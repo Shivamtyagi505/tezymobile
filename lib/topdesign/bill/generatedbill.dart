@@ -5,8 +5,6 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:quikieappps1/saree/other_review.dart';
-import 'package:quikieappps1/topdesign/review/blousereview.dart';
 import 'package:quikieappps1/topdesign/review/topreview.dart';
 import 'package:url_launcher/url_launcher.dart';
 

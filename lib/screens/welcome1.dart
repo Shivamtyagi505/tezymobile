@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
+import 'package:quikieappps1/api/datafromfrontend/registration_data_class.dart';
+import 'package:quikieappps1/api/registration/registration_model.dart';
+import 'package:quikieappps1/api/registration/registration_services.dart';
 import 'package:quikieappps1/home/bottomNavigation.dart';
+import 'package:quikieappps1/main.dart';
 
 class welcomeScreen1 extends StatefulWidget {
   @override
@@ -73,7 +76,7 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                     child: TextField(
                                       focusNode: nameFocusNode,
                                       controller: boutiqueController,
-                                      obscureText: true,
+                                      //obscureText: true,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                                         labelText: 'Boutique Name',
@@ -93,7 +96,7 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                     ),
                                     child: TextField(
                                       controller: emailIdController,
-                                      obscureText: true,
+                                    //  obscureText: true,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                                         labelText: 'Email',
@@ -162,10 +165,12 @@ class welcomeScreen1State extends State<welcomeScreen1> {
 
                                   ),*/
                                   InkWell( onTap: () {
-                                    Navigator.push(
-                                        context, MaterialPageRoute(builder: (context) => BottomNavigation()));
+                                   /* Navigator.push(
+                                        context, MaterialPageRoute(builder: (context) => BottomNavigation()));*/
+                                    collectAllRegistrationInfo();
+
                                   },
-                                    child: Container(
+                                    child: _futureRegistrationModel==null?Container(
                                       height: 55,
                                       width: 296,
                                       margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
@@ -183,7 +188,7 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                           ),
                                         ],
                                       ),
-                                    ),
+                                    ):buildRegistrationFutureBuilder(),
                                   ),
                                   InkWell(onTap: (){
                                    // Navigator.push(context, MaterialPageRoute(builder: (context) => welcomeScreen1()));
@@ -250,6 +255,58 @@ class welcomeScreen1State extends State<welcomeScreen1> {
               ],
             ),
           ),
+
         ));
   }
+  Future<RegistrationModel> _futureRegistrationModel;
+  void collectAllRegistrationInfo(){
+    String email=emailIdController.text;
+    String password=passwordController.text;
+    String name=boutiqueController.text;
+    setState(() {
+      _futureRegistrationModel= createUser(RegistrationData(email: email,name: name,password: password));
+    });
+
+   // print("email:  ${email} password: ${password} name: ${name}");
+  }
+
+  FutureBuilder<RegistrationModel> buildRegistrationFutureBuilder() {
+    return FutureBuilder<RegistrationModel>(
+      future: _futureRegistrationModel,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          WidgetsBinding.instance.addPostFrameCallback((_){
+
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => PreLoginScree()));
+
+          });
+
+        } else if (snapshot.hasError) {
+          return Container(
+            height: 55,
+            width: 296,
+            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+            decoration: const BoxDecoration(
+              color: Color(0xff029EFF),
+              borderRadius: BorderRadius.all(Radius.circular(80.0)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'Sign Up',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
+        }
+
+        return const CircularProgressIndicator();
+      },
+    );
+  }
 }
+

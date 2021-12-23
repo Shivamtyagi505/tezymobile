@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/review.dart';
-import 'package:quikieappps1/bottom/preview_bottom.dart';
-import 'package:quikieappps1/screens/previewOrder_blouse.dart';
 
 class Orders extends StatefulWidget {
   const Orders({Key key}) : super(key: key);

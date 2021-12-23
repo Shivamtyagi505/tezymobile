@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:quikieappps1/blouse/input_sample.dart';
-import 'package:quikieappps1/bottom/bottom_measurement.dart';
 import 'package:quikieappps1/bottomdesign/selectcustomerbottom.dart';
 import 'package:quikieappps1/customer/selectcustomer.dart';
-import 'package:quikieappps1/dress/input_sample_dress.dart';
 import 'package:quikieappps1/other_design/selectcustomerother.dart';
-import 'package:quikieappps1/saree/saree_design.dart';
 import 'package:quikieappps1/topdesign/selectcustomertop.dart';
 
 class Tabview extends StatelessWidget {

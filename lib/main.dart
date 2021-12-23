@@ -1,26 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:quikieappps1/bill/generatedbill.dart';
-import 'package:quikieappps1/bottom/bottomreview.dart';
 import 'package:quikieappps1/provider/measurement_provider.dart';
-import 'package:quikieappps1/saree/other_review.dart';
-import 'package:quikieappps1/saree/other_review_second.dart';
-import 'package:quikieappps1/screens/Welcome2.dart';
-import 'package:quikieappps1/screens/previewOrder_blouse.dart';
-import 'package:quikieappps1/screens/previewOrder_bottom.dart';
-import 'package:quikieappps1/screens/previewOrder_other.dart';
-
 import 'package:quikieappps1/screens/welcome1.dart';
-import 'package:quikieappps1/topdesign/preview_order/previewOrder_top.dart';
-import 'blouse/design/select_other_design.dart';
-import 'blouse/measurement_update.dart';
 import 'blouse/pro_vider/image_notif.dart';
-import 'bottom/blousereview.dart';
-import 'home/home_page_updated.dart';
-
 
 
 void main() {
@@ -168,23 +152,27 @@ class PreLoginScreeDesign extends StatelessWidget {
                     ),  
                   ),  
                     ),
-                    Container(
-                      height: 55,
-                      width: 296,
-                      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                      decoration: const BoxDecoration(
-                        color: Color(0xff029EFF),
-                        borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'Sign in',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                    InkWell(onTap: (){
+
+                    },
+                      child: Container(
+                        height: 55,
+                        width: 296,
+                        margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                        decoration: const BoxDecoration(
+                          color: Color(0xff029EFF),
+                          borderRadius: BorderRadius.all(Radius.circular(80.0)),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Sign in',
+                              style: TextStyle(color: Colors.white, fontSize: 18),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     InkWell(onTap: (){
@@ -280,4 +268,5 @@ class PreLoginScreeDesign extends StatelessWidget {
       ),
     );
   }
+
 }

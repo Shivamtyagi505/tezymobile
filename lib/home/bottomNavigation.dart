@@ -4,8 +4,6 @@ import 'package:quikieappps1/home/homepage.dart';
 import 'package:quikieappps1/orders/customer_order.dart';
 import 'package:quikieappps1/orders/orders.dart';
 
-import 'home_page_updated.dart';
-
 class BottomNavigation extends StatefulWidget {
 
   @override
