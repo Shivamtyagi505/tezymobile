@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:quikieappps1/api/apifile/api_list.dart';
 import 'package:quikieappps1/api/datafromfrontend/registration_data_class.dart';
 import 'package:quikieappps1/api/registration/registration_model.dart';
 
 
 Future<RegistrationModel> createUser(RegistrationData data) async {
   final response = await http.post(
-    Uri.parse("http://172.105.253.131:1337/api/auth/local/register"),
+    Uri.parse(register),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

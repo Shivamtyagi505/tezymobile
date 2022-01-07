@@ -49,15 +49,16 @@ dependencies:
   mobx: ^2.0.4
   flutter_mobx:
   intl: ^0.17.0
-  flutter_native_splash: ^1.2.3
+  # flutter_native_splash: ^1.2.3
   url_launcher: ^6.0.17
   http: ^0.13.4
+  shared_preferences: ^2.0.11
 
 
-flutter_native_splash:
-  image: assets/images/splashtwo.png
-  color: "032B77"
-  android_gravity: center
+# flutter_native_splash:
+#   image: assets/images/splashtwo.png
+#   color: "032B77"
+#   android_gravity: center
 dev_dependencies:
   flutter_test:
     sdk: flutter

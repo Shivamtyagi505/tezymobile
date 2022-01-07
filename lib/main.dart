@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:quikieappps1/api/datafromfrontend/login_data_class.dart';
+import 'package:quikieappps1/api/login/login_model.dart';
 import 'package:quikieappps1/provider/measurement_provider.dart';
 import 'package:quikieappps1/screens/welcome1.dart';
+import 'package:quikieappps1/splash_screen/splash_screen.dart';
+import 'package:quikieappps1/util/shared_preferences.dart';
+import 'api/login/login_services.dart';
 import 'blouse/pro_vider/image_notif.dart';
+import 'home/bottomNavigation.dart';
+import 'home/homepage.dart';
 
 
 void main() {
@@ -43,14 +50,20 @@ class PreLoginScree extends StatelessWidget {
             ),
           ),
         ),
-        home:PreLoginScreeDesign(),
+        home:SplashScreen(),
        // home:  selectotherdesign(),
       ),
     );
   }
 }
 
-class PreLoginScreeDesign extends StatelessWidget {
+class PreLoginScreeDesign extends StatefulWidget {
+
+  @override
+  _PreLoginScreeDesignState createState() => _PreLoginScreeDesignState();
+}
+
+class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
   var emailIdController = TextEditingController();
   var passwordController = TextEditingController();
   var nameController = TextEditingController();
@@ -119,7 +132,6 @@ class PreLoginScreeDesign extends StatelessWidget {
                       ),
                       child:  TextField(  
                     controller: emailIdController,  
-                    obscureText: true,  
                     decoration: InputDecoration(  
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8)
@@ -153,9 +165,10 @@ class PreLoginScreeDesign extends StatelessWidget {
                   ),  
                     ),
                     InkWell(onTap: (){
-
+                      login();
                     },
-                      child: Container(
+                      child: _futureLoginModel == null?
+                      Container(
                         height: 55,
                         width: 296,
                         margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
@@ -173,7 +186,8 @@ class PreLoginScreeDesign extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                      ):
+                      buildLoginFutureBuilder()
                     ),
                     InkWell(onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => welcomeScreen1()));
@@ -269,4 +283,57 @@ class PreLoginScreeDesign extends StatelessWidget {
     );
   }
 
+
+
+  Future<LoginModel> _futureLoginModel;
+  void login(){
+    String identifier=emailIdController.text;
+    String password=passwordController.text;
+    setState(() {
+      _futureLoginModel= getLogin(LoginData(password: password, identifier: identifier));
+    });
+
+   // print("email:  ${email} password: ${password} name: ${name}");
+  }
+
+  FutureBuilder<LoginModel> buildLoginFutureBuilder(){
+    return FutureBuilder<LoginModel>(
+      future: _futureLoginModel,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          WidgetsBinding.instance.addPostFrameCallback((_){
+            print(snapshot.data.user.id);
+              SharedData().setUser(snapshot.data.user.id.toString());
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => BottomNavigation()));
+
+          });
+
+        } else if (snapshot.hasError) {
+          return Container(
+            height: 55,
+            width: 296,
+            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+            decoration: const BoxDecoration(
+              color: Color(0xff029EFF),
+              borderRadius: BorderRadius.all(Radius.circular(80.0)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'Sign In',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
+        }
+
+        return const CircularProgressIndicator();
+      },
+    );
+  }
 }
+
