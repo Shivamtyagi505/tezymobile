@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quikieappps1/bodymeasure/input_sample_numberpicker.dart';
 import 'package:quikieappps1/dress/dress_measurement.dart';
-import 'package:quikieappps1/home/homepage.dart';
+import 'package:quikieappps1/home/home_page/homepage.dart';
 
 class input_sample_dress extends StatefulWidget {
   @override

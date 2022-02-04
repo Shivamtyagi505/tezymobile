@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quikieappps1/bodymeasure/input_sample_numberpicker.dart';
-import 'package:quikieappps1/home/homepage.dart';
+import 'package:quikieappps1/home/home_page/homepage.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
 import 'package:quikieappps1/topdesign/topmeasurement.dart';
 

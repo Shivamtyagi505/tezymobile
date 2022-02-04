@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/blouse/design/design.dart';
-import 'package:quikieappps1/home/homepage.dart';
+import 'package:quikieappps1/home/home_page/homepage.dart';
 import 'package:quikieappps1/orders/customer_order.dart';
 import 'package:quikieappps1/orders/orders.dart';
 
 class BottomNavigation extends StatefulWidget {
+  final String name;
+  BottomNavigation({this.name});
 
   @override
   _BottomNavigationState createState() => _BottomNavigationState();
@@ -14,7 +16,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
    final PageController _pageController = PageController();
   var statusLoading = false;
   var loading = false;
-  bool _progressVisible = false;
   var _selectedTab = 0;
   void _handleIndexChanged(int i) {
     _pageController.animateToPage(i,
@@ -25,9 +26,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
  @override
   Widget build(BuildContext context) {
-    var height =  MediaQuery.of(context).size.height;
     List<Widget> _pages = [
-      HomePageScreen(),
+      HomePageScreen(name: widget.name,),
      // HomePageUpdatedagain(),
       Orders(),
       Design(),

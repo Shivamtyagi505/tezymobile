@@ -111,6 +111,8 @@ class _HomePageState extends State<HomePage> {
     'Chest Round',
     'Back Neck Width',
   ];
+
+  // ignore: missing_required_param
   List<String> mesuringList = [];
   int FIRST_TIME = 0;
   String getalistName = 'Shoulder';
@@ -126,6 +128,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.selectVal);
+    print(scaleData.selectScaleValue);
+
     //selectedImage=imageNotif.getImage;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -344,6 +349,7 @@ class _HomePageState extends State<HomePage> {
                                     subGridCountPerGrid: 10,
                                     subGridWidth: 8,
                                     onSelectedChanged: (value) {
+                                          print(getdataval);
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');
@@ -584,6 +590,8 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               FloatingActionButton(
+                
+                    heroTag: null,
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -593,6 +601,8 @@ class _HomePageState extends State<HomePage> {
                 child: Image.asset("assets/images/Previous.png"),
               ),
               FloatingActionButton(
+                
+                    heroTag: null,
                 onPressed: () {
                   Navigator.push(
                     context,

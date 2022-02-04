@@ -510,6 +510,7 @@ class GeneratedBillState extends State<GeneratedBill> {
                 padding: const EdgeInsets.all(1.0),
                 child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
                   FloatingActionButton(
+                    heroTag: null,
                     backgroundColor: Colors.white,
                     child: Icon(
                       Icons.share,

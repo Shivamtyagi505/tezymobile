@@ -640,6 +640,8 @@ int FIRST_TIME=0;
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               FloatingActionButton(
+                
+                    heroTag: null,
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -649,6 +651,8 @@ int FIRST_TIME=0;
                 child: Image.asset("assets/images/Previous.png"),
               ),
               FloatingActionButton(
+                
+                    heroTag: null,
                 onPressed: () {
                   Navigator.push(
                     context,

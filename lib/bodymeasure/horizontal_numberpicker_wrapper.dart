@@ -249,6 +249,7 @@ class HorizontalNumberPickerWrapperState
 
 
 
+
   double getScalePrintVal(val) {
     double base = 1.00;
     double finalva = ((((val / 1 - (val % 1)) - base)) * 0.25) + (val % 1);
