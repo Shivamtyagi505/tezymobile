@@ -426,7 +426,7 @@ class select_front_designState extends State<select_front_design> {
           if (val == 0) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage(selectVal:8.00)),
+              MaterialPageRoute(builder: (context) => MeasurementScreen(selectVal:8.00)),
             );
             // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: DailyLiaScreen()));
           }

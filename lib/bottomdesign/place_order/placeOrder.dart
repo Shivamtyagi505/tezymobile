@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:quikieappps1/api/invoice_number_suggestion/invoice_number_model.dart';
+import 'package:quikieappps1/api/invoice_number_suggestion/invoice_number_services.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/bottomdesign/bill/generatedbill.dart';
 import 'package:quikieappps1/bottomdesign/preview_order/previewOrder_bottom.dart';
@@ -173,6 +175,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
           ],
         ));
   }
+Future<InvoiceNumberSuggestion> _invoiceNumber;
+
+@override
+  void initState() {
+  _invoiceNumber =  invoiceNumberSuggestion();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

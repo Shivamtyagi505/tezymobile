@@ -13,16 +13,16 @@ import 'package:quikieappps1/state_management/mob_store.dart';
 
 import '../bodymeasure/horizontal_numberpicker_wrapper.dart';
 
-class HomePage extends StatefulWidget {
+class MeasurementScreen extends StatefulWidget {
   double selectVal;
 
-  HomePage({this.selectVal = 8.00});
+  MeasurementScreen({this.selectVal = 8.00});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MeasurementScreenState createState() => _MeasurementScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MeasurementScreenState extends State<MeasurementScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isSelected = false;
   bool ontap = false;
@@ -128,8 +128,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.selectVal);
-    print(scaleData.selectScaleValue);
 
     //selectedImage=imageNotif.getImage;
     var width = MediaQuery.of(context).size.width;
@@ -349,7 +347,6 @@ class _HomePageState extends State<HomePage> {
                                     subGridCountPerGrid: 10,
                                     subGridWidth: 8,
                                     onSelectedChanged: (value) {
-                                          print(getdataval);
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');
@@ -451,6 +448,7 @@ class _HomePageState extends State<HomePage> {
                           },
                           itemCount: _listViewData.length,
                           itemBuilder: (context, index) {
+                            // print(getdataval[widget.selectVal][returnindex.indexOf(_listViewData[index])]);
                             return InkWell(
                               onTap: () {
                                 // selectedImage = images[index];
@@ -491,7 +489,9 @@ class _HomePageState extends State<HomePage> {
                                     subGridCountPerGrid: 10,
                                     subGridWidth: 8,
                                     onSelectedChanged: (value) {
-                                      //
+                                      var updatedValue = getUpdatedValue(value);
+                                      print('updated$updatedValue');
+                                      getdataval[widget.selectVal][returnindex.indexOf(_listViewData[index])] = updatedValue + 1;
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');
@@ -616,6 +616,12 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
+  double getUpdatedValue(val) {
+    double base = 1.00;
+    double finalva = ((((val / 1 - (val % 1)) - base)) * 0.25) + (val % 1);
+    return finalva;
+  }
+
   void changeImageOnScroll(int index) {
     if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
     if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
@@ -639,3 +645,4 @@ class _HomePageState extends State<HomePage> {
     if (_listViewData[index] == 'Chest Round') scaleData.setName('Chest Round');
   }
 }
+
