@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quikieappps1/blouse/measurement.dart';
 import 'package:quikieappps1/blouse/pro_vider/image_notif.dart';
 import 'package:quikieappps1/bodymeasure/HorizontalNumberPicker.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
@@ -253,6 +254,7 @@ class HorizontalNumberPickerWrapperState
   double getScalePrintVal(val) {
     double base = 1.00;
     double finalva = ((((val / 1 - (val % 1)) - base)) * 0.25) + (val % 1);
+    print('fnal$finalva');
     return finalva;
   }
 
