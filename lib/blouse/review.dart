@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../orders/Controller/orders_services.dart';
 import '../orders/Model/orders_model.dart';
+import '../screens/previewOrder_blouse.dart';
 
 class Review extends StatefulWidget {
   @override
@@ -13,9 +14,9 @@ class Review extends StatefulWidget {
 }
 
 class reviewState extends State<Review> {
-  int? _index;
-  OrdersModel? review;
-  OrdersModel? review2;
+  // int _index;
+  late OrdersModel review;
+  late OrdersModel review2;
 
   void modelData() async {
     review2 = await ordersModel();
@@ -82,27 +83,19 @@ class reviewState extends State<Review> {
                                                           height: 200,
                                                           decoration:
                                                               BoxDecoration(
+                                                            image:
+                                                                DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: Image.network(
+                                                                      "http://172.105.253.131:1337${review.data.attributes.totalProducts[0].backImageBlouse!.formats?.large?.url}")
+                                                                  .image,
+                                                            ),
                                                             color: darkGrey,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .only(
                                                               topLeft: Radius
                                                                   .circular(20),
-                                                              bottomLeft: Radius
-                                                                  .circular(20),
-                                                              topRight: Radius
-                                                                  .circular(0),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          20),
-                                                            ),
-                                                          ),
-                                                          child: Center(
-                                                            child: Icon(
-                                                              Icons.photo,
-                                                              size: 40,
-                                                              color: textColor,
                                                             ),
                                                           ),
                                                         ),
@@ -159,27 +152,19 @@ class reviewState extends State<Review> {
                                                           height: 200,
                                                           decoration:
                                                               BoxDecoration(
+                                                            image:
+                                                                DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: Image.network(
+                                                                      "http://172.105.253.131:1337${review.data.attributes.totalProducts[0].backImageBlouse!.formats!.large!.url}")
+                                                                  .image,
+                                                            ),
                                                             color: darkGrey,
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .only(
-                                                              topLeft: Radius
-                                                                  .circular(0),
-                                                              bottomLeft: Radius
-                                                                  .circular(20),
                                                               topRight: Radius
                                                                   .circular(20),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          20),
-                                                            ),
-                                                          ),
-                                                          child: Center(
-                                                            child: Icon(
-                                                              Icons.photo,
-                                                              size: 40,
-                                                              color: textColor,
                                                             ),
                                                           ),
                                                         ),
@@ -236,28 +221,19 @@ class reviewState extends State<Review> {
                                                         height: 200,
                                                         decoration:
                                                             BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image: Image.network(
+                                                                    "http://172.105.253.131:1337${review.data.attributes.totalProducts[0].backImageBlouse!.formats!.large!.url}")
+                                                                .image,
+                                                          ),
                                                           color: darkGrey,
                                                           borderRadius:
                                                               BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    0),
                                                             bottomLeft:
                                                                 Radius.circular(
                                                                     20),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    0),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    20),
-                                                          ),
-                                                        ),
-                                                        child: Center(
-                                                          child: Icon(
-                                                            Icons.photo,
-                                                            size: 40,
-                                                            color: textColor,
                                                           ),
                                                         ),
                                                       ),
@@ -271,10 +247,6 @@ class reviewState extends State<Review> {
                                                                     .only(
                                                               bottomLeft: Radius
                                                                   .circular(20),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          0),
                                                             ),
                                                           ),
                                                           child: Row(
@@ -314,25 +286,31 @@ class reviewState extends State<Review> {
                                                           color: darkGrey,
                                                           borderRadius:
                                                               BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    0),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    20),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    0),
                                                             bottomRight:
                                                                 Radius.circular(
                                                                     20),
                                                           ),
                                                         ),
-                                                        child: Center(
-                                                          child: Icon(
-                                                            Icons.photo,
-                                                            size: 40,
-                                                            color: textColor,
+                                                        child: Container(
+                                                          height: 200,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            image:
+                                                                DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: Image.network(
+                                                                      "http://172.105.253.131:1337${review.data.attributes.totalProducts[0].backImageBlouse!.formats?.large?.url}")
+                                                                  .image,
+                                                            ),
+                                                            color: darkGrey,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .only(
+                                                              bottomRight:
+                                                                  Radius
+                                                                      .circular(
+                                                                          20),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
@@ -344,8 +322,6 @@ class reviewState extends State<Review> {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .only(
-                                                              bottomLeft: Radius
-                                                                  .circular(0),
                                                               bottomRight:
                                                                   Radius
                                                                       .circular(
@@ -401,7 +377,7 @@ class reviewState extends State<Review> {
                                     fontWeight: FontWeight.w400)),
                             SizedBox(height: 7),
                             Container(
-                              height: MediaQuery.of(context).size.height / 1.5,
+                              height: MediaQuery.of(context).size.height / 1,
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(12)),
@@ -413,119 +389,75 @@ class reviewState extends State<Review> {
                                 children: [
                                   MeasurementWidget(
                                     text1: 'Full Length',
-                                    text2: '21.25',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].fullLength}',
                                     text3: 'Shoulder',
-                                    text4: '13.50',
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 20,
-                                    child: DottedLine(
-                                      direction: Axis.horizontal,
-                                      lineLength: width / 1.2,
-                                      lineThickness: 1.0,
-                                      dashLength: 2.0,
-                                      dashColor:
-                                          Color.fromRGBO(196, 196, 196, 10),
-                                      dashRadius: 0.0,
-                                      dashGapLength: 3.0,
-                                      dashGapColor: Colors.transparent,
-                                      dashGapRadius: 0.0,
-                                    ),
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].shoulder}',
                                   ),
                                   MeasurementWidget(
-                                    text1: 'Chest Round',
-                                    text2: '22.25',
-                                    text3: 'Waist Round',
-                                    text4: '13.50',
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 20,
-                                    child: DottedLine(
-                                      direction: Axis.horizontal,
-                                      lineLength: width / 1.2,
-                                      lineThickness: 1.0,
-                                      dashLength: 2.0,
-                                      dashColor:
-                                          Color.fromRGBO(196, 196, 196, 10),
-                                      dashRadius: 0.0,
-                                      dashGapLength: 3.0,
-                                      dashGapColor: Colors.transparent,
-                                      dashGapRadius: 0.0,
-                                    ),
+                                    text1: 'Shoulder Gap',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].shoulderGap}',
+                                    text3: 'SleevesLength',
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].sleevesLength}',
                                   ),
                                   MeasurementWidget(
-                                    text1: 'Waist band Length',
-                                    text2: '23.25',
-                                    text3: 'Sleeves Length',
-                                    text4: '13.50',
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 20,
-                                    child: DottedLine(
-                                      direction: Axis.horizontal,
-                                      lineLength: width / 1.2,
-                                      lineThickness: 1.0,
-                                      dashLength: 2.0,
-                                      dashColor:
-                                          Color.fromRGBO(196, 196, 196, 10),
-                                      dashRadius: 0.0,
-                                      dashGapLength: 3.0,
-                                      dashGapColor: Colors.transparent,
-                                      dashGapRadius: 0.0,
-                                    ),
+                                    text1: 'Armhole Round',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].armholeRound}',
+                                    text3: 'Circle Down Loose',
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].circleDownLoose}',
                                   ),
                                   MeasurementWidget(
                                     text1: 'Sleeve Round',
-                                    text2: '24.25',
-                                    text3: 'Arm Hole Round',
-                                    text4: '13.50',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].sleevesRound}',
+                                    text3: 'Upper Chest Round',
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].upperChestRound}',
                                   ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 20,
-                                    child: DottedLine(
-                                      direction: Axis.horizontal,
-                                      lineLength: width / 1.2,
-                                      lineThickness: 1.0,
-                                      dashLength: 2.0,
-                                      dashColor:
-                                          Color.fromRGBO(196, 196, 196, 10),
-                                      dashRadius: 0.0,
-                                      dashGapLength: 3.0,
-                                      dashGapColor: Colors.transparent,
-                                      dashGapRadius: 0.0,
-                                    ),
+                                  MeasurementWidget(
+                                    text1: 'Lower Chest Round',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].lowerChestRound}',
+                                    text3: 'Waist Round',
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].waistRound}',
+                                  ),
+                                  MeasurementWidget(
+                                    text1: 'First Dart Point',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].firstDartPoint}',
+                                    text3: 'Second Dart Point',
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].secondDartPoint}',
+                                  ),
+                                  MeasurementWidget(
+                                    text1: 'Bust Point',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].bustPoint}',
+                                    text3: 'Front AC',
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].frontAc}',
                                   ),
                                   MeasurementWidget(
                                     text1: 'Front Neck Deep',
-                                    text2: '25.25',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].frontNeckDeep}',
                                     text3: 'Back Neck Deep',
-                                    text4: '13.50',
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    height: 20,
-                                    child: DottedLine(
-                                      direction: Axis.horizontal,
-                                      lineLength: width / 1.2,
-                                      lineThickness: 1.0,
-                                      dashLength: 2.0,
-                                      dashColor:
-                                          Color.fromRGBO(196, 196, 196, 10),
-                                      dashRadius: 0.0,
-                                      dashGapLength: 3.0,
-                                      dashGapColor: Colors.transparent,
-                                      dashGapRadius: 0.0,
-                                    ),
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].backNeckDeep}',
                                   ),
                                   MeasurementWidget(
-                                    text1: 'Neck Width',
-                                    text2: '26.25',
-                                    text3: 'Bust Width',
-                                    text4: '13.50',
+                                    text1: 'Waist Band Length',
+                                    text2:
+                                        '${review.data.attributes.totalProducts[0].waistBandLength}',
+                                    text3: 'Neck Width',
+                                    text4:
+                                        '${review.data.attributes.totalProducts[0].neckWidth}',
                                   ),
                                 ],
                               ),
@@ -554,11 +486,43 @@ class reviewState extends State<Review> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(children: [
+                                  Text('Cups'),
+                                  review.data.attributes.totalProducts[0]
+                                              .cups ==
+                                          false
+                                      ? Text('No',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  3, 43, 119, 10)))
+                                      : Text('Yes',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  3, 43, 119, 10)))
+                                ]),
+                                DottedLine(
+                                  direction: Axis.vertical,
+                                  lineLength: 52,
+                                  lineThickness: 1.0,
+                                  dashLength: 4.0,
+                                  dashColor: Color.fromRGBO(196, 196, 196, 10),
+                                  dashRadius: 0.0,
+                                  dashGapLength: 4.0,
+                                  dashGapColor: Colors.transparent,
+                                  dashGapRadius: 0.0,
+                                ),
+                                Column(children: [
                                   Text('PIPING'),
-                                  Text('NO',
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromRGBO(3, 43, 119, 10)))
+                                  review.data.attributes.totalProducts[0]
+                                              .piping ==
+                                          false
+                                      ? Text('NO',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  3, 43, 119, 10)))
+                                      : Text('Yes',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  3, 43, 119, 10)))
                                 ]),
                                 DottedLine(
                                   direction: Axis.vertical,
@@ -573,7 +537,8 @@ class reviewState extends State<Review> {
                                 ),
                                 Column(children: [
                                   Text('ZIP'),
-                                  Text('Front',
+                                  Text(
+                                      '${review.data.attributes.totalProducts[0].zipType}',
                                       style: TextStyle(
                                           color:
                                               Color.fromRGBO(3, 43, 119, 10)))
@@ -657,7 +622,16 @@ class reviewState extends State<Review> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Image.asset('assets/images/Group 1069.png'),
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PreviewOrdersBlouse()));
+                                      },
+                                      child: Image.asset(
+                                          'assets/images/Group 1069.png')),
                                   Image.asset('assets/images/Group 1068.png'),
                                   Image.asset('assets/images/Group 1067.png'),
                                 ],
@@ -667,25 +641,30 @@ class reviewState extends State<Review> {
                 ]))),
           );
         } else if (snapshot.hasError) {
-          return Container(
-            height: 100,
-            width: 100,
-            child: Column(
-              children: [
-                Text('$snapshot.error'),
-              ],
+          return SafeArea(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  Text('$snapshot.error'),
+                ],
+              ),
             ),
           );
-        } else
-          return Container(
-            height: 200,
-            width: 200,
-            child: Column(
-              children: [
-                CircularProgressIndicator(),
-              ],
+        } else {
+          return SafeArea(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  CircularProgressIndicator(),
+                ],
+              ),
             ),
           );
+        }
       },
     );
   }
@@ -712,7 +691,7 @@ class reviewState extends State<Review> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(review!.data!.attributes!.totalBills![0].customerName!,
+                  Text(review.data.attributes.totalBills[0].customerName.toString(),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -737,7 +716,7 @@ class reviewState extends State<Review> {
                             color: Color.fromRGBO(145, 144, 154, 10),
                             fontSize: 12,
                             fontWeight: FontWeight.w500)),
-                    Text(review!.data!.attributes!.totalBills![0].invoiceNumber!,
+                    Text(review.data.attributes.totalBills[0].invoiceNumber.toString(),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -750,7 +729,9 @@ class reviewState extends State<Review> {
                             color: Color.fromRGBO(145, 144, 154, 10),
                             fontSize: 12,
                             fontWeight: FontWeight.w500)),
-                    Text("05 May 2021",
+                    Text(
+                        review.data.attributes.totalBills[0].dueDate!
+                            .substring(3, 16),
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -764,7 +745,7 @@ class reviewState extends State<Review> {
                               color: Color.fromRGBO(151, 151, 151, 10),
                               fontSize: 12,
                               fontWeight: FontWeight.w400)),
-                      Text(review!.data!.attributes!.totalProducts![0].productType!,
+                      Text(review.data.attributes.totalProducts[0].productType.toString(),
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -779,19 +760,10 @@ class reviewState extends State<Review> {
               child: CircleAvatar(
                 radius: MediaQuery.of(context).size.height / 20,
                 backgroundImage: Image.network(
-                        "http://172.105.253.131:1337${review!.data!.attributes!.totalProducts![0].backImageBlouse!.formats!.thumbnail?.url}")
+                        "http://172.105.253.131:1337${review.data.attributes.totalProducts[0].backImageBlouse!.formats!.thumbnail!.url}")
                     .image,
               ),
             ),
-            // Container(
-            //     child: Image.network(
-            //         ""),
-            //     margin: EdgeInsets.only(top: 20),
-            //     width: 82.0,
-            //     height: 82.0,
-            //     decoration: new BoxDecoration(
-            //         shape: BoxShape.circle,
-            //         color: Color.fromRGBO(244, 248, 252, 10))),
           ],
         ),
         Container(
@@ -805,17 +777,26 @@ class reviewState extends State<Review> {
               SizedBox(
                 height: 5,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    categories("Order No : 01"),
-                    categories("Order No : 02"),
-                    categories("Order No : 03"),
-                    categories("Order No : 04"),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 40,
+                      width: 150,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount:
+                              review.data.attributes.totalProducts.length,
+                          itemBuilder: (context, index) {
+                            return orderNumber(
+                              "Order No. ${review.data.attributes.totalProducts[index].orderId}",
+                            );
+                          }),
+                    ),
+                  )
+                ],
               ),
               SizedBox(
                 height: 9,
@@ -950,7 +931,7 @@ class reviewState extends State<Review> {
     );
   }
 
-  Widget categories(String text) {
+  Widget orderNumber(String text) {
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 5),
         padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
@@ -958,12 +939,14 @@ class reviewState extends State<Review> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(48),
             border: Border.all(color: Colors.white)),
-        child: Text(
-          text,
-          style: TextStyle(
-              fontSize: 15,
-              color: Color.fromRGBO(60, 60, 61, 10),
-              fontWeight: FontWeight.w500),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+                fontSize: 15,
+                color: Color.fromRGBO(60, 60, 61, 10),
+                fontWeight: FontWeight.w500),
+          ),
         ));
   }
 
@@ -976,55 +959,81 @@ class reviewState extends State<Review> {
 }
 
 class MeasurementWidget extends StatelessWidget {
-  final String? text1;
-  final String? text2;
-  final String? text3;
-  final String? text4;
-  const MeasurementWidget({
-    this.text1,
-    this.text2,
-    this.text3,
-    this.text4,
-    Key? key,
-  }) : super(key: key);
+  final String text1;
+  final String text2;
+  final String text3;
+  final String text4;
+   MeasurementWidget({
+    required this.text1,
+    required this.text2,
+    required this.text3,
+    required this.text4,
+
+  });
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: Column(
         children: [
-          Container(
-            width: 150,
-            child: Column(children: [
-              Text(text1!,
-                  style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text2!,
-                  style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
-            ]),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                width: 150,
+                child: Column(children: [
+                  Text(text1,
+                      style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Text(text2,
+                      style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
+                ]),
+              ),
+              Center(
+                child: DottedLine(
+                  direction: Axis.vertical,
+                  lineLength: 52.5,
+                  lineThickness: 1.0,
+                  dashLength: 4.0,
+                  dashColor: Color.fromRGBO(196, 196, 196, 10),
+                  dashRadius: 0.0,
+                  dashGapLength: 4.0,
+                  dashGapColor: Colors.transparent,
+                  dashGapRadius: 0.0,
+                ),
+              ),
+              Container(
+                width: 120,
+                child: Column(children: [
+                  Text(text3,
+                      style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Text(text4,
+                      style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
+                ]),
+              ),
+            ],
           ),
-          Center(
+          Container(
+            alignment: Alignment.center,
+            height: 20,
             child: DottedLine(
-              direction: Axis.vertical,
-              lineLength: 52.5,
+              direction: Axis.horizontal,
+              lineLength: width / 1.2,
               lineThickness: 1.0,
-              dashLength: 4.0,
+              dashLength: 2.0,
               dashColor: Color.fromRGBO(196, 196, 196, 10),
               dashRadius: 0.0,
-              dashGapLength: 4.0,
+              dashGapLength: 3.0,
               dashGapColor: Colors.transparent,
               dashGapRadius: 0.0,
             ),
-          ),
-          Container(
-            width: 120,
-            child: Column(children: [
-              Text(text3!,
-                  style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text4!,
-                  style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
-            ]),
           ),
         ],
       ),

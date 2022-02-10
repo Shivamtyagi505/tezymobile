@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/blouse/design/design.dart';
 import 'package:quikieappps1/home/home_page/homepage.dart';
-import 'package:quikieappps1/orders/customer_order.dart';
-import 'package:quikieappps1/orders/orders.dart';
+import 'package:quikieappps1/orders/View/customer_order.dart';
+import 'package:quikieappps1/orders/View/orders.dart';
+
 
 class BottomNavigation extends StatefulWidget {
   final String? name;
