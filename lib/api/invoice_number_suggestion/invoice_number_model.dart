@@ -14,8 +14,8 @@ class InvoiceNumberSuggestion {
         this.meta,
     });
 
-    InvoiceData data;
-    Meta meta;
+    InvoiceData? data;
+    Meta? meta;
 
     factory InvoiceNumberSuggestion.fromJson(Map<String, dynamic> json) => InvoiceNumberSuggestion(
         data: InvoiceData.fromJson(json["data"]),
@@ -23,8 +23,8 @@ class InvoiceNumberSuggestion {
     );
 
     Map<String, dynamic> toJson() => {
-        "data": data.toJson(),
-        "meta": meta.toJson(),
+        "data": data!.toJson(),
+        "meta": meta!.toJson(),
     };
 }
 
@@ -33,14 +33,14 @@ class InvoiceData {
         this.attributes,
     });
 
-    Attributes attributes;
+    Attributes? attributes;
 
     factory InvoiceData.fromJson(Map<String, dynamic> json) => InvoiceData(
         attributes: Attributes.fromJson(json["attributes"]),
     );
 
     Map<String, dynamic> toJson() => {
-        "attributes": attributes.toJson(),
+        "attributes": attributes!.toJson(),
     };
 }
 
@@ -50,8 +50,8 @@ class Attributes {
         this.nextInvoiceNumberSuggestion,
     });
 
-    String lastInvoiceNumber;
-    String nextInvoiceNumberSuggestion;
+    String? lastInvoiceNumber;
+    String? nextInvoiceNumberSuggestion;
 
     factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
         lastInvoiceNumber: json["lastInvoiceNumber"],

@@ -6,46 +6,46 @@ import 'HorizontalNumberPicker.dart';
 ///对HorizontalNumberPicker进行简单包装，添加顶部的选中值显示和两边的半透明遮罩
 // ignore: must_be_immutable
 class inputsamplePickerWrapper extends StatefulWidget {
-  final double initialValue;
-  final double minValue;
-  final double maxValue;
-  final double step;
-  final String unit;
-  final String title;
+  final double? initialValue;
+  final double? minValue;
+  final double? maxValue;
+  final double? step;
+  final String? unit;
+  final String? title;
 
   ///控件的宽度
-  final int widgetWidth;
+  final int? widgetWidth;
 
   ///一大格中有多少个小格
-  final int subGridCountPerGrid;
+  final int? subGridCountPerGrid;
 
   ///每一小格的宽度
-  final int subGridWidth;
+  final int? subGridWidth;
 
-  final void Function(double) onSelectedChanged;
+  final void Function(double)? onSelectedChanged;
 
   ///返回上方大标题所展示的数值字符串
-  String Function(double) titleTransformer;
+  String Function(double)? titleTransformer;
 
   ///返回标尺刻度所展示的数值字符串
-  final String Function(double) scaleTransformer;
+  final String Function(double)? scaleTransformer;
 
   ///标题文字颜色
-  final Color titleTextColor;
+  final Color? titleTextColor;
 
   ///刻度颜色
-  final Color scaleColor;
+  final Color? scaleColor;
 
   ///指示器颜色
-  final Color indicatorColor;
+  final Color? indicatorColor;
 
   ///刻度文字颜色
-  final Color scaleTextColor;
+  final Color? scaleTextColor;
 
 
 
   inputsamplePickerWrapper({
-    Key key,
+     Key? key,
     this.initialValue = 500,
     this.minValue = 100,
     this.maxValue = 900,
@@ -85,7 +85,7 @@ class inputsamplePickerWrapper extends StatefulWidget {
 
 class HorizontalNumberPickerWrapperState
     extends State<inputsamplePickerWrapper> {
-  double _selectedValue;
+  double? _selectedValue;
 
   @override
   void initState() {
@@ -109,7 +109,7 @@ class HorizontalNumberPickerWrapperState
       children: <Widget>[
         //上方选中值
         Text(
-          widget.titleTransformer(cal(_selectedValue)),
+          widget.titleTransformer!(cal(_selectedValue!)),
           style: TextStyle(
               color: Colors.black,
               fontSize: 40,
@@ -136,25 +136,25 @@ class HorizontalNumberPickerWrapperState
         Container(width: 0, height: 30),
         //可滚动标尺
         HorizontalNumberPicker(
-          initialValue: widget.initialValue,
-          minValue: widget.minValue,
-          maxValue: widget.maxValue,
-          title: widget.title,
-          step: widget.step,
-          widgetWidth: widget.widgetWidth,
+          initialValue: widget.initialValue!,
+          minValue: widget.minValue!,
+          maxValue: widget.maxValue!,
+          title: widget.title!,
+          step: widget.step!,
+          widgetWidth: widget.widgetWidth!,
           widgetHeight: numberPickerHeight,
-          subGridCountPerGrid: widget.subGridCountPerGrid,
-          subGridWidth: widget.subGridWidth,
+          subGridCountPerGrid: widget.subGridCountPerGrid!,
+          subGridWidth: widget.subGridWidth!,
           onSelectedChanged: (value) {
-            widget.onSelectedChanged(value);
+            widget.onSelectedChanged!(value);
             setState(() {
               _selectedValue = value;
             });
           },
           scaleTransformer: widget.scaleTransformer,
-          scaleColor: widget.scaleColor,
-          indicatorColor: widget.indicatorColor,
-          scaleTextColor: widget.scaleTextColor,
+          scaleColor: widget.scaleColor!,
+          indicatorColor: widget.indicatorColor!,
+          scaleTextColor: widget.scaleTextColor!,
         ),
       ],
     );

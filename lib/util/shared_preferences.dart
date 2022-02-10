@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedData {
   static final SharedData instance = SharedData();
-  SharedPreferences _pref;
+  SharedPreferences? _pref;
 
   _init() async {
     try {
@@ -16,7 +16,7 @@ class SharedData {
     try {
       await _init();
 
-      if (!_pref.containsKey('user_id')) {
+      if (!_pref!.containsKey('user_id')) {
         return false;
       }
       return true;
@@ -29,10 +29,10 @@ class SharedData {
     try {
       await _init();
 
-      if (!_pref.containsKey('user_id')) {
+      if (!_pref!.containsKey('user_id')) {
         return false;
       }
-      return await _pref.getString('user_id');
+      return await _pref!.getString('user_id');
     } catch (e) {
       print(e);
     }
@@ -41,7 +41,7 @@ class SharedData {
   setUser(String value) async {
     try {
       await _init();
-      await _pref.setString('user_id', value);
+      await _pref!.setString('user_id', value);
       return true;
     } catch (e) {
       print(e);
@@ -51,7 +51,7 @@ class SharedData {
   logout() async {
     try {
       await _init();
-      return await _pref.clear();
+      return await _pref!.clear();
     } catch (e) {
       print(e);
     }

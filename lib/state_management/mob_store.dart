@@ -6,14 +6,14 @@ class ScaleNo = ScaleValue with _$ScaleNo;
 
 abstract class ScaleValue with Store {
   @observable
-  double value ;
+  double? value ;
   @observable
   String name="Upper chest Round.png";
   @observable
-  double selectScaleValue;
+  double? selectScaleValue;
 
   @action
-  double setValue(double selectedValue) {
+  double? setValue(double selectedValue) {
     selectScaleValue=selectedValue;
   }
   @action

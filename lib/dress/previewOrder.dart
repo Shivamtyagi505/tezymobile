@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:quikieappps1/dress/design/select_sleeve_design.dart';
 import 'package:quikieappps1/dress/dressreview.dart';
-import 'package:quikieappps1/screens/placeOrder.dart';
-import 'package:quikieappps1/dress/design/select_front_design.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:quikieappps1/assets/colors.dart';
 

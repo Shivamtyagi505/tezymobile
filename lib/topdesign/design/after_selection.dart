@@ -10,7 +10,7 @@ class After_Selection_image extends StatefulWidget {
 }
 
 class After_Selection_imageState extends State<After_Selection_image> {
-  int _index;
+  int? _index;
   bool isSelected = false;
   final List<String> _listViewData = [
     'Front Design',

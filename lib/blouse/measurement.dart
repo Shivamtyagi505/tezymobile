@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:quikieappps1/blouse/design/select_front_design.dart';
 import 'package:quikieappps1/blouse/image_class.dart';
 import 'package:quikieappps1/blouse/input_sample.dart';
-import 'package:quikieappps1/blouse/pro_vider/image_notif.dart';
-import 'package:quikieappps1/bodymeasure/test_scale.dart';
 import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
 
 import '../bodymeasure/horizontal_numberpicker_wrapper.dart';
 
+// ignore: must_be_immutable
 class MeasurementScreen extends StatefulWidget {
   double selectVal;
 
@@ -23,7 +20,6 @@ class MeasurementScreen extends StatefulWidget {
 }
 
 class _MeasurementScreenState extends State<MeasurementScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isSelected = false;
   bool ontap = false;
   List<int> arrange = [];
@@ -121,22 +117,17 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scaleData.setName("Upper Chest Round");
   }
 
   @override
   Widget build(BuildContext context) {
-
-    //selectedImage=imageNotif.getImage;
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return new Scaffold(
         backgroundColor: Colors.white,
         appBar: new AppBar(
           elevation: 0,
-          // backgroundColor: Color.fromRGBO(229, 229, 229, 10),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: new Text(
@@ -332,7 +323,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                         ? Color(0xff979797)
                                         : Color.fromRGBO(3, 43, 119, 1),
                                     initialValue: /*getdataval[50.00][index]*/ widget.selectVal < 18.25
-                                        ? ((getdataval[widget.selectVal][returnindex.indexOf(_listViewData[index])]) *
+                                        ? ((getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])]) *
                                                 4) -
                                             3
                                         : ((new Abc(widget.selectVal).bb[returnindex.indexOf(_listViewData[index])]) *
@@ -474,7 +465,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                         ? Color(0xff979797)
                                         : Color.fromRGBO(3, 43, 119, 1),
                                     initialValue: /*getdataval[50.00][index]*/ widget.selectVal < 18.25
-                                        ? ((getdataval[widget.selectVal][returnindex.indexOf(_listViewData[index])]) *
+                                        ? ((getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])]) *
                                                 4) -
                                             3
                                         : ((new Abc(widget.selectVal).bb[returnindex.indexOf(_listViewData[index])]) *
@@ -490,8 +481,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                     subGridWidth: 8,
                                     onSelectedChanged: (value) {
                                       var updatedValue = getUpdatedValue(value);
-                                      print('updated$updatedValue');
-                                      getdataval[widget.selectVal][returnindex.indexOf(_listViewData[index])] = updatedValue + 1;
+                                      getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])] = updatedValue + 1;
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');

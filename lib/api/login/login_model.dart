@@ -5,8 +5,8 @@ class LoginModel {
     this.user,
   });
 
-  String jwt;
-  User user;
+  String? jwt;
+  User? user;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
     jwt: json["jwt"],
@@ -26,14 +26,14 @@ class User {
     this.updatedAt,
   });
 
-  int id;
-  String username;
-  String email;
-  String provider;
-  bool confirmed;
-  bool blocked;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? username;
+  String? email;
+  String? provider;
+  bool? confirmed;
+  bool? blocked;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
     id: json["id"],

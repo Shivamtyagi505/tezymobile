@@ -1,17 +1,11 @@
 import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:quikieappps1/api/apifile/api_list.dart';
 import 'package:quikieappps1/assets/colors.dart';
-import 'package:quikieappps1/blouse/Drawing_Pad.dart';
-import 'package:quikieappps1/screens/hangings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../orders/Controller/orders_services.dart';
 import '../orders/Model/orders_model.dart';
-import '../orders/View/orders.dart';
 
 class Review extends StatefulWidget {
   @override
@@ -19,9 +13,9 @@ class Review extends StatefulWidget {
 }
 
 class reviewState extends State<Review> {
-  int _index;
-  OrdersModel review;
-  OrdersModel review2;
+  int? _index;
+  OrdersModel? review;
+  OrdersModel? review2;
 
   void modelData() async {
     review2 = await ordersModel();
@@ -38,7 +32,7 @@ class reviewState extends State<Review> {
     super.initState();
   }
 
-  Future<OrdersModel> _futureReviewModel;
+  Future<OrdersModel>? _futureReviewModel;
   FutureBuilder<OrdersModel> reviewFutureBuilder() {
     return FutureBuilder<OrdersModel>(
       future: _futureReviewModel,
@@ -718,7 +712,7 @@ class reviewState extends State<Review> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(review.data.attributes.totalBills[0].customerName,
+                  Text(review!.data!.attributes!.totalBills![0].customerName!,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -743,7 +737,7 @@ class reviewState extends State<Review> {
                             color: Color.fromRGBO(145, 144, 154, 10),
                             fontSize: 12,
                             fontWeight: FontWeight.w500)),
-                    Text(review.data.attributes.totalBills[0].invoiceNumber,
+                    Text(review!.data!.attributes!.totalBills![0].invoiceNumber!,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -770,7 +764,7 @@ class reviewState extends State<Review> {
                               color: Color.fromRGBO(151, 151, 151, 10),
                               fontSize: 12,
                               fontWeight: FontWeight.w400)),
-                      Text(review.data.attributes.totalProducts[0].productType,
+                      Text(review!.data!.attributes!.totalProducts![0].productType!,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -785,7 +779,7 @@ class reviewState extends State<Review> {
               child: CircleAvatar(
                 radius: MediaQuery.of(context).size.height / 20,
                 backgroundImage: Image.network(
-                        "http://172.105.253.131:1337${review.data.attributes.totalProducts[0].backImageBlouse.formats.thumbnail.url}")
+                        "http://172.105.253.131:1337${review!.data!.attributes!.totalProducts![0].backImageBlouse!.formats!.thumbnail?.url}")
                     .image,
               ),
             ),
@@ -982,16 +976,16 @@ class reviewState extends State<Review> {
 }
 
 class MeasurementWidget extends StatelessWidget {
-  final String text1;
-  final String text2;
-  final String text3;
-  final String text4;
+  final String? text1;
+  final String? text2;
+  final String? text3;
+  final String? text4;
   const MeasurementWidget({
     this.text1,
     this.text2,
     this.text3,
     this.text4,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -1004,9 +998,9 @@ class MeasurementWidget extends StatelessWidget {
           Container(
             width: 150,
             child: Column(children: [
-              Text(text1,
+              Text(text1!,
                   style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text2,
+              Text(text2!,
                   style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
             ]),
           ),
@@ -1026,9 +1020,9 @@ class MeasurementWidget extends StatelessWidget {
           Container(
             width: 120,
             child: Column(children: [
-              Text(text3,
+              Text(text3!,
                   style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text4,
+              Text(text4!,
                   style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
             ]),
           ),

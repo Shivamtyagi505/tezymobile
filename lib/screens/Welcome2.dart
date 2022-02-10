@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:quikieappps1/blouse/review.dart';
 import 'package:quikieappps1/home/bottomNavigation.dart';
 
 class welcomeScreen2 extends StatefulWidget {

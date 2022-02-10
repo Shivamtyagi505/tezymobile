@@ -5,7 +5,6 @@ import 'package:quikieappps1/assets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quikieappps1/bill/generatedbill.dart';
 import 'package:quikieappps1/home/popularmenu.dart';
-import 'package:quikieappps1/screens/previewOrder_blouse.dart';
 import 'package:intl/intl.dart';
 import 'package:quikieappps1/screens/previewOrders.dart';
 
@@ -45,13 +44,13 @@ class _PlaceOrderState extends State<PlaceOrder> {
       );
 
   Widget buildCircle({
-    Widget child,
-    double all,
-    Color color,
+    Widget? child,
+    double? all,
+    Color? color,
   }) =>
       ClipOval(
         child: Container(
-          padding: EdgeInsets.all(all),
+          padding: EdgeInsets.all(all!),
           color: color,
           child: child,
         ),
@@ -269,7 +268,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                       style: const TextStyle(color: Color(0xff8E8D8D)),
                       onChanged: (newValue) {
                         setState(() {
-                          dropdownValue = newValue;
+                          dropdownValue = newValue!;
                         });
                       },
                       items: <String>[

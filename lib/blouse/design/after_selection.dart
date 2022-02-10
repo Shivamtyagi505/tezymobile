@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:overscroll_pop/overscroll_pop.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../measurement.dart';
 
 class After_Selection_image extends StatefulWidget {
   @override
@@ -12,7 +10,7 @@ class After_Selection_image extends StatefulWidget {
 }
 
 class After_Selection_imageState extends State<After_Selection_image> {
-  int _index;
+  int? _index;
   bool isSelected = false;
   final List<String> _listViewData = [
     'Front Design',

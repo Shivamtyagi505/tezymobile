@@ -15,7 +15,7 @@ class Drawing_PadState extends State<Drawing_Pad> {
   bool textField = false;
   double xPosition = 0;
   double yPosition = 0;
-  String value;
+  String? value;
   List<String> list = [];
   TextEditingController edit = TextEditingController();
   List<TextEditingController> editingController = List.generate(20, (index) => TextEditingController());
@@ -171,7 +171,7 @@ class Drawing_PadState extends State<Drawing_Pad> {
                       ),
                       onPressed: () {
                         final sign = _sign.currentState;
-                        sign.clear();
+                        sign!.clear();
                         setState(() {
                           _img = ByteData(0);
                         });
@@ -238,8 +238,8 @@ class Drawing_PadState extends State<Drawing_Pad> {
 }
 
 class Coordinate {
-  String value;
-  double x;
-  double y;
+  String? value;
+  double? x;
+  double? y;
   Coordinate({this.value, this.x, this.y});
 }

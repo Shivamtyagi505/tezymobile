@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:quikieappps1/blouse/design/select_front_design.dart';
 import 'package:quikieappps1/bodymeasure/horizontal_numberpicker_wrapper.dart';
 import 'package:quikieappps1/bottomdesign/bottomimage_class.dart';
 import 'package:quikieappps1/bottomdesign/design/select_other_design.dart';
@@ -21,7 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isSelected = false;
   bool ontap = false;
 
@@ -60,7 +58,6 @@ class _HomePageState extends State<HomePage> {
   List<int> arrange=[];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scaleData.setName("Hip");
   }
@@ -270,7 +267,7 @@ class _HomePageState extends State<HomePage> {
                                       : Color.fromRGBO(3, 43, 119, 1),
                                   initialValue: /*getdataval[50.00][index]*/ widget
                                       .selectVal ==100.25
-                                      ? ((getdataval[widget.selectVal]
+                                      ? ((getdataval[widget.selectVal]!
                                   [returnindexonlybottommeasurement.indexOf(_listViewData[index])]) *
                                       4) -
                                       3
@@ -433,7 +430,7 @@ class _HomePageState extends State<HomePage> {
                                       : Color.fromRGBO(3, 43, 119, 1),
                                   initialValue: /*getdataval[50.00][index]*/ widget
                                       .selectVal ==100.25
-                                      ? ((getdataval[widget.selectVal]
+                                      ? ((getdataval[widget.selectVal]!
                                   [returnindexonlybottommeasurement.indexOf(_listViewData[index])]) *
                                       4) -
                                       3

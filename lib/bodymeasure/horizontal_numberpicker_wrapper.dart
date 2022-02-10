@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
 import 'package:quikieappps1/blouse/pro_vider/image_notif.dart';
 import 'package:quikieappps1/bodymeasure/HorizontalNumberPicker.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
@@ -8,47 +6,47 @@ import 'package:quikieappps1/state_management/mob_store.dart';
 ///对HorizontalNumberPicker进行简单包装，添加顶部的选中值显示和两边的半透明遮罩
 // ignore: must_be_immutable
 class HorizontalNumberPickerWrapper extends StatefulWidget {
-  final double initialValue;
-  final double minValue;
-  final double maxValue;
-  final double step;
-  final String unit;
-  final String name;
-  final String title;
+  final double? initialValue;
+  final double? minValue;
+  final double? maxValue;
+  final double? step;
+  final String? unit;
+  final String? name;
+  final String? title;
 
   ///控件的宽度
-  final int widgetWidth;
+  final int? widgetWidth;
 
   ///一大格中有多少个小格
-  final int subGridCountPerGrid;
+  final int? subGridCountPerGrid;
 
   ///每一小格的宽度
-  final int subGridWidth;
+  final int? subGridWidth;
 
-  final void Function(double) onSelectedChanged;
+  final void Function(double)? onSelectedChanged;
 
   ///返回上方大标题所展示的数值字符串
-  String Function(double) titleTransformer;
+  String Function(double)? titleTransformer;
 
   ///返回标尺刻度所展示的数值字符串
-  final String Function(double) scaleTransformer;
+  final String Function(double)? scaleTransformer;
 
   ///标题文字颜色
-  final Color titleTextColor;
+  final Color? titleTextColor;
 
   ///刻度颜色
-  final Color scaleColor;
+  final Color? scaleColor;
 
   ///指示器颜色
-  final Color indicatorColor;
+  final Color? indicatorColor;
 
   ///刻度文字颜色
-  final Color scaleTextColor;
+  final Color? scaleTextColor;
   
-  final ImageNotif imageNotif;
+  final ImageNotif? imageNotif;
 
   HorizontalNumberPickerWrapper({
-    Key key,
+     Key? key,
     this.imageNotif,
     this.initialValue = 500,
     this.minValue = 100,
@@ -60,7 +58,7 @@ class HorizontalNumberPickerWrapper extends StatefulWidget {
     this.widgetWidth = 200,
     this.subGridCountPerGrid = 10,
     this.subGridWidth = 8,
-    @required this.onSelectedChanged,
+    required this.onSelectedChanged,
     this.titleTransformer,
     this.scaleTransformer,
     this.titleTextColor = Colors.white,
@@ -89,14 +87,14 @@ class HorizontalNumberPickerWrapper extends StatefulWidget {
 
 class HorizontalNumberPickerWrapperState
     extends State<HorizontalNumberPickerWrapper> {
-  double _selectedValue;
-  ScaleNo scaleData = ScaleNo();
+  double? _selectedValue;
+  ScaleNo? scaleData = ScaleNo();
 
   @override
   void initState() {
     super.initState();
     _selectedValue = widget.initialValue;
-    scaleData.PostValue(widget.initialValue);
+    scaleData!.PostValue(widget.initialValue!);
   }
 
   ///处理state的复用
@@ -133,7 +131,7 @@ class HorizontalNumberPickerWrapperState
                     ),
               ),
               Text(
-                widget.titleTransformer(getScalePrintVal(_selectedValue)),
+                widget.titleTransformer!(getScalePrintVal(_selectedValue)),
                 style: TextStyle(
                     color: widget.titleTextColor,
                     fontSize: 20,
@@ -156,17 +154,17 @@ class HorizontalNumberPickerWrapperState
                 color: Colors.white,
               ),
               child: HorizontalNumberPicker(
-                initialValue: widget.initialValue,
-                minValue: widget.minValue,
-                maxValue: widget.maxValue,
-                title: widget.title,
-                step: widget.step,
-                widgetWidth: widget.widgetWidth,
+                initialValue: widget.initialValue!,
+                minValue: widget.minValue!,
+                maxValue: widget.maxValue!,
+                title: widget.title!,
+                step: widget.step!,
+                widgetWidth: widget.widgetWidth!,
                 widgetHeight: numberPickerHeight,
-                subGridCountPerGrid: widget.subGridCountPerGrid,
-                subGridWidth: widget.subGridWidth,
+                subGridCountPerGrid: widget.subGridCountPerGrid!,
+                subGridWidth: widget.subGridWidth!,
                 onSelectedChanged: (value) {
-                  widget.onSelectedChanged(value);
+                  widget.onSelectedChanged!(value);
                   setState(() {
                     _selectedValue = value;
                   });
@@ -210,9 +208,9 @@ class HorizontalNumberPickerWrapperState
 */
                 },
                 scaleTransformer: widget.scaleTransformer,
-                scaleColor: widget.scaleColor,
-                indicatorColor: widget.indicatorColor,
-                scaleTextColor: widget.scaleTextColor,
+                scaleColor: widget.scaleColor!,
+                indicatorColor: widget.indicatorColor!,
+                scaleTextColor: widget.scaleTextColor!,
               ),
             ),
 
@@ -259,7 +257,7 @@ class HorizontalNumberPickerWrapperState
   }
 
   String yoyo() {
-    widget.titleTransformer(50);
+    widget.titleTransformer!(50);
     return "";
   }
 }

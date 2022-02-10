@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quikieappps1/assets/colors.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
-import 'package:quikieappps1/screens/previewOrder_blouse.dart';
-
-import 'package:quikieappps1/blouse/input_sample.dart';
 
 class Design extends StatefulWidget {
   @override

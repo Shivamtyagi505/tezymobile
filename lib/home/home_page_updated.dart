@@ -3,7 +3,6 @@ import 'package:quikieappps1/home/popularmenu.dart';
 import 'package:quikieappps1/home/todaycustomers.dart';
 import 'package:quikieappps1/profile/profile_design.dart';
 
-import 'bottomNavigation.dart';
 import 'bottom_bar.dart';
 
 class HomePageUpdatedagain extends StatefulWidget {

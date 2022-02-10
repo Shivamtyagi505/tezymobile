@@ -1,6 +1,5 @@
 import '../bodymeasure/horizontal_numberpicker_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:quikieappps1/dress/design/select_front_design.dart';
 import 'package:quikieappps1/dress/input_sample_dress.dart';
 class HomePage extends StatefulWidget {
@@ -9,7 +8,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -212,10 +210,10 @@ class _HomePageState extends State<HomePage> {
 }
 
 class CustomHorizontalPicker extends StatelessWidget {
-  final String name;
+  final String? name;
   const CustomHorizontalPicker({
      this.name,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

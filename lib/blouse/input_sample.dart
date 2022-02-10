@@ -14,14 +14,11 @@ class input_sampleState extends State<input_sample> {
   ScaleNo scaleData=ScaleNo();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scaleData.setValue(48.00);
   }
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Color(0xFFE5F3FD),
         appBar: new AppBar(
@@ -130,7 +127,7 @@ class input_sampleState extends State<input_sample> {
                     heroTag: null,
                 onPressed: () {
                   double keyValue;
-                   keyValue=(8+(scaleData.selectScaleValue-8)*0.25);
+                   keyValue=(8+(scaleData.selectScaleValue!-8)*0.25);
                  /* Navigator.pushAndRemoveUntil(
                       context,
                       PageTransition(

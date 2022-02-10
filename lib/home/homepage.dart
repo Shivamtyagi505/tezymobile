@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quikieappps1/home/popularmenu.dart';
 import 'package:quikieappps1/home/todaycustomers.dart';
 import 'package:quikieappps1/profile/profile_design.dart';
@@ -12,15 +11,11 @@ class HomePageScreen extends StatefulWidget {
 class _HomePageScreenState extends State<HomePageScreen> {
   int _currentPage = 0, _index = 0;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
-    return ScreenUtilInit(
-      designSize: Size(375, 820),
-      builder: () => Scaffold(
+    return Scaffold(
         appBar: new AppBar(
           automaticallyImplyLeading: false,
           elevation: 0.0,
@@ -254,7 +249,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
             FloatingNavbarItem(icon: Icons.people_rounded, title: 'Customers'),
           ],
         ),*/
-      ),
-    );
+      );
   }
 }

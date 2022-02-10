@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<AddCustomerModel> addCustomerApi(AddCustomerData data) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString('jwt');
+  String? jwt = prefs.getString('jwt');
   final response = await http.post(
     Uri.parse(addCustomer),
     headers: <String, String>{
@@ -17,8 +17,8 @@ Future<AddCustomerModel> addCustomerApi(AddCustomerData data) async {
      'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      "name": data.name,
-      "mobile": data.mobile,
+      "name": data.name!,
+      "mobile": data.mobile!,
 
     }),
   );

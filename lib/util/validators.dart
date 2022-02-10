@@ -1,6 +1,6 @@
 ///Email validator
 String validateEmail(String value) {
-  Pattern pattern =
+  String pattern =
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
       r"{0,253}[a-zA-Z0-9.])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
       r"{0,253}[a-zA-Z0-9.])?)*$";
@@ -8,7 +8,7 @@ String validateEmail(String value) {
   if (!regex.hasMatch(value) || value == null)
     return 'Enter a valid email address.';
   else
-    return null;
+    return '';
 }
 
 ///Password validator
@@ -16,7 +16,7 @@ String validatePassword(String value) {
   if (value.isEmpty) {
     return "Please Enter Password.";
   } else {
-    return null;
+    return '';
   }
 }
 
@@ -29,7 +29,7 @@ String validateMobile(String value) {
   } else if (!regExp.hasMatch(value)) {
     return 'Please enter valid mobile number.';
   }
-  return null;
+  return '';
 }
 
 ///Phone number validator
@@ -37,12 +37,12 @@ String validateNames(String value) {
   if (value.length <= 0) {
     return 'Customer Name must contains only letters and numbers';
   }
-  return null;
+  return value;
 }
 
 String validateWeight(String value) {
   if (value.length == 0) {
     return 'This field is required.';
   }
-  return null;
+  return value;
 }

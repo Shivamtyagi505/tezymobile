@@ -1,15 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_model.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_services.dart';
 import 'package:quikieappps1/api/datafromfrontend/add_customer_class.dart';
 import 'package:quikieappps1/blouse/input_sample.dart';
-import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
-import 'package:quikieappps1/customer/selectcustomer.dart';
-import 'package:quikieappps1/customer/updateboutiquedetails.dart';
 import 'package:quikieappps1/util/validators.dart';
 
 class AddCustomer extends StatefulWidget {
@@ -112,7 +106,7 @@ class _AddCustomerState extends State<AddCustomer> {
                               child: Container(
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
                                 child: TextFormField(
-                                  validator: (value) => validateNames(value),
+                                  // validator: (value) => validateNames(value!),
                                   controller: nameController,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -139,7 +133,7 @@ class _AddCustomerState extends State<AddCustomer> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(24, 0, 24, 50),
                               child: TextFormField(
-                                validator: (value) => validateMobile(value),
+                                // validator: (value) => validateMobile(value!),
                                 maxLength: 10,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -156,8 +150,8 @@ class _AddCustomerState extends State<AddCustomer> {
                         (_futureAddCustomerModel == null)
                             ? MaterialButton(
                                 onPressed: () {
-                                  if (_formKey.currentState.validate()) {
-                                    _formKey.currentState.save();
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
                                     fetchAddCustomerApi();
                                   }
                                   // value.fetchAddCustomer();
@@ -187,7 +181,7 @@ class _AddCustomerState extends State<AddCustomer> {
       );
   }
 
-  Future<AddCustomerModel> _futureAddCustomerModel;
+  Future<AddCustomerModel>? _futureAddCustomerModel;
   void fetchAddCustomerApi() {
     String name = nameController.text;
     String mobile = mobileController.text;
@@ -204,7 +198,7 @@ class _AddCustomerState extends State<AddCustomer> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           print(snapshot.data);
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+          WidgetsBinding.instance!.addPostFrameCallback((_) {
             Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
           });
         } else if (snapshot.hasError) {

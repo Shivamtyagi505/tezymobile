@@ -127,7 +127,7 @@ class input_sampleState extends State<input_sample> {
               FloatingActionButton(
                 onPressed: () {
                   double keyValue;
-                   keyValue=(8+(scaleData.selectScaleValue-8)*0.25);
+                   keyValue=(8+(scaleData.selectScaleValue!-8)*0.25);
 print("keyVAlue : $keyValue");
                  /* Navigator.pushAndRemoveUntil(
                       context,
