@@ -13,8 +13,8 @@ Future<LoginModel> getLogin(LoginData data) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      "identifier": data.identifier,
-      "password": data.password,
+      "identifier": data.identifier!,
+      "password": data.password!,
 
     }),
   );

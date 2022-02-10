@@ -6,12 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
 import 'package:quikieappps1/blouse/design/after_selection.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
 import 'package:quikieappps1/blouse/design/select_back_design.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse.dart';
-import 'package:quikieappps1/blouse/review.dart';
-
-
 
 class select_sleeve_design extends StatefulWidget {
   @override
@@ -19,9 +15,9 @@ class select_sleeve_design extends StatefulWidget {
 }
 
 class select_sleeve_designState extends State<select_sleeve_design> {
-  int _index;
-  File _image;
-  File _backImage;
+  int? _index;
+  File? _image;
+  File? _backImage;
   var loading = false;
   bool isSelected =false;
   final picker = ImagePicker();
@@ -30,7 +26,7 @@ class select_sleeve_designState extends State<select_sleeve_design> {
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(pickedFile!.path);
     });
   }
 
@@ -38,7 +34,7 @@ class select_sleeve_designState extends State<select_sleeve_design> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(pickedFile!.path);
     });
   }
 

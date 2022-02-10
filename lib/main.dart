@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/api/datafromfrontend/login_data_class.dart';
 import 'package:quikieappps1/api/login/login_model.dart';
-import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
 import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:quikieappps1/provider/measurement_provider.dart';
 import 'package:quikieappps1/screens/welcome1.dart';
@@ -33,9 +31,7 @@ void main() {
 class PreLoginScree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: Size(360, 600),
-      builder: () => MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "PreLoginScreeDesign",
         theme: ThemeData(
@@ -53,7 +49,6 @@ class PreLoginScree extends StatelessWidget {
         ),
         home: SplashScreen(),
         // home:  selectotherdesign(),
-      ),
     );
   }
 }
@@ -90,17 +85,17 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
               children: [
                 Container(
                   //  height: height*0.5,
-                  margin: EdgeInsets.only(top: 30.h),
+                  margin: EdgeInsets.only(top: 30),
                   alignment: Alignment.center,
                   child: Image.asset(
                     'assets/images/Logo2.png',
                     fit: BoxFit.fitHeight,
-                    height: 200.h,
+                    height: 200,
                   ),
                 ),
                 Container(
                     // height:height*0.5 ,
-                    margin: EdgeInsets.only(top: 240.h),
+                    margin: EdgeInsets.only(top: 240),
                     width: width,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -113,7 +108,7 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.symmetric(vertical: 10),
                           width: width,
-                          height: 69.h,
+                          height: 69,
                           child: Text(
                             "Tezy",
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 55, color: Color(0xFF02D3FF)),
@@ -133,7 +128,7 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          validator: (value) => validateEmail(value),
+                          // validator: (value) => validateEmail(value!),
                           controller: emailIdController,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -153,7 +148,7 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          validator: (value) => validatePassword(value),
+                          // validator: (value) => validatePassword(value!),
                           focusNode: passwordFocusNode,
                           controller: passwordController,
                           obscureText: true,
@@ -166,8 +161,8 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
                       ),
                       InkWell(
                           onTap: () {
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
                               login();
                             }
                           },
@@ -288,7 +283,7 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
     );
   }
 
-  Future<LoginModel> _futureLoginModel;
+   Future<LoginModel>? _futureLoginModel;
   void login() {
     String identifier = emailIdController.text;
     String password = passwordController.text;
@@ -308,14 +303,14 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
       future: _futureLoginModel,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            SharedData().setUser(snapshot.data.user.id.toString());
-            setJwt(snapshot.data.jwt, snapshot.data.user.username);
+          WidgetsBinding.instance!.addPostFrameCallback((_) {
+            SharedData().setUser(snapshot.data!.user!.id.toString());
+            setJwt(snapshot.data!.jwt, snapshot.data!.user!.username);
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => BottomNavigation(
-                          name: snapshot.data.user.username,
+                          name: snapshot.data!.user!.username!,
                         )));
           });
         } else if (snapshot.hasError) {

@@ -1,13 +1,11 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/assets/colors.dart';
-import 'package:quikieappps1/blouse/Drawing_Pad.dart';
-import 'package:quikieappps1/screens/hangings.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'blousereview.dart';
 //salwar top
 class Topreview extends StatefulWidget {
   @override
@@ -15,7 +13,7 @@ class Topreview extends StatefulWidget {
 }
 
 class TopreviewState extends State<Topreview> {
-  int _index;
+  int? _index;
 
   Widget appBar() {
     return Column(
@@ -796,60 +794,6 @@ class TopreviewState extends State<Topreview> {
       //     //FloatingNavbarItem(icon: Icons.help_outline_rounded, title: 'Help Desk'),
       //   ],
       // ),
-    );
-  }
-}
-
-class MeasurementWidget extends StatelessWidget {
-  final String text1;
-  final String text2;
-  final String text3;
-  final String text4;
-  const MeasurementWidget({
-     this.text1,
-     this.text2,
-    this.text3,
-     this.text4,
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            width: 150,
-            child: Column(
-              children: [
-              Text(text1, style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text2, style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
-            ]),
-          ),
-          Center(
-            child: DottedLine(
-              direction: Axis.vertical,
-              lineLength: 52.5,
-              lineThickness: 1.0,
-              dashLength: 4.0,
-              dashColor: Color.fromRGBO(196, 196, 196, 10),
-              dashRadius: 0.0,
-              dashGapLength: 4.0,
-              dashGapColor: Colors.transparent,
-              dashGapRadius: 0.0,
-            ),
-          ),
-          Container(
-            width: 120,
-            child: Column(children: [
-              Text(text3, style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text4, style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
-            ]),
-          ),
-        ],
-      ),
     );
   }
 }

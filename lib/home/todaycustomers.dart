@@ -1,12 +1,11 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quikieappps1/customer/addcustomer.dart';
 
 // ignore: must_be_immutable
 class Todaycustomers extends StatelessWidget {
-  double width, height = 57.0;
+  double? width, height = 57.0;
   double customFontSize = 12;
   String defaultFontFamily = 'Roboto-Light.ttf';
 

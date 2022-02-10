@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/dress/dress_measurement.dart';
@@ -63,7 +62,7 @@ class After_Selection_imageState extends State<After_Selection_image> {
     );
   }
 
-  int _index;
+  int? _index;
 
 
   @override

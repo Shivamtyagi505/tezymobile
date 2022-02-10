@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quikieappps1/api/datafromfrontend/registration_data_class.dart';
 import 'package:quikieappps1/api/registration/registration_model.dart';
 import 'package:quikieappps1/api/registration/registration_services.dart';
-import 'package:quikieappps1/home/bottomNavigation.dart';
 import 'package:quikieappps1/main.dart';
 
 class welcomeScreen1 extends StatefulWidget {
@@ -23,7 +22,6 @@ class welcomeScreen1State extends State<welcomeScreen1> {
   FocusNode nameFocusNode = new FocusNode();
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
@@ -258,7 +256,7 @@ class welcomeScreen1State extends State<welcomeScreen1> {
 
         ));
   }
-  Future<RegistrationModel> _futureRegistrationModel;
+  Future<RegistrationModel>? _futureRegistrationModel;
   void collectAllRegistrationInfo(){
     String email=emailIdController.text;
     String password=passwordController.text;
@@ -275,7 +273,7 @@ class welcomeScreen1State extends State<welcomeScreen1> {
       future: _futureRegistrationModel,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          WidgetsBinding.instance.addPostFrameCallback((_){
+          WidgetsBinding.instance!.addPostFrameCallback((_){
 
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => PreLoginScree()));

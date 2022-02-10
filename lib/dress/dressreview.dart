@@ -1,5 +1,4 @@
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
@@ -9,7 +8,7 @@ class dressreview extends StatefulWidget {
 }
 
 class dressreviewState extends State<dressreview> {
-   int _index;
+   int? _index;
 
   Widget appBar() {
     return Column(
@@ -601,16 +600,16 @@ class dressreviewState extends State<dressreview> {
 }
 
 class MeasurementWidget extends StatelessWidget {
-  final String text1;
-  final String text2;
-  final String text3;
-  final String text4;
+  final String? text1;
+  final String? text2;
+  final String? text3;
+  final String? text4;
   const MeasurementWidget({
     this.text1,
      this.text2,
      this.text3,
      this.text4,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -622,7 +621,7 @@ class MeasurementWidget extends StatelessWidget {
         children: [
           Container(
             width: 150,
-            child: Column(children: [Text(text1,style: TextStyle(color: Color.fromRGBO(3,43,119,10)),), Text(text2,style: TextStyle(color:Color.fromRGBO(210,85,90,10),))]),
+            child: Column(children: [Text(text1!,style: TextStyle(color: Color.fromRGBO(3,43,119,10)),), Text(text2!,style: TextStyle(color:Color.fromRGBO(210,85,90,10),))]),
           ),
           Center(
             child: DottedLine(
@@ -639,7 +638,7 @@ class MeasurementWidget extends StatelessWidget {
           ),
           Container(
             width: 150,
-            child: Column(children: [Text(text3,style: TextStyle(color: Color.fromRGBO(3,43,119,10))), Text(text4,style: TextStyle(color: Color.fromRGBO(3,43,119,10)))]),
+            child: Column(children: [Text(text3!,style: TextStyle(color: Color.fromRGBO(3,43,119,10))), Text(text4!,style: TextStyle(color: Color.fromRGBO(3,43,119,10)))]),
           ),
         ],
       ),

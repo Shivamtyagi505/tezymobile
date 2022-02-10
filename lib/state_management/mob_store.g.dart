@@ -12,13 +12,13 @@ mixin _$ScaleNo on ScaleValue, Store {
   final _$valueAtom = Atom(name: 'ScaleValue.value');
 
   @override
-  double get value {
+  double? get value {
     _$valueAtom.reportRead();
     return super.value;
   }
 
   @override
-  set value(double value) {
+  set value(double? value) {
     _$valueAtom.reportWrite(value, super.value, () {
       super.value = value;
     });
@@ -42,13 +42,13 @@ mixin _$ScaleNo on ScaleValue, Store {
   final _$selectScaleValueAtom = Atom(name: 'ScaleValue.selectScaleValue');
 
   @override
-  double get selectScaleValue {
+  double? get selectScaleValue {
     _$selectScaleValueAtom.reportRead();
     return super.selectScaleValue;
   }
 
   @override
-  set selectScaleValue(double value) {
+  set selectScaleValue(double? value) {
     _$selectScaleValueAtom.reportWrite(value, super.selectScaleValue, () {
       super.selectScaleValue = value;
     });
@@ -57,7 +57,7 @@ mixin _$ScaleNo on ScaleValue, Store {
   final _$ScaleValueActionController = ActionController(name: 'ScaleValue');
 
   @override
-  double setValue(double selectedValue) {
+  double? setValue(double selectedValue) {
     final _$actionInfo =
         _$ScaleValueActionController.startAction(name: 'ScaleValue.setValue');
     try {

@@ -1,12 +1,9 @@
 import 'dart:io';
 
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:quikieappps1/blouse/review.dart';
 import 'package:quikieappps1/blouse/review/blousereview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -554,10 +551,10 @@ class GeneratedBillState extends State<GeneratedBill> {
 }
 
 class BillWidget extends StatelessWidget {
-  final String asset;
+  final String? asset;
   const BillWidget({
     this.asset,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -573,7 +570,7 @@ class BillWidget extends StatelessWidget {
                   height: 55,
                   width: 65,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                  child: Image.asset(asset)),
+                  child: Image.asset(asset!)),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Padding(
                   padding: EdgeInsets.only(top: 5),
@@ -627,45 +624,45 @@ class BillWidget extends StatelessWidget {
   }
 }
 
-class WeirdBorder extends ShapeBorder {
-  final double radius;
-  final double pathWidth;
+// class WeirdBorder extends ShapeBorder {
+//   final double radius;
+//   final double pathWidth;
 
-  WeirdBorder({this.radius, this.pathWidth = 1});
+//   WeirdBorder({this.radius, this.pathWidth = 1});
 
-  @override
-  EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
+//   @override
+//   EdgeInsetsGeometry get dimensions => EdgeInsets.zero;
 
-  Path getInnerPath(Rect rect, {TextDirection textDirection, offset}) {
-    return Path()
-      ..fillType = PathFillType.evenOdd
-      ..addPath(getOuterPath(rect, textDirection: textDirection), Offset.zero);
-  }
+//   Path getInnerPath(Rect rect, {TextDirection textDirection, offset}) {
+//     return Path()
+//       ..fillType = PathFillType.evenOdd
+//       ..addPath(getOuterPath(rect, textDirection: textDirection), Offset.zero);
+//   }
 
-  @override
-  Path getOuterPath(Rect rect, {TextDirection textDirection}) => _createPath(rect);
+//   @override
+//   Path getOuterPath(Rect rect, {TextDirection textDirection}) => _createPath(rect);
 
-  @override
-  void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {}
+//   @override
+//   void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {}
 
-  @override
-  ShapeBorder scale(double t) => WeirdBorder(radius: radius);
+//   @override
+//   ShapeBorder scale(double t) => WeirdBorder(radius: radius);
 
-  Path _createPath(Rect rect) {
-    final innerRadius = radius + pathWidth;
-    final innerRect =
-        Rect.fromLTRB(rect.left + pathWidth, rect.top + pathWidth, rect.right - pathWidth, rect.bottom - pathWidth);
+//   Path _createPath(Rect rect) {
+//     final innerRadius = radius + pathWidth;
+//     final innerRect =
+//         Rect.fromLTRB(rect.left + pathWidth, rect.top + pathWidth, rect.right - pathWidth, rect.bottom - pathWidth);
 
-    final outer = Path.combine(PathOperation.difference, Path()..addRect(rect), _createBevels(rect, radius));
-    final inner = Path.combine(PathOperation.difference, Path()..addRect(innerRect), _createBevels(rect, innerRadius));
-    return Path.combine(PathOperation.difference, outer, inner);
-  }
+//     final outer = Path.combine(PathOperation.difference, Path()..addRect(rect), _createBevels(rect, radius));
+//     final inner = Path.combine(PathOperation.difference, Path()..addRect(innerRect), _createBevels(rect, innerRadius));
+//     return Path.combine(PathOperation.difference, outer, inner);
+//   }
 
-  Path _createBevels(Rect rect, double radius) {
-    return Path()
-      ..addOval(Rect.fromCircle(center: Offset(rect.left, rect.top), radius: radius))
-      ..addOval(Rect.fromCircle(center: Offset(rect.left + rect.width, rect.top), radius: radius))
-      ..addOval(Rect.fromCircle(center: Offset(rect.left, rect.top + rect.height), radius: radius))
-      ..addOval(Rect.fromCircle(center: Offset(rect.left + rect.width, rect.top + rect.height), radius: radius));
-  }
-}
+//   Path _createBevels(Rect rect, double radius) {
+//     return Path()
+//       ..addOval(Rect.fromCircle(center: Offset(rect.left, rect.top), radius: radius))
+//       ..addOval(Rect.fromCircle(center: Offset(rect.left + rect.width, rect.top), radius: radius))
+//       ..addOval(Rect.fromCircle(center: Offset(rect.left, rect.top + rect.height), radius: radius))
+//       ..addOval(Rect.fromCircle(center: Offset(rect.left + rect.width, rect.top + rect.height), radius: radius));
+//   }
+// }

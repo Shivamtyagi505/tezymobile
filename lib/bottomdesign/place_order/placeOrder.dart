@@ -48,13 +48,13 @@ class _PlaceOrderState extends State<PlaceOrder> {
       );
 
   Widget buildCircle({
-    Widget child,
-    double all,
-    Color color,
+    Widget? child,
+    double? all,
+    Color? color,
   }) =>
       ClipOval(
         child: Container(
-          padding: EdgeInsets.all(all),
+          padding: EdgeInsets.all(all!),
           color: color,
           child: child,
         ),
@@ -175,7 +175,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
           ],
         ));
   }
-Future<InvoiceNumberSuggestion> _invoiceNumber;
+Future<InvoiceNumberSuggestion>? _invoiceNumber;
 
 @override
   void initState() {
@@ -280,7 +280,7 @@ Future<InvoiceNumberSuggestion> _invoiceNumber;
                       style: const TextStyle(color: Color(0xff8E8D8D)),
                       onChanged: (newValue) {
                         setState(() {
-                          dropdownValue = newValue;
+                          dropdownValue = newValue!;
                         });
                       },
                       items: <String>[

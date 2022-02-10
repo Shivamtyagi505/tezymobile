@@ -12,8 +12,6 @@ class input_sample_dress extends StatefulWidget {
 class input_sample_dressState extends State<input_sample_dress> {
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Color(0xFFE5F3FD),
         appBar: new AppBar(

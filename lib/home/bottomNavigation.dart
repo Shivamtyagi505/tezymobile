@@ -5,7 +5,7 @@ import 'package:quikieappps1/orders/customer_order.dart';
 import 'package:quikieappps1/orders/orders.dart';
 
 class BottomNavigation extends StatefulWidget {
-  final String name;
+  final String? name;
   BottomNavigation({this.name});
 
   @override

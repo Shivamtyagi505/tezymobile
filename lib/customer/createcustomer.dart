@@ -1,14 +1,8 @@
 
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-
-
-
-
 
 
 class createcustomer extends StatefulWidget {
@@ -40,7 +34,7 @@ class createcustomerState extends State<createcustomer> {
                           filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                           child: CircleAvatar(
                             radius: size.width * 0.14,
-                            backgroundColor: Colors.grey[400].withOpacity(
+                            backgroundColor: Colors.grey[400]!.withOpacity(
                               0.4,
                             ),
                             child: Icon(
@@ -140,17 +134,17 @@ class createcustomerState extends State<createcustomer> {
 
 class TextInputField extends StatelessWidget{
   const TextInputField({
-    Key key,
+    Key? key,
      this.icon,
      this.hint,
      this.inputType,
      this.inputAction,
   }) : super(key: key);
 
-  final IconData icon;
-  final String hint;
-  final TextInputType inputType;
-  final TextInputAction inputAction;
+  final IconData? icon;
+  final String? hint;
+  final TextInputType? inputType;
+  final TextInputAction? inputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +155,7 @@ class TextInputField extends StatelessWidget{
         height: size.height * 0.08,
         width: size.width * 0.8,
         decoration: BoxDecoration(
-          color: Colors.grey[500].withOpacity(0.5),
+          color: Colors.grey[500]!.withOpacity(0.5),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
@@ -191,17 +185,17 @@ class TextInputField extends StatelessWidget{
 
 class PasswordInput extends StatelessWidget {
   const PasswordInput({
-    Key key,
+    Key? key,
      this.icon,
      this.hint,
      this.inputType,
      this.inputAction,
   }) : super(key: key);
 
-  final IconData icon;
-  final String hint;
-  final TextInputType inputType;
-  final TextInputAction inputAction;
+  final IconData? icon;
+  final String? hint;
+  final TextInputType? inputType;
+  final TextInputAction? inputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +206,7 @@ class PasswordInput extends StatelessWidget {
         height: size.height * 0.08,
         width: size.width * 0.8,
         decoration: BoxDecoration(
-          color: Colors.grey[500].withOpacity(0.5),
+          color: Colors.grey[500]!.withOpacity(0.5),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(

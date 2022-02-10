@@ -4,7 +4,7 @@ import 'package:quikieappps1/orders/Model/orders_model.dart';
 import '../../api/apifile/api_list.dart';
 import '../Model/orders_model.dart';
 
-String stringResponse;
+String? stringResponse;
 
 Future <OrdersModel> ordersModel() async {
   http.Response response;
@@ -17,7 +17,7 @@ Future <OrdersModel> ordersModel() async {
   if (response.statusCode == 200) {
     stringResponse = response.body;
     //print(OrdersModel.fromJson(jsonDecode(stringResponse)).data.attributes.totalBills[0].customerName);
-    return OrdersModel.fromJson(jsonDecode(stringResponse));
+    return OrdersModel.fromJson(jsonDecode(stringResponse!));
   } else {
     print("error ${response.statusCode}");
     throw Exception('Failed to fetch data');

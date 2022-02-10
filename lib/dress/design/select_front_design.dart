@@ -1,13 +1,8 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
 import 'package:quikieappps1/dress/dress_measurement.dart';
 import 'package:quikieappps1/dress/design/select_back_design.dart';
-import 'package:quikieappps1/screens/previewOrder_blouse.dart';
 import 'package:flutter/material.dart';
-
-import 'package:quikieappps1/blouse/input_sample.dart';
-import 'package:quikieappps1/widgets/custom_bottom_navbar.dart';
 
 class select_front_design extends StatefulWidget {
   @override
@@ -15,7 +10,7 @@ class select_front_design extends StatefulWidget {
 }
 
 class select_front_designState extends State<select_front_design> {
-  int _index;
+  int? _index;
 
   Widget categories(String text) {
     return Container(

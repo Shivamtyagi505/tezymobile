@@ -1,12 +1,8 @@
 import 'dart:io';
 
-import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/assets/colors.dart';
-import 'package:quikieappps1/blouse/Drawing_Pad.dart';
-import 'package:quikieappps1/screens/hangings.dart';
 import 'package:url_launcher/url_launcher.dart';
 //salwar bottom second
 class BottomReview extends StatefulWidget {
@@ -15,7 +11,7 @@ class BottomReview extends StatefulWidget {
 }
 
 class BottomReviewState extends State<BottomReview> {
-  int _index;
+  int? _index;
 
   Widget appBar() {
     return Column(
@@ -508,16 +504,16 @@ class BottomReviewState extends State<BottomReview> {
 }
 
 class MeasurementWidget extends StatelessWidget {
-  final String text1;
-  final String text2;
-  final String text3;
-  final String text4;
+  final String? text1;
+  final String? text2;
+  final String? text3;
+  final String? text4;
   const MeasurementWidget({
      this.text1,
      this.text2,
     this.text3,
      this.text4,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -531,8 +527,8 @@ class MeasurementWidget extends StatelessWidget {
             width: 150,
             child: Column(
               children: [
-              Text(text1, style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text2, style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
+              Text(text1!, style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
+              Text(text2!, style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
             ]),
           ),
           Center(
@@ -551,8 +547,8 @@ class MeasurementWidget extends StatelessWidget {
           Container(
             width: 120,
             child: Column(children: [
-              Text(text3, style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
-              Text(text4, style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
+              Text(text3!, style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10))),
+              Text(text4!, style: TextStyle(color: Color.fromRGBO(210, 85, 90, 10)))
             ]),
           ),
         ],

@@ -16,9 +16,9 @@ class selectotherdesign extends StatefulWidget {
 }
 
 class selectotherdesignState extends State<selectotherdesign> {
- int _index;
-  File _image;
-  File _backImage;
+ int? _index;
+  File? _image;
+  File? _backImage;
   var loading = false;
   bool isSelected = false;
   final picker = ImagePicker();
@@ -27,7 +27,7 @@ class selectotherdesignState extends State<selectotherdesign> {
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(pickedFile!.path);
     });
   }
 
@@ -35,7 +35,7 @@ class selectotherdesignState extends State<selectotherdesign> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(pickedFile!.path);
     });
   }
 

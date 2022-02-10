@@ -25,14 +25,14 @@ class NewsBloc {
       if (event == ConstantValue.Shoulder) {
         try {
           _streamSink.add("assets/images/blousemeasurement/Shoulder.png");
-        } on Exception catch (excep) {
+        } on Exception {
           _streamSink.addError("went worng");
         }
       }
       if (event == ConstantValue.fetch) {
         try {
           _streamSink.add("assets/images/3d woman 1.png");
-        } on Exception catch (excep) {
+        } on Exception {
           _streamSink.addError("went worng fetch");
         }
       }

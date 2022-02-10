@@ -4,50 +4,50 @@ import 'dart:ui' as ui;
 
 // ignore: must_be_immutable
 class HorizontalNumberPicker extends StatefulWidget {
-  final double initialValue;
-  final String title;
-  final double minValue;
-  final double maxValue;
-  final double step;
+  final double? initialValue;
+  final String? title;
+  final double? minValue;
+  final double? maxValue;
+  final double? step;
 
   ///控件的宽度
-  final int widgetWidth;
+  final int? widgetWidth;
 
   ///控件的高度
-  final int widgetHeight;
+  final int? widgetHeight;
 
   ///大格的总数
-  int gridCount;
+  int? gridCount;
 
   ///一大格中有多少个小格
-  final int subGridCountPerGrid;
+  final int? subGridCountPerGrid;
 
   ///大格的宽度
-  int gridWidth;
+  int? gridWidth;
 
   ///每一小格的宽度
-  final int subGridWidth;
+  final int? subGridWidth;
 
-  int listViewItemCount;
+  int? listViewItemCount;
 
-  double paddingItemWidth;
+  double? paddingItemWidth;
 
-  final void Function(double) onSelectedChanged;
+  final void Function(double)? onSelectedChanged;
 
   ///返回标尺刻度所展示的数值字符串
-  String Function(double) scaleTransformer;
+  String Function(double)? scaleTransformer;
 
   ///刻度颜色
-  final Color scaleColor;
+  final Color? scaleColor;
 
   ///指示器颜色
-  final Color indicatorColor;
+  final Color? indicatorColor;
 
   ///刻度文字颜色
-  final Color scaleTextColor;
+  final Color? scaleTextColor;
 
   HorizontalNumberPicker({
-    Key key,
+    Key? key,
     this.initialValue = 500,
     this.title="",
     this.minValue = 100,
@@ -63,30 +63,30 @@ class HorizontalNumberPicker extends StatefulWidget {
     this.indicatorColor = const Color(0xFF3995FF),
     this.scaleTextColor = const Color(0xFF8E99A0),
   }) : super(key: key) {
-    if (subGridCountPerGrid % 2 != 0) {
+    if (subGridCountPerGrid! % 2 != 0) {
       throw Exception("subGridCountPerGrid必须是偶数");
     }
 
-    if ((maxValue - minValue) % step != 0) {
+    if ((maxValue! - minValue!) % step! != 0) {
       throw Exception("(maxValue - minValue)必须是step的整数倍");
     }
-    int totalSubGridCount = (maxValue - minValue) ~/ step;
+    int totalSubGridCount = (maxValue! - minValue!) ~/ step!;
 
-    if (totalSubGridCount % subGridCountPerGrid != 0) {
+    if (totalSubGridCount % subGridCountPerGrid! != 0) {
       throw Exception("(maxValue - minValue)~/step必须是subGridCountPerGrid的整数倍");
     }
     //第一个grid和最后一个grid都只会展示一半数量的subGrid，因此gridCount需要+1
-    gridCount = totalSubGridCount ~/ subGridCountPerGrid + 1;
+    gridCount = totalSubGridCount ~/ subGridCountPerGrid! + 1;
 
-    gridWidth = subGridWidth * subGridCountPerGrid;
+    gridWidth = subGridWidth! * subGridCountPerGrid!;
 
     //每个grid都是listView的一个item
     //除此之外，在第一个grid之前和最后一个grid之后，还需要各填充一个空白item，
     //这样第一个item和最后一个item才能滚动到屏幕中间。
-    listViewItemCount = gridCount + 2;
+    listViewItemCount = gridCount! + 2;
 
     //空白item的宽度
-    paddingItemWidth = widgetWidth / 2 - gridWidth / 2;
+    paddingItemWidth = widgetWidth! / 2 - gridWidth! / 2;
 
     if (scaleTransformer == null) {
       scaleTransformer = (value) {
@@ -102,7 +102,7 @@ class HorizontalNumberPicker extends StatefulWidget {
 }
 
 class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -110,9 +110,9 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
 
     _scrollController = ScrollController(
       //计算初始偏移量
-      initialScrollOffset: (widget.initialValue - widget.minValue) /
-          widget.step *
-          widget.subGridWidth,
+      initialScrollOffset: (widget.initialValue! - widget.minValue!) /
+          widget.step! *
+          widget.subGridWidth!,
     );
   }
 
@@ -123,17 +123,17 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
     _scrollController?.dispose();
     _scrollController = ScrollController(
       //计算初始偏移量
-      initialScrollOffset: (widget.initialValue - widget.minValue) /
-          widget.step *
-          widget.subGridWidth,
+      initialScrollOffset: (widget.initialValue! - widget.minValue!) /
+          widget.step! *
+          widget.subGridWidth!,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: widget.widgetWidth.toDouble(),
-      height: widget.widgetHeight.toDouble(),
+      width: widget.widgetWidth!.toDouble(),
+      height: widget.widgetHeight!.toDouble(),
       child: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
@@ -148,7 +148,7 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
               itemBuilder: (BuildContext context, int index) {
 
                 //首尾空白元素
-                if (index == 0 || index == widget.listViewItemCount - 1) {
+                if (index == 0 || index == widget.listViewItemCount! - 1) {
                   return Container(
                    // width: widget.paddingItemWidth,
                     height: 0,
@@ -160,7 +160,7 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
                   if (index == 1) {
                     type = 0;
                     //最后一个普通元素
-                  } else if (index == widget.listViewItemCount - 2) {
+                  } else if (index == widget.listViewItemCount! - 2) {
                     type = 2;
                     //中间普通元素
                   } else {
@@ -169,16 +169,16 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
 
                   return Container(
                     child: NumberPickerItem(
-                      subGridCount: widget.subGridCountPerGrid,
-                      subGridWidth: widget.subGridWidth,
-                      itemHeight: widget.widgetHeight,
-                      valueStr: widget.scaleTransformer(widget.minValue +
+                      subGridCount: widget.subGridCountPerGrid!,
+                      subGridWidth: widget.subGridWidth!,
+                      itemHeight: widget.widgetHeight!,
+                      valueStr: widget.scaleTransformer!(widget.minValue! +
                           (index - 1) *
-                              widget.subGridCountPerGrid *
-                              widget.step),
+                              widget.subGridCountPerGrid! *
+                              widget.step!),
                       type: type,
-                      scaleColor: widget.scaleColor,
-                      scaleTextColor: widget.scaleTextColor,
+                      scaleColor: widget.scaleColor!,
+                      scaleTextColor: widget.scaleTextColor!,
                     ),
                   );
                 }
@@ -188,7 +188,7 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
           //指示器
           Container(
             width: 2,
-            height: widget.widgetHeight / 2,
+            height: widget.widgetHeight! / 2,
             color: widget.indicatorColor,
           ),
         ],
@@ -201,15 +201,15 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
     if (notification is ScrollNotification) {
       //距离widget中间最近的刻度值
       double centerValue =
-          (notification.metrics.pixels / widget.subGridWidth).round() *
-              widget.step +
-              widget.minValue;
+          (notification.metrics.pixels / widget.subGridWidth!).round() *
+              widget.step! +
+              widget.minValue!;
 
       // 通知回调选中值改变了
-      widget.onSelectedChanged(centerValue);
+      widget.onSelectedChanged!(centerValue);
 
       //若用户手指离开屏幕且列表的滚动停止，则滚动到centerValue
-      if (_scrollingStopped(notification, _scrollController)) {
+      if (_scrollingStopped(notification, _scrollController!)) {
         select(centerValue);
       }
     }
@@ -231,8 +231,8 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
 
   ///选中值
   select(double valueToSelect) {
-    _scrollController.animateTo(
-      (valueToSelect - widget.minValue) / widget.step * widget.subGridWidth,
+    _scrollController!.animateTo(
+      (valueToSelect - widget.minValue!) / widget.step! * widget.subGridWidth!,
       duration: Duration(milliseconds: 200),
       curve: Curves.decelerate,
     );
@@ -243,19 +243,19 @@ class HorizontalNumberPickerState extends State<HorizontalNumberPicker> {
 
 ///每个item中间为长刻度，并在下方显示数值。两边都是短刻度
 class NumberPickerItem extends StatelessWidget {
-  final int subGridCount;
-  final int subGridWidth;
-  final int itemHeight;
-  final String valueStr;
+  final int? subGridCount;
+  final int? subGridWidth;
+  final int? itemHeight;
+  final String? valueStr;
 
   //0:列表首item 1:中间item 2:尾item
-  final int type;
+  final int? type;
 
-  final Color scaleColor;
-  final Color scaleTextColor;
+  final Color? scaleColor;
+  final Color? scaleTextColor;
 
   const NumberPickerItem({
-    Key key,
+    Key? key,
     @required this.subGridCount,
     @required this.subGridWidth,
     @required this.itemHeight,
@@ -267,8 +267,8 @@ class NumberPickerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double itemWidth = (subGridWidth * subGridCount).toDouble();
-    double itemHeight = this.itemHeight.toDouble();
+    double itemWidth = (subGridWidth! * subGridCount!).toDouble();
+    double itemHeight = this.itemHeight!.toDouble();
 
     return CustomPaint(
       size: Size(itemWidth, itemHeight),
@@ -279,28 +279,28 @@ class NumberPickerItem extends StatelessWidget {
 }
 
 class MyPainter extends CustomPainter {
-  final int subGridWidth;
+  final int? subGridWidth;
 
-  final String valueStr;
+  final String? valueStr;
 
   //0:列表首item 1:中间item 2:尾item
-  final int type;
+  final int? type;
 
-  final Color scaleColor;
+  final Color? scaleColor;
 
-  final Color scaleTextColor;
+  final Color? scaleTextColor;
 
-  Paint _linePaint;
+  Paint? _linePaint;
 
-  double _lineWidth = 2;
+  double? _lineWidth = 2;
 
   MyPainter(this.subGridWidth, this.valueStr, this.type, this.scaleColor,
       this.scaleTextColor) {
     _linePaint = Paint()
       ..isAntiAlias = true
       ..style = PaintingStyle.stroke
-      ..strokeWidth = _lineWidth
-      ..color = scaleColor;
+      ..strokeWidth = _lineWidth!
+      ..color = scaleColor!;
   }
 
   @override
@@ -326,25 +326,25 @@ class MyPainter extends CustomPainter {
     }
 
     //绘制横线
-    canvas.drawLine(Offset(startX, 0 + _lineWidth / 2),
-        Offset(endX, 0 + _lineWidth / 2), _linePaint);
+    canvas.drawLine(Offset(startX, 0 + _lineWidth! / 2),
+        Offset(endX, 0 + _lineWidth! / 2), _linePaint!);
 
     //绘制竖线
-    for (double x = startX; x <= endX; x += subGridWidth) {
+    for (double x = startX; x <= endX; x += subGridWidth!) {
       if (x == size.width / 2) {
         //中间为长刻度
         canvas.drawLine(
-            Offset(x, 0), Offset(x, size.height * 3 / 8), _linePaint);
+            Offset(x, 0), Offset(x, size.height * 3 / 8), _linePaint!);
       } else {
         //其他为短刻度
-        canvas.drawLine(Offset(x, 0), Offset(x, size.height / 4), _linePaint);
+        canvas.drawLine(Offset(x, 0), Offset(x, size.height / 4), _linePaint!);
       }
     }
   }
 
   void drawText(Canvas canvas, Size size) {
     //文字水平方向居中对齐，竖直方向底对齐
-    ui.Paragraph p = _buildText(valueStr, size.width);
+    ui.Paragraph p = _buildText(valueStr!, size.width);
     //获得文字的宽高
     double halfWidth = p.minIntrinsicWidth / 3;
     double halfHeight = p.height / 2;

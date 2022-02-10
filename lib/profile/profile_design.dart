@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quikieappps1/customer/updateboutiquedetails.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -101,12 +100,12 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildWideContainers(BoxConstraints constraints) {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 30.h),
+        margin: EdgeInsets.only(top: 30),
         alignment: Alignment.center,
         child: Image.asset(
           'assets/images/Logo2.png',
           fit: BoxFit.fitHeight,
-          height: 200.h,
+          height: 200,
         ),
       ),
     );

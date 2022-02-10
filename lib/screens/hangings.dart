@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/assets/colors.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
 
 class Hangings extends StatefulWidget {
   @override
@@ -9,7 +7,7 @@ class Hangings extends StatefulWidget {
 }
 
 class HangingsState extends State<Hangings > {
-   int _index;
+   int? _index;
 
   Widget category(String text) {
     return Container(

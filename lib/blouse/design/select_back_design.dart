@@ -1,17 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
 import 'package:quikieappps1/blouse/design/after_selection.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
 import 'package:quikieappps1/blouse/design/select_front_design.dart';
 import 'package:quikieappps1/blouse/design/select_sleeve_design.dart';
-import 'package:quikieappps1/screens/previewOrder_blouse.dart';
-
-import 'package:quikieappps1/blouse/input_sample.dart';
 
 class select_back_design extends StatefulWidget {
   bool isSelected;
@@ -21,9 +16,9 @@ class select_back_design extends StatefulWidget {
 }
 
 class select_back_designState extends State<select_back_design> {
-   int _index;
-   File _image;
-   File _backImage;
+   int? _index;
+   File? _image;
+   File? _backImage;
   var loading = false;
   bool isSelected =false;
   final picker = ImagePicker();
@@ -32,7 +27,7 @@ class select_back_designState extends State<select_back_design> {
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(pickedFile!.path);
     });
   }
 
@@ -40,7 +35,7 @@ class select_back_designState extends State<select_back_design> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(pickedFile!.path);
     });
   }
 

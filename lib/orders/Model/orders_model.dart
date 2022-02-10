@@ -1,14 +1,13 @@
 import 'package:meta/meta.dart';
-import 'dart:convert';
 
 class OrdersModel {
   OrdersModel({
-    @required this.data,
-    @required this.meta,
+     this.data,
+    this.meta,
   });
 
-  final DataClass data;
-  final Meta meta;
+  final DataClass? data;
+  final Meta? meta;
 
   factory OrdersModel.fromJson(Map<String, dynamic> json) => OrdersModel(
     data: DataClass.fromJson(json["data"]),
@@ -16,37 +15,37 @@ class OrdersModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-    "meta": meta.toJson(),
+    "data": data!.toJson(),
+    "meta": meta!.toJson(),
   };
 }
 
 class DataClass {
   DataClass({
-    @required this.attributes,
+    this.attributes,
   });
 
-  final Attributes attributes;
+  final Attributes? attributes;
 
   factory DataClass.fromJson(Map<String, dynamic> json) => DataClass(
     attributes: Attributes.fromJson(json["attributes"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "attributes": attributes.toJson(),
+    "attributes": attributes!.toJson(),
   };
 }
 
 class Attributes {
   Attributes({
-    @required this.serverDate,
-    @required this.totalBills,
-    @required this.totalProducts,
+     this.serverDate,
+    required this.totalBills,
+     this.totalProducts,
   });
 
-  final String serverDate;
-  final List<TotalBill> totalBills;
-  final List<TotalProduct> totalProducts;
+  final String? serverDate;
+  final List<TotalBill>? totalBills;
+  final List<TotalProduct>? totalProducts;
 
   factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
     serverDate: json["serverDate"],
@@ -56,8 +55,8 @@ class Attributes {
 
   Map<String, dynamic> toJson() => {
     "serverDate": serverDate,
-    "totalBills": List<dynamic>.from(totalBills.map((x) => x.toJson())),
-    "totalProducts": List<dynamic>.from(totalProducts.map((x) => x.toJson())),
+    "totalBills": List<dynamic>.from(totalBills!.map((x) => x.toJson())),
+    "totalProducts": List<dynamic>.from(totalProducts!.map((x) => x.toJson())),
   };
 }
 
@@ -80,21 +79,21 @@ class TotalBill {
     @required this.customerName,
   });
 
-  final int id;
-  final String customerId;
-  final String shopEmail;
-  final String shopUniqueId;
-  final String createdAt;
-  final String updatedAt;
-  final String orderDate;
-  final String dueDate;
-  final String invoiceNumber;
-  final String adavancePayment;
-  final String grandTotalPayment;
-  final String balancePayment;
-  final bool automaticBillCompletion;
-  final bool manualBillCompletion;
-  final String customerName;
+  final int? id;
+  final String? customerId;
+  final String? shopEmail;
+  final String? shopUniqueId;
+  final String? createdAt;
+  final String? updatedAt;
+  final String? orderDate;
+  final String? dueDate;
+  final String? invoiceNumber;
+  final String? adavancePayment;
+  final String? grandTotalPayment;
+  final String? balancePayment;
+  final bool? automaticBillCompletion;
+  final bool? manualBillCompletion;
+  final String? customerName;
 
   factory TotalBill.fromJson(Map<String, dynamic> json) => TotalBill(
     id: json["id"],
@@ -208,77 +207,77 @@ class TotalProduct {
     @required this.fabricImageOther,
   });
 
-  final int id;
-  final String orderId;
-  final String customerId;
-  final String shopEmail;
-  final String shopUniqueId;
-  final String fullLength;
-  final String shoulder;
-  final String shoulderGap;
-  final String sleevesLength;
-  final String armholeRound;
-  final String circleDownLoose;
-  final String sleevesRound;
-  final String upperChestRound;
-  final String lowerChestRound;
-  final String waistRound;
-  final String firstDartPoint;
-  final String secondDartPoint;
-  final String bustPoint;
-  final String frontAc;
-  final String frontNeckDeep;
-  final String backNeckDeep;
-  final String waistBandLength;
-  final String neckWidth;
-  final String createdAt;
-  final String updatedAt;
-  final String productName;
-  final String price;
-  final int quantity;
-  final String chestRound;
-  final String backNeckWidth;
-  final bool orderCompletion;
-  final bool cups;
-  final bool piping;
-  final String zipType;
-  final String hooks;
-  final String productType;
+  final int? id;
+  final String? orderId;
+  final String? customerId;
+  final String? shopEmail;
+  final String? shopUniqueId;
+  final String? fullLength;
+  final String? shoulder;
+  final String? shoulderGap;
+  final String? sleevesLength;
+  final String? armholeRound;
+  final String? circleDownLoose;
+  final String? sleevesRound;
+  final String? upperChestRound;
+  final String? lowerChestRound;
+  final String? waistRound;
+  final String? firstDartPoint;
+  final String? secondDartPoint;
+  final String? bustPoint;
+  final String? frontAc;
+  final String? frontNeckDeep;
+  final String? backNeckDeep;
+  final String? waistBandLength;
+  final String? neckWidth;
+  final String? createdAt;
+  final String? updatedAt;
+  final String? productName;
+  final String? price;
+  final int? quantity;
+  final String? chestRound;
+  final String? backNeckWidth;
+  final bool? orderCompletion;
+  final bool? cups;
+  final bool? piping;
+  final String? zipType;
+  final String? hooks;
+  final String? productType;
   final dynamic blouseFrontImageUrl;
   final dynamic blouseBackImageUrl;
   final dynamic blouseSleevesImageUrl;
   final dynamic blouseHangingsImageUrl;
   final dynamic frontImageBlouse;
-  final BackImageBlouse backImageBlouse;
+  final BackImageBlouse? backImageBlouse;
   final dynamic sleevesImageBlouse;
   final dynamic hangingsImageBlouse;
   final dynamic fabricImageBlouse;
   final dynamic drawingPadImageBlouse;
   final dynamic createdBy;
   final dynamic updatedBy;
-  final String sleeveLength;
-  final String sleeveRound;
-  final String hip;
-  final String waistLength;
-  final String slitLength;
-  final String lowerchestRound;
-  final String bottomRound;
+  final String? sleeveLength;
+  final String? sleeveRound;
+  final String? hip;
+  final String? waistLength;
+  final String? slitLength;
+  final String? lowerchestRound;
+  final String? bottomRound;
   final dynamic topFrontImageUrl;
   final dynamic topBackImageUrl;
   final dynamic topSleevesImageUrl;
   final dynamic topHangingsImageUrl;
-  final bool lining;
+  final bool? lining;
   final dynamic frontImageTop;
   final dynamic backImageTop;
   final dynamic sleevesImageTop;
-  final BackImageBlouse hangingsImageTop;
+  final BackImageBlouse? hangingsImageTop;
   final dynamic fabricImageTop;
   final dynamic drawingPadImageTop;
-  final bool falls;
-  final bool zigZag;
+  final bool? falls;
+  final bool? zigZag;
   final dynamic otherStyleImageUrl;
-  final BackImageBlouse styleImageOther;
-  final BackImageBlouse fabricImageOther;
+  final BackImageBlouse? styleImageOther;
+  final BackImageBlouse? fabricImageOther;
 
   factory TotalProduct.fromJson(Map<String, dynamic> json) => TotalProduct(
     id: json["id"],
@@ -396,7 +395,7 @@ class TotalProduct {
     "blouseSleevesImageUrl": blouseSleevesImageUrl,
     "blouseHangingsImageUrl": blouseHangingsImageUrl,
     "frontImage_blouse": frontImageBlouse,
-    "backImage_blouse": backImageBlouse == null ? null : backImageBlouse.toJson(),
+    "backImage_blouse": backImageBlouse == null ? null : backImageBlouse!.toJson(),
     "sleevesImage_blouse": sleevesImageBlouse,
     "hangingsImage_blouse": hangingsImageBlouse,
     "fabricImage_blouse": fabricImageBlouse,
@@ -418,14 +417,14 @@ class TotalProduct {
     "frontImage_top": frontImageTop,
     "backImage_top": backImageTop,
     "sleevesImage_top": sleevesImageTop,
-    "hangingsImage_top": hangingsImageTop == null ? null : hangingsImageTop.toJson(),
+    "hangingsImage_top": hangingsImageTop == null ? null : hangingsImageTop!.toJson(),
     "fabricImage_top": fabricImageTop,
     "drawingPadImage_top": drawingPadImageTop,
     "falls": falls == null ? null : falls,
     "zigZag": zigZag == null ? null : zigZag,
     "otherStyleImageUrl": otherStyleImageUrl,
-    "styleImage_other": styleImageOther == null ? null : styleImageOther.toJson(),
-    "fabricImage_other": fabricImageOther == null ? null : fabricImageOther.toJson(),
+    "styleImage_other": styleImageOther == null ? null : styleImageOther!.toJson(),
+    "fabricImage_other": fabricImageOther == null ? null : fabricImageOther!.toJson(),
   };
 }
 
@@ -450,23 +449,23 @@ class BackImageBlouse {
     @required this.updatedAt,
   });
 
-  final int id;
-  final String name;
+  final int? id;
+  final String? name;
   final dynamic alternativeText;
   final dynamic caption;
-  final int width;
-  final int height;
-  final Formats formats;
-  final String hash;
-  final String ext;
-  final String mime;
-  final double size;
-  final String url;
+  final int? width;
+  final int? height;
+  final Formats? formats;
+  final String? hash;
+  final String? ext;
+  final String? mime;
+  final double? size;
+  final String? url;
   final dynamic previewUrl;
-  final String provider;
+  final String? provider;
   final dynamic providerMetadata;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
 
   factory BackImageBlouse.fromJson(Map<String, dynamic> json) => BackImageBlouse(
     id: json["id"],
@@ -495,7 +494,7 @@ class BackImageBlouse {
     "caption": caption,
     "width": width,
     "height": height,
-    "formats": formats.toJson(),
+    "formats": formats!.toJson(),
     "hash": hash,
     "ext": ext,
     "mime": mime,
@@ -517,10 +516,10 @@ class Formats {
     @required this.thumbnail,
   });
 
-  final Large large;
-  final Large small;
-  final Large medium;
-  final Large thumbnail;
+  final Large? large;
+  final Large? small;
+  final Large? medium;
+  final Large? thumbnail;
 
   factory Formats.fromJson(Map<String, dynamic> json) => Formats(
     large: Large.fromJson(json["large"]),
@@ -530,10 +529,10 @@ class Formats {
   );
 
   Map<String, dynamic> toJson() => {
-    "large": large.toJson(),
-    "small": small.toJson(),
-    "medium": medium.toJson(),
-    "thumbnail": thumbnail.toJson(),
+    "large": large!.toJson(),
+    "small": small!.toJson(),
+    "medium": medium!.toJson(),
+    "thumbnail": thumbnail!.toJson(),
   };
 }
 
@@ -550,15 +549,15 @@ class Large {
     @required this.height,
   });
 
-  final String ext;
-  final String url;
-  final String hash;
-  final String mime;
-  final String name;
+  final String? ext;
+  final String? url;
+  final String? hash;
+  final String? mime;
+  final String? name;
   final dynamic path;
-  final double size;
-  final int width;
-  final int height;
+  final double? size;
+  final int? width;
+  final int? height;
 
   factory Large.fromJson(Map<String, dynamic> json) => Large(
     ext: json["ext"],

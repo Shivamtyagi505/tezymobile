@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:quikieappps1/blouse/design/select_front_design.dart';
 import 'package:quikieappps1/blouse/image_class.dart';
 import 'package:quikieappps1/blouse/input_sample.dart';
-import 'package:quikieappps1/blouse/pro_vider/image_notif.dart';
-import 'package:quikieappps1/bodymeasure/test_scale.dart';
 import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
@@ -23,7 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isSelected = false;
   bool ontap = false;
 
@@ -111,21 +106,17 @@ int FIRST_TIME=0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     scaleData.setName("Default");
   }
 
   @override
   Widget build(BuildContext context) {
-    //selectedImage=imageNotif.getImage;
     var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return new Scaffold(
         backgroundColor: Colors.white,
         appBar: new AppBar(
           elevation: 0,
-          // backgroundColor: Color.fromRGBO(229, 229, 229, 10),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: new Text(
@@ -311,7 +302,7 @@ int FIRST_TIME=0;
                                     initialValue: /*getdataval[50.00][index]*/ widget
                                                 .selectVal <
                                             18.25
-                                        ? ((getdataval[widget.selectVal]
+                                        ? ((getdataval[widget.selectVal]!
                                                     [returnindex.indexOf(_listViewData[index])]) *
                                                 4) -
                                             3
@@ -494,7 +485,7 @@ int FIRST_TIME=0;
                                     initialValue: /*getdataval[50.00][index]*/ widget
                                                 .selectVal <
                                             18.25
-                                        ? ((getdataval[widget.selectVal]
+                                        ? ((getdataval[widget.selectVal]!
                                                     [returnindex.indexOf(_listViewData[index])]) *
                                                 4) -
                                             3

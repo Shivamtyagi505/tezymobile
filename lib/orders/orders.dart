@@ -4,7 +4,7 @@ import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/review.dart';
 
 class Orders extends StatefulWidget {
-  const Orders({Key key}) : super(key: key);
+  const Orders({Key? key}) : super(key: key);
 
   @override
   _OrdersState createState() => _OrdersState();

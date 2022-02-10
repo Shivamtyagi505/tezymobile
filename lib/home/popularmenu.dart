@@ -410,8 +410,8 @@ class Tabview extends StatelessWidget {
 }
 
 class TabBarWidget extends StatelessWidget {
-  final String asset;
-  final String text;
+  final String? asset;
+  final String? text;
   const TabBarWidget({
     this.asset,
     this.text,
@@ -452,7 +452,7 @@ class TabBarWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(0.7),
                     child: Image.asset(
-                      asset,
+                      asset!,
                       fit: BoxFit.fill,
                       height: 70,
                     ),
@@ -464,7 +464,7 @@ class TabBarWidget extends StatelessWidget {
             Expanded(
                 //  flex: 4,
                 child: Text(
-              text,
+              text!,
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(0xff280D78), fontSize: 10, fontWeight: FontWeight.w500),
             )),
@@ -476,8 +476,8 @@ class TabBarWidget extends StatelessWidget {
   }
 }
 class TabBarWidgetOther extends StatelessWidget {
-  final String asset;
-  final String text;
+  final String? asset;
+  final String? text;
   const TabBarWidgetOther({
     this.asset,
     this.text,
@@ -518,7 +518,7 @@ class TabBarWidgetOther extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(0.7),
                     child: Image.asset(
-                      asset,
+                      asset!,
                       fit: BoxFit.fill,
                       height: 70,
                     ),
@@ -529,7 +529,7 @@ class TabBarWidgetOther extends StatelessWidget {
             Expanded(
               //  flex: 4,
                 child: Text(
-                  text,
+                  text!,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Color(0xff280D78), fontSize: 10, fontWeight: FontWeight.w500),
                 )),
@@ -540,8 +540,8 @@ class TabBarWidgetOther extends StatelessWidget {
   }
 }
 class TabBarWidgettop extends StatelessWidget {
-  final String asset;
-  final String text;
+  final String? asset;
+  final String? text;
   const TabBarWidgettop({
     this.asset,
     this.text,
@@ -582,7 +582,7 @@ class TabBarWidgettop extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(0.7),
                     child: Image.asset(
-                      asset,
+                      asset!,
                       fit: BoxFit.fill,
                       height: 70,
                     ),
@@ -593,7 +593,7 @@ class TabBarWidgettop extends StatelessWidget {
             Expanded(
               //  flex: 4,
                 child: Text(
-                  text,
+                  text!,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Color(0xff280D78), fontSize: 10, fontWeight: FontWeight.w500),
                 )),
@@ -604,8 +604,8 @@ class TabBarWidgettop extends StatelessWidget {
   }
 }
 class TabBarWidgetbottom extends StatelessWidget {
-  final String asset;
-  final String text;
+  final String? asset;
+  final String? text;
   const TabBarWidgetbottom({
     this.asset,
     this.text,
@@ -646,7 +646,7 @@ class TabBarWidgetbottom extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(0.7),
                     child: Image.asset(
-                      asset,
+                      asset!,
                       fit: BoxFit.fill,
                       height: 70,
                     ),
@@ -657,7 +657,7 @@ class TabBarWidgetbottom extends StatelessWidget {
             Expanded(
               //  flex: 4,
                 child: Text(
-                  text,
+                  text!,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Color(0xff280D78), fontSize: 10, fontWeight: FontWeight.w500),
                 )),
@@ -669,8 +669,8 @@ class TabBarWidgetbottom extends StatelessWidget {
 }
 
 class TabBarWidgetupdated extends StatelessWidget {
-  final String asset;
-  final String text;
+  final String? asset;
+  final String? text;
   const TabBarWidgetupdated({
     this.asset,
     this.text,
@@ -713,7 +713,7 @@ class TabBarWidgetupdated extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(0.7),
                     child: Image.asset(
-                      asset,
+                      asset!,
                       fit: BoxFit.fill,
                       height: 70,
                     ),
@@ -724,7 +724,7 @@ class TabBarWidgetupdated extends StatelessWidget {
             Expanded(
                 flex: 3,
                 child: Text(
-                  text,
+                  text!,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Color(0xff280D78), fontSize: 11, fontWeight: FontWeight.w500),
                 )),
@@ -736,8 +736,8 @@ class TabBarWidgetupdated extends StatelessWidget {
 }
 
 class TabBarWidgetupdatedbottom extends StatelessWidget {
-  final String asset;
-  final String text;
+  final String? asset;
+  final String? text;
   const TabBarWidgetupdatedbottom({
     this.asset,
     this.text,
@@ -778,7 +778,7 @@ class TabBarWidgetupdatedbottom extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(0.7),
                     child: Image.asset(
-                      asset,
+                      asset!,
                       fit: BoxFit.fill,
                       height: 70,
                     ),
@@ -789,7 +789,7 @@ class TabBarWidgetupdatedbottom extends StatelessWidget {
             Expanded(
                 flex: 3,
                 child: Text(
-                  text,
+                  text!,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Color(0xff280D78), fontSize: 11, fontWeight: FontWeight.w500),
                 )),

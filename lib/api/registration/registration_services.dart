@@ -13,9 +13,9 @@ Future<RegistrationModel> createUser(RegistrationData data) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      "username": data.name,
-      "email": data.email,
-      "password": data.password,
+      "username": data.name!,
+      "email": data.email!,
+      "password": data.password!,
 
     }),
   );

@@ -16,8 +16,8 @@ class PreviewOrderBottom extends StatefulWidget {
 
 class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
   dynamic status = [true, true, true, true];
-   File _image;
-   File _galleryImage;
+   File? _image;
+   File? _galleryImage;
   var loading = false;
   final picker = ImagePicker();
 
@@ -25,7 +25,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _image = File(pickedFile!.path);
     });
   }
 
@@ -33,7 +33,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
-      _galleryImage = File(pickedFile.path);
+      _galleryImage = File(pickedFile!.path);
     });
   }
 
@@ -232,7 +232,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                           ? ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.file(
-                                  _image,
+                                  _image!,
                                   width: double.infinity,
                                   height: 100,
                                   fit: BoxFit.fill,
@@ -303,7 +303,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                          ? ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: Image.file(
-                                  _galleryImage,
+                                  _galleryImage!,
                                   width: double.infinity,
                                   height: 100,
                                   fit: BoxFit.fill,

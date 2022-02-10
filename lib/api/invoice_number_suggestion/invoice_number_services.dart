@@ -1,16 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:quikieappps1/api/add_customer/add_customer_model.dart';
 import 'package:quikieappps1/api/apifile/api_list.dart';
-import 'package:quikieappps1/api/datafromfrontend/add_customer_class.dart';
 import 'package:quikieappps1/api/invoice_number_suggestion/invoice_number_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 Future<InvoiceNumberSuggestion> invoiceNumberSuggestion() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString('jwt');
+  String? jwt = prefs.getString('jwt');
   final response = await http.get(
     Uri.parse(addCustomer),
     headers: <String, String>{

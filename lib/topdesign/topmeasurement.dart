@@ -20,7 +20,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isSelected = false;
   bool ontap = false;
 
@@ -322,7 +321,7 @@ class _HomePageState extends State<HomePage> {
                                   initialValue: /*getdataval[50.00][index]*/ widget
                                       .selectVal <
                                       18.25
-                                      ? ((getdataval[widget.selectVal]
+                                      ? ((getdataval[widget.selectVal]!
                                   [returnindex.indexOf(_listViewData[index])]) *
                                       4) -
                                       3
@@ -515,7 +514,7 @@ class _HomePageState extends State<HomePage> {
                                   initialValue: /*getdataval[50.00][index]*/ widget
                                       .selectVal <
                                       18.25
-                                      ? ((getdataval[widget.selectVal]
+                                      ? ((getdataval[widget.selectVal]!
                                   [returnindex.indexOf(_listViewData[index])]) *
                                       4) -
                                       3
