@@ -18,6 +18,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   void initState() {
     var provider = Provider.of<HomepageController>(context, listen: false);
     provider.dateFormat();
+    provider.fetchAllCustomer();
     super.initState();
   }
 
@@ -26,7 +27,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
     var height = MediaQuery.of(context).size.height;
     return Consumer<HomepageController>(
       builder: (context,value,child) {
-        return  Scaffold(
+        return  value.allCustomerModel == null
+        ? Center(child: CircularProgressIndicator())
+        :Scaffold(
             appBar: new AppBar(
               automaticallyImplyLeading: false,
               elevation: 0.0,

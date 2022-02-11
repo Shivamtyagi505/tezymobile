@@ -14,11 +14,11 @@ class AddCustomerModel {
         this.meta,
     });
 
-    Data? data;
+    CustomerDataModel? data;
     Meta? meta;
 
     factory AddCustomerModel.fromJson(Map<String, dynamic> json) => AddCustomerModel(
-        data: Data.fromJson(json["data"]),
+        data: CustomerDataModel.fromJson(json["data"]),
         meta: Meta.fromJson(json["meta"]),
     );
 
@@ -28,18 +28,18 @@ class AddCustomerModel {
     };
 }
 
-class Data {
-    Data({
+class CustomerDataModel {
+    CustomerDataModel({
         required this.id,
         required this.attributes,
     });
 
     int id;
-    Attributes attributes;
+    CustomerAttributes attributes;
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+    factory CustomerDataModel.fromJson(Map<String, dynamic> json) => CustomerDataModel(
         id: json["id"],
-        attributes: Attributes.fromJson(json["attributes"]),
+        attributes: CustomerAttributes.fromJson(json["attributes"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -48,8 +48,8 @@ class Data {
     };
 }
 
-class Attributes {
-    Attributes({
+class CustomerAttributes {
+    CustomerAttributes({
         this.name,
         this.mobile,
         this.createdAt,
@@ -65,7 +65,7 @@ class Attributes {
     String? shopEmail;
     String? shopUniqueId;
 
-    factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
+    factory CustomerAttributes.fromJson(Map<String, dynamic> json) => CustomerAttributes(
         name: json["name"],
         mobile: json["mobile"],
         createdAt: DateTime.parse(json["createdAt"]),

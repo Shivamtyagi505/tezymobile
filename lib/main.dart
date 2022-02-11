@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/api/datafromfrontend/login_data_class.dart';
 import 'package:quikieappps1/api/login/login_model.dart';
+import 'package:quikieappps1/blouse/design/controller/select_design_controller.dart';
+import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
 import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:quikieappps1/provider/measurement_provider.dart';
 import 'package:quikieappps1/screens/welcome1.dart';
@@ -20,7 +22,8 @@ void main() {
     runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (ctx) => MeasurementProvider()),
       ChangeNotifierProvider(create: (ctx) => HomepageController()),
-      // ChangeNotifierProvider(create: (ctx) => AddCustomerController()),
+      ChangeNotifierProvider(create: (ctx) => BlouseSelectDesignController()),
+      ChangeNotifierProvider(create: (ctx) => AddCustomerController()),
       ChangeNotifierProvider<ImageNotif>.value(
         value: ImageNotif(),
       ),
@@ -128,7 +131,7 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          // validator: (value) => validateEmail(value!),
+                          validator: (value) => validateEmail(value!),
                           controller: emailIdController,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -148,7 +151,7 @@ class _PreLoginScreeDesignState extends State<PreLoginScreeDesign> {
                           color: Colors.white,
                         ),
                         child: TextFormField(
-                          // validator: (value) => validatePassword(value!),
+                           validator: (value) => validatePassword(value!),
                           focusNode: passwordFocusNode,
                           controller: passwordController,
                           obscureText: true,

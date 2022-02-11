@@ -1,9 +1,12 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_model.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_services.dart';
 import 'package:quikieappps1/api/datafromfrontend/add_customer_class.dart';
 import 'package:quikieappps1/blouse/input_sample.dart';
+import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
+import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:quikieappps1/util/validators.dart';
 
 class AddCustomer extends StatefulWidget {
@@ -34,7 +37,8 @@ class _AddCustomerState extends State<AddCustomer> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Consumer<AddCustomerController>(builder: (context, value, child) {
+      return Scaffold(
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -106,8 +110,8 @@ class _AddCustomerState extends State<AddCustomer> {
                               child: Container(
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
                                 child: TextFormField(
-                                  // validator: (value) => validateNames(value!),
-                                  controller: nameController,
+                                  validator: (value) => validateNames(value!),
+                                  controller: value.nameController,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                                       hintText: 'Enter Customer Name'),
@@ -133,11 +137,11 @@ class _AddCustomerState extends State<AddCustomer> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(24, 0, 24, 50),
                               child: TextFormField(
-                                // validator: (value) => validateMobile(value!),
+                                validator: (value) => validateMobile(value!),
                                 maxLength: 10,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                controller: mobileController,
+                                controller: value.mobileController,
                                 decoration: InputDecoration(
                                   counterText: '',
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -147,29 +151,26 @@ class _AddCustomerState extends State<AddCustomer> {
                             ),
                           ],
                         ),
-                        (_futureAddCustomerModel == null)
-                            ? MaterialButton(
-                                onPressed: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
-                                    fetchAddCustomerApi();
-                                  }
-                                  // value.fetchAddCustomer();
-                                },
-                                child: Text(
-                                  "Add Customer",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      fontFamily: 'Poppins'),
-                                ),
-                                color: Color(0xff032B77),
-                                minWidth: 283,
-                                height: 54,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                              )
-                            : buildAddCustomerFutureBuilder(),
+                        // (_futureAddCustomerModel == null)
+                        // ?
+                        MaterialButton(
+                          onPressed: ()async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              value.fetchAddCustomer(context);
+                            }
+                          },
+                          child: Text(
+                            "Add Customer",
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500, fontFamily: 'Poppins'),
+                          ),
+                          color: Color(0xff032B77),
+                          minWidth: 283,
+                          height: 54,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                        )
+                        // : buildAddCustomerFutureBuilder(),
                       ],
                     ),
                   ),
@@ -179,52 +180,54 @@ class _AddCustomerState extends State<AddCustomer> {
           ),
         ),
       );
-  }
-
-  Future<AddCustomerModel>? _futureAddCustomerModel;
-  void fetchAddCustomerApi() {
-    String name = nameController.text;
-    String mobile = mobileController.text;
-    setState(() {
-      _futureAddCustomerModel = addCustomerApi(AddCustomerData(name: name, mobile: mobile));
     });
-
-    // print("email:  ${email} password: ${password} name: ${name}");
   }
 
-  FutureBuilder<AddCustomerModel> buildAddCustomerFutureBuilder() {
-    return FutureBuilder<AddCustomerModel>(
-      future: _futureAddCustomerModel,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          print(snapshot.data);
-          WidgetsBinding.instance!.addPostFrameCallback((_) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
-          });
-        } else if (snapshot.hasError) {
-          return Container(
-            height: 55,
-            width: 296,
-            margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-            decoration: const BoxDecoration(
-              color: Color(0xff029EFF),
-              borderRadius: BorderRadius.all(Radius.circular(80.0)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  'Sign Up',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          );
-        }
+//   Future<AddCustomerModel>? _futureAddCustomerModel;
+//   void fetchAddCustomerApi() {
+//     String name = nameController.text;
+//     String mobile = mobileController.text;
+//     setState(() {
+//       _futureAddCustomerModel = addCustomerApi(AddCustomerData(name: name, mobile: mobile));
+//     });
 
-        return const CircularProgressIndicator();
-      },
-    );
-  }
+//     // print("email:  ${email} password: ${password} name: ${name}");
+//   }
+
+//   FutureBuilder<AddCustomerModel> buildAddCustomerFutureBuilder() {
+//     return FutureBuilder<AddCustomerModel>(
+//       future: _futureAddCustomerModel,
+//       builder: (context, snapshot) {
+//         if (snapshot.hasData) {
+//           print(snapshot.data);
+//           WidgetsBinding.instance!.addPostFrameCallback((_) {
+//             Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
+//           });
+//         } else if (snapshot.hasError) {
+//           return Container(
+//             height: 55,
+//             width: 296,
+//             margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+//             decoration: const BoxDecoration(
+//               color: Color(0xff029EFF),
+//               borderRadius: BorderRadius.all(Radius.circular(80.0)),
+//             ),
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceAround,
+//               children: [
+//                 Text(
+//                   'Sign Up',
+//                   style: TextStyle(color: Colors.white, fontSize: 18),
+//                   textAlign: TextAlign.center,
+//                 ),
+//               ],
+//             ),
+//           );
+//         }
+
+//         return const CircularProgressIndicator();
+//       },
+//     );
+//   }
+// }
 }
