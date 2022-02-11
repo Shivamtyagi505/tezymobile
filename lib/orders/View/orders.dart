@@ -1,20 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/review.dart';
-
 import '../Controller/orders_services.dart';
 import '../Model/orders_model.dart';
 
 class Orders extends StatefulWidget {
-  const Orders({Key? key}) : super(key: key);
+
   @override
   _OrdersState createState() => _OrdersState();
 }
 
 class _OrdersState extends State<Orders> {
-  OrdersModel? order;
-  OrdersModel? order2;
+   OrdersModel? order;
+   OrdersModel? order2;
 
   void modelData() async {
     order2 = await ordersModel();
@@ -261,17 +261,17 @@ class _OrdersState extends State<Orders> {
     );
   }
 
-  Future<OrdersModel>? _futureOrdersModel;
+  late Future<OrdersModel>? _futureOrdersModel;
   FutureBuilder<OrdersModel> buildFutureBuilder() {
     return FutureBuilder<OrdersModel>(
       future: _futureOrdersModel,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           bool? checkedValue =
-              order!.data!.attributes!.totalBills![0].manualBillCompletion;
+              order!.data.attributes.totalBills[0].manualBillCompletion;
           return ListView.builder(
             padding: EdgeInsets.zero,
-            itemCount: snapshot.data!.data!.attributes!.totalBills!.length,
+            itemCount: snapshot.data!.data.attributes.totalBills.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
@@ -301,8 +301,8 @@ class _OrdersState extends State<Orders> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        order!.data!.attributes!.totalBills![0]
-                                            .customerName!,
+                                        order!.data.attributes.totalBills[0]
+                                            .customerName.toString(),
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             color: Colors.black,
@@ -331,7 +331,7 @@ class _OrdersState extends State<Orders> {
                                             fontWeight: FontWeight.w600),
                                       ),
                                       Text(
-                                        order!.data!.attributes!.totalBills![0]
+                                        order!.data.attributes.totalBills[0]
                                             .dueDate!.substring(3,16),
                                         textAlign: TextAlign.right,
                                         style: TextStyle(
@@ -349,7 +349,7 @@ class _OrdersState extends State<Orders> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Bill No. ${snapshot.data!.data!.attributes!.totalBills![index].invoiceNumber}',
+                                  'Bill No. ${snapshot.data!.data.attributes.totalBills[index].invoiceNumber}',
                                   style: TextStyle(
                                       color: Color.fromRGBO(17, 112, 222, 1),
                                       fontSize: 12,

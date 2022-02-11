@@ -1,13 +1,14 @@
 import 'package:meta/meta.dart';
+import 'dart:convert';
 
 class OrdersModel {
   OrdersModel({
-     this.data,
-    this.meta,
+    required this.data,
+    required this.meta,
   });
 
-  final DataClass? data;
-  final Meta? meta;
+  final DataClass data;
+  final Meta meta;
 
   factory OrdersModel.fromJson(Map<String, dynamic> json) => OrdersModel(
     data: DataClass.fromJson(json["data"]),
@@ -15,37 +16,37 @@ class OrdersModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "data": data!.toJson(),
-    "meta": meta!.toJson(),
+    "data": data.toJson(),
+    "meta": meta.toJson(),
   };
 }
 
 class DataClass {
   DataClass({
-    this.attributes,
+    required this.attributes,
   });
 
-  final Attributes? attributes;
+  final Attributes attributes;
 
   factory DataClass.fromJson(Map<String, dynamic> json) => DataClass(
     attributes: Attributes.fromJson(json["attributes"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "attributes": attributes!.toJson(),
+    "attributes": attributes.toJson(),
   };
 }
 
 class Attributes {
   Attributes({
-     this.serverDate,
+    required this.serverDate,
     required this.totalBills,
-     this.totalProducts,
+    required this.totalProducts,
   });
 
-  final String? serverDate;
-  final List<TotalBill>? totalBills;
-  final List<TotalProduct>? totalProducts;
+  final String serverDate;
+  final List<TotalBill> totalBills;
+  final List<TotalProduct> totalProducts;
 
   factory Attributes.fromJson(Map<String, dynamic> json) => Attributes(
     serverDate: json["serverDate"],
@@ -55,28 +56,28 @@ class Attributes {
 
   Map<String, dynamic> toJson() => {
     "serverDate": serverDate,
-    "totalBills": List<dynamic>.from(totalBills!.map((x) => x.toJson())),
-    "totalProducts": List<dynamic>.from(totalProducts!.map((x) => x.toJson())),
+    "totalBills": List<dynamic>.from(totalBills.map((x) => x.toJson())),
+    "totalProducts": List<dynamic>.from(totalProducts.map((x) => x.toJson())),
   };
 }
 
 class TotalBill {
   TotalBill({
-    @required this.id,
-    @required this.customerId,
-    @required this.shopEmail,
-    @required this.shopUniqueId,
-    @required this.createdAt,
-    @required this.updatedAt,
-    @required this.orderDate,
-    @required this.dueDate,
-    @required this.invoiceNumber,
-    @required this.adavancePayment,
-    @required this.grandTotalPayment,
-    @required this.balancePayment,
-    @required this.automaticBillCompletion,
-    @required this.manualBillCompletion,
-    @required this.customerName,
+    required this.id,
+    required this.customerId,
+    required this.shopEmail,
+    required this.shopUniqueId,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.orderDate,
+    required this.dueDate,
+    required this.invoiceNumber,
+    required this.adavancePayment,
+    required this.grandTotalPayment,
+    required this.balancePayment,
+    required this.automaticBillCompletion,
+    required this.manualBillCompletion,
+    required this.customerName,
   });
 
   final int? id;
@@ -134,77 +135,77 @@ class TotalBill {
 
 class TotalProduct {
   TotalProduct({
-    @required this.id,
-    @required this.orderId,
-    @required this.customerId,
-    @required this.shopEmail,
-    @required this.shopUniqueId,
-    @required this.fullLength,
-    @required this.shoulder,
-    @required this.shoulderGap,
-    @required this.sleevesLength,
-    @required this.armholeRound,
-    @required this.circleDownLoose,
-    @required this.sleevesRound,
-    @required this.upperChestRound,
-    @required this.lowerChestRound,
-    @required this.waistRound,
-    @required this.firstDartPoint,
-    @required this.secondDartPoint,
-    @required this.bustPoint,
-    @required this.frontAc,
-    @required this.frontNeckDeep,
-    @required this.backNeckDeep,
-    @required this.waistBandLength,
-    @required this.neckWidth,
-    @required this.createdAt,
-    @required this.updatedAt,
-    @required this.productName,
-    @required this.price,
-    @required this.quantity,
-    @required this.chestRound,
-    @required this.backNeckWidth,
-    @required this.orderCompletion,
-    @required this.cups,
-    @required this.piping,
-    @required this.zipType,
-    @required this.hooks,
-    @required this.productType,
-    @required this.blouseFrontImageUrl,
-    @required this.blouseBackImageUrl,
-    @required this.blouseSleevesImageUrl,
-    @required this.blouseHangingsImageUrl,
-    @required this.frontImageBlouse,
-    @required this.backImageBlouse,
-    @required this.sleevesImageBlouse,
-    @required this.hangingsImageBlouse,
-    @required this.fabricImageBlouse,
-    @required this.drawingPadImageBlouse,
-    @required this.createdBy,
-    @required this.updatedBy,
-    @required this.sleeveLength,
-    @required this.sleeveRound,
-    @required this.hip,
-    @required this.waistLength,
-    @required this.slitLength,
-    @required this.lowerchestRound,
-    @required this.bottomRound,
-    @required this.topFrontImageUrl,
-    @required this.topBackImageUrl,
-    @required this.topSleevesImageUrl,
-    @required this.topHangingsImageUrl,
-    @required this.lining,
-    @required this.frontImageTop,
-    @required this.backImageTop,
-    @required this.sleevesImageTop,
-    @required this.hangingsImageTop,
-    @required this.fabricImageTop,
-    @required this.drawingPadImageTop,
-    @required this.falls,
-    @required this.zigZag,
-    @required this.otherStyleImageUrl,
-    @required this.styleImageOther,
-    @required this.fabricImageOther,
+    required this.id,
+    required this.orderId,
+    required this.customerId,
+    required this.shopEmail,
+    required this.shopUniqueId,
+    required this.fullLength,
+    required this.shoulder,
+    required this.shoulderGap,
+    required this.sleevesLength,
+    required this.armholeRound,
+    required this.circleDownLoose,
+    required this.sleevesRound,
+    required this.upperChestRound,
+    required this.lowerChestRound,
+    required this.waistRound,
+    required this.firstDartPoint,
+    required this.secondDartPoint,
+    required this.bustPoint,
+    required this.frontAc,
+    required this.frontNeckDeep,
+    required this.backNeckDeep,
+    required this.waistBandLength,
+    required this.neckWidth,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.productName,
+    required this.price,
+    required this.quantity,
+    required this.chestRound,
+    required this.backNeckWidth,
+    required this.orderCompletion,
+    required this.cups,
+    required this.piping,
+    required this.zipType,
+    required this.hooks,
+    required this.productType,
+    required this.blouseFrontImageUrl,
+    required this.blouseBackImageUrl,
+    required this.blouseSleevesImageUrl,
+    required this.blouseHangingsImageUrl,
+    required this.frontImageBlouse,
+    required this.backImageBlouse,
+    required this.sleevesImageBlouse,
+    required this.hangingsImageBlouse,
+    required this.fabricImageBlouse,
+    required this.drawingPadImageBlouse,
+    required this.createdBy,
+    required this.updatedBy,
+    required this.sleeveLength,
+    required this.sleeveRound,
+    required this.hip,
+    required this.waistLength,
+    required this.slitLength,
+    required this.lowerchestRound,
+    required this.bottomRound,
+    required this.topFrontImageUrl,
+    required this.topBackImageUrl,
+    required this.topSleevesImageUrl,
+    required this.topHangingsImageUrl,
+    required this.lining,
+    required this.frontImageTop,
+    required this.backImageTop,
+    required this.sleevesImageTop,
+    required this.hangingsImageTop,
+    required this.fabricImageTop,
+    required this.drawingPadImageTop,
+    required this.falls,
+    required this.zigZag,
+    required this.otherStyleImageUrl,
+    required this.styleImageOther,
+    required this.fabricImageOther,
   });
 
   final int? id;
@@ -395,7 +396,7 @@ class TotalProduct {
     "blouseSleevesImageUrl": blouseSleevesImageUrl,
     "blouseHangingsImageUrl": blouseHangingsImageUrl,
     "frontImage_blouse": frontImageBlouse,
-    "backImage_blouse": backImageBlouse == null ? null : backImageBlouse!.toJson(),
+    "backImage_blouse": backImageBlouse == null ? null : backImageBlouse?.toJson(),
     "sleevesImage_blouse": sleevesImageBlouse,
     "hangingsImage_blouse": hangingsImageBlouse,
     "fabricImage_blouse": fabricImageBlouse,
@@ -417,36 +418,36 @@ class TotalProduct {
     "frontImage_top": frontImageTop,
     "backImage_top": backImageTop,
     "sleevesImage_top": sleevesImageTop,
-    "hangingsImage_top": hangingsImageTop == null ? null : hangingsImageTop!.toJson(),
+    "hangingsImage_top": hangingsImageTop == null ? null : hangingsImageTop?.toJson(),
     "fabricImage_top": fabricImageTop,
     "drawingPadImage_top": drawingPadImageTop,
     "falls": falls == null ? null : falls,
     "zigZag": zigZag == null ? null : zigZag,
     "otherStyleImageUrl": otherStyleImageUrl,
-    "styleImage_other": styleImageOther == null ? null : styleImageOther!.toJson(),
-    "fabricImage_other": fabricImageOther == null ? null : fabricImageOther!.toJson(),
+    "styleImage_other": styleImageOther == null ? null : styleImageOther?.toJson(),
+    "fabricImage_other": fabricImageOther == null ? null : fabricImageOther?.toJson(),
   };
 }
 
 class BackImageBlouse {
   BackImageBlouse({
-    @required this.id,
-    @required this.name,
-    @required this.alternativeText,
-    @required this.caption,
-    @required this.width,
-    @required this.height,
-    @required this.formats,
-    @required this.hash,
-    @required this.ext,
-    @required this.mime,
-    @required this.size,
-    @required this.url,
-    @required this.previewUrl,
-    @required this.provider,
-    @required this.providerMetadata,
-    @required this.createdAt,
-    @required this.updatedAt,
+    required this.id,
+    required this.name,
+    required this.alternativeText,
+    required this.caption,
+    required this.width,
+    required this.height,
+    required this.formats,
+    required this.hash,
+    required this.ext,
+    required this.mime,
+    required this.size,
+    required this.url,
+    required this.previewUrl,
+    required this.provider,
+    required this.providerMetadata,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   final int? id;
@@ -494,7 +495,7 @@ class BackImageBlouse {
     "caption": caption,
     "width": width,
     "height": height,
-    "formats": formats!.toJson(),
+    "formats": formats?.toJson(),
     "hash": hash,
     "ext": ext,
     "mime": mime,
@@ -510,10 +511,10 @@ class BackImageBlouse {
 
 class Formats {
   Formats({
-    @required this.large,
-    @required this.small,
-    @required this.medium,
-    @required this.thumbnail,
+    required this.large,
+    required this.small,
+    required this.medium,
+    required this.thumbnail,
   });
 
   final Large? large;
@@ -529,24 +530,24 @@ class Formats {
   );
 
   Map<String, dynamic> toJson() => {
-    "large": large!.toJson(),
-    "small": small!.toJson(),
-    "medium": medium!.toJson(),
-    "thumbnail": thumbnail!.toJson(),
+    "large": large?.toJson(),
+    "small": small?.toJson(),
+    "medium": medium?.toJson(),
+    "thumbnail": thumbnail?.toJson(),
   };
 }
 
 class Large {
   Large({
-    @required this.ext,
-    @required this.url,
-    @required this.hash,
-    @required this.mime,
-    @required this.name,
-    @required this.path,
-    @required this.size,
-    @required this.width,
-    @required this.height,
+    required this.ext,
+    required this.url,
+    required this.hash,
+    required this.mime,
+    required this.name,
+    required this.path,
+    required this.size,
+    required this.width,
+    required this.height,
   });
 
   final String? ext;

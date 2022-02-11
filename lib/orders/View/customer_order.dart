@@ -121,7 +121,7 @@ class _CustomerOrderState extends State<CustomerOrder> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text('Due',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 10,color: Color(0xff979797)),),
+                                    Text('Last order',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 10,color: Color(0xff979797)),),
                                     Text('12 Sep 2021',style: TextStyle(fontWeight: FontWeight.w400,fontSize: 12,),),
                                     Text('View',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 13,color: Color(0xff1170DE)),),
                                   ],

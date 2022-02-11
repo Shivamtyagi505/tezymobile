@@ -186,14 +186,14 @@ class After_Selection_imageState extends State<After_Selection_image> {
           currentIndex: 0,
           items: [
             BottomNavigationBarItem(
-                title: Text(''),
+                label: '',
                 icon: Image.asset('assets/images/Previous.png')),
 
 
 
             BottomNavigationBarItem(
               icon: Image.asset('assets/images/Group 416.png'),
-              title: Text(''),
+              label: '',
 
             ),
 

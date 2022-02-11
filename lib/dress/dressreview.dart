@@ -581,15 +581,15 @@ class dressreviewState extends State<dressreview> {
         currentIndex: 0,
         items: [
           BottomNavigationBarItem(
-              title: Text(''),
+              label: '',
               icon: Image.asset('assets/images/Group 1069.png')),
           BottomNavigationBarItem(
-              title: Text(''),
+              label: '',
               icon: Image.asset('assets/images/Group 1068.png')),
 
           BottomNavigationBarItem(
             icon: Image.asset('assets/images/Group 1067.png'),
-            title: Text(''),
+            label: '',
           ),
 
           //FloatingNavbarItem(icon: Icons.help_outline_rounded, title: 'Help Desk'),

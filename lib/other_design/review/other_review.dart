@@ -362,12 +362,12 @@ class OtherReviewState extends State<OtherReview> {
         },
         currentIndex: 0,
         items: [
-          BottomNavigationBarItem(title: Text(''), icon: Image.asset('assets/images/Group 1069.png')),
-          BottomNavigationBarItem(title: Text(''), icon: Image.asset('assets/images/Group 1068.png')),
+          BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Group 1069.png')),
+          BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Group 1068.png')),
 
           BottomNavigationBarItem(
             icon: Image.asset('assets/images/Group 1067.png'),
-            title: Text(''),
+            label: '',
           ),
 
           //FloatingNavbarItem(icon: Icons.help_outline_rounded, title: 'Help Desk'),

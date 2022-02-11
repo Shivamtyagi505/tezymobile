@@ -157,11 +157,11 @@ class After_Selection_imageState extends State<After_Selection_image> {
         },
         currentIndex: 0,
         items: [
-          BottomNavigationBarItem(title: Text(''), icon: Image.asset('assets/images/Previous.png')),
+          BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Previous.png')),
 
           BottomNavigationBarItem(
             icon: Image.asset('assets/images/Next1.png'),
-            title: Text(''),
+            label: '',
           ),
 
           //FloatingNavbarItem(icon: Icons.help_outline_rounded, title: 'Help Desk'),
