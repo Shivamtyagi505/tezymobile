@@ -53,6 +53,8 @@ dependencies:
   url_launcher: ^6.0.18
   http: ^0.13.4
   shared_preferences: ^2.0.13
+  fluttertoast: ^8.0.8
+  
 
 
 # flutter_native_splash:

@@ -1,9 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:quikieappps1/api/select_design/select_design_model.dart';
+import 'package:quikieappps1/api/select_design/select_design_services.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
+import 'package:quikieappps1/blouse/design/controller/select_design_controller.dart';
 import 'package:quikieappps1/blouse/measurement.dart';
 import 'package:quikieappps1/blouse/design/select_back_design.dart';
 
@@ -82,18 +87,18 @@ class select_front_designState extends State<select_front_design> {
           style: TextStyle(fontSize: 15, color: Colors.white),
         ));
   }
-  
-  Widget design(String text) {
+
+  Widget design(String text,var image) {
     return InkWell(
       onDoubleTap: () {
         setState(() {
           isSelected = !isSelected;
         });
       },
-      onTap: () async{
+      onTap: () async {
         var data = await Navigator.push(context, MaterialPageRoute(builder: (context) => After_Selection_image()));
         setState(() {
-          isSelected =! isSelected;
+          isSelected = !isSelected;
         });
       },
       child: Column(
@@ -103,7 +108,7 @@ class select_front_designState extends State<select_front_design> {
             height: MediaQuery.of(context).size.height / 3,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: darkGrey),
-            child: Image.asset('assets/images/3d woman 1.png'),
+            child: Image.network(image),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 2, left: 5, bottom: 10),
@@ -117,6 +122,7 @@ class select_front_designState extends State<select_front_design> {
       ),
     );
   }
+
   Widget imageContainer(String text) {
     return Container(
       child: Expanded(
@@ -159,12 +165,12 @@ class select_front_designState extends State<select_front_design> {
           Padding(
             padding: const EdgeInsets.all(7.0),
             child: InkWell(
-              onTap: (){
-                setState(() {
-                  isSelected =false;
-                });
-              },
-              child: Icon(Icons.close, size: 15, color: Colors.white)),
+                onTap: () {
+                  setState(() {
+                    isSelected = false;
+                  });
+                },
+                child: Icon(Icons.close, size: 15, color: Colors.white)),
           )
         ]),
       ),
@@ -190,278 +196,277 @@ class select_front_designState extends State<select_front_design> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            color: primaryColor,
-            child: Column(
-              children: [
-                SizedBox(height: 35),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Select Front Design",
-                                style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500)),
-                            SizedBox(height: 5),
+  void initState() {
+    // var provider =  Provider.of<SelectDesignController>(context);
+    // provider.fetchSelectDesignApi();
+    super.initState();
+  }
 
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: Offset(0, 7), // changes position of shadow
-                          ),
-                        ],
-                        color: Colors.grey),
-                    child: TextField(
-                      onChanged: (value) {},
-                      //  controller: editingController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        // labelText: "Search...",
-                        hintText:"Search..." ,
-                        prefixIcon:Icon(Icons.search) ,
-                        suffixIcon: Icon(Icons.clear_rounded),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      categories("Boat Neck"),
-                      categories("High Neck"),
-                      categories("U Neck"),
-                      categories("Collar"),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  isSelected == false
-                  ?Container(
-                    child: Expanded(
-                      child: Stack(alignment: Alignment.topRight, children: [
-                        Stack(alignment: Alignment.bottomCenter, children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            height: 180,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(180, 180, 180, 1), borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                              child: Icon(
-                                Icons.photo,
-                                size: 40,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          Container(
-                              margin: EdgeInsets.symmetric(horizontal: 3),
-                              height: 42,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(child: SizedBox()),
-                                  Text(
-                                    'Front Design',
-                                    style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                ],
-                              ))
-                        ]),
-                        Padding(
-                          padding: const EdgeInsets.all(7.0),
-                          child: Icon(Icons.close, size: 15, color: Colors.white),
-                        )
-                      ]),
-                    ),
-                  )
-                  : Container(
-                    child: Expanded(
-                      child: Stack(alignment: Alignment.topRight, children: [
-                        Stack(alignment: Alignment.bottomCenter, children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            height: 180,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(180, 180, 180, 1), borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                              child: Image.asset('assets/images/3d woman 1.png')
-                            ),
-                          ),
-                          Container(
-                              margin: EdgeInsets.symmetric(horizontal: 3),
-                              height: 42,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(child: SizedBox()),
-                                  Text(
-                                    'Front Design',
-                                    style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                ],
-                              ))
-                        ]),
-                        Padding(
-                          padding: const EdgeInsets.all(7.0),
-                          child: InkWell(
-                            onTap: (){
-                              setState(() {
-                                isSelected=!isSelected;
-                              });
-                            },
-                            child: Icon(Icons.close, size: 15, color: Colors.white)),
-                        )
-                      ]),
-                    ),
-                  ),
-                  imageContainer("Back Design"),
-                  imageContainer("Sleeve Design"),
-                ],
-              ),
-            ),
-                   Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<BlouseSelectDesignController>(
+      builder: (context,value,child) {
+        value.fetchSelectFrontDesignApi();
+        return Scaffold(
+          body: Column(
+            children: [
+              Container(
+                color: primaryColor,
+                child: Column(
                   children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design")
-                        ],
+                    SizedBox(height: 35),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Select Front Design",
+                                  style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500)),
+                              SizedBox(height: 5),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 7), // changes position of shadow
+                              ),
+                            ],
+                            color: Colors.grey),
+                        child: TextField(
+                          onChanged: (value) {},
+                          //  controller: editingController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            // labelText: "Search...",
+                            hintText: "Search...",
+                            prefixIcon: Icon(Icons.search),
+                            suffixIcon: Icon(Icons.clear_rounded),
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(width: 6),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          designSmall("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          SizedBox(height: 50)
+                          categories("Boat Neck"),
+                          categories("High Neck"),
+                          categories("U Neck"),
+                          categories("Collar"),
                         ],
                       ),
                     )
                   ],
                 ),
-              )
-                ],
               ),
-            ),
-          ),
-         
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: Color.fromRGBO(69, 89, 210, 10),
-        unselectedItemColor: Colors.black54,
-        onTap: (int val) {
-          setState(() {
-            _index = val;
-          });
-
-          if (val == 0) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MeasurementScreen(selectVal:8.00)),
-            );
-            // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: DailyLiaScreen()));
-          }
-          if (val == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => select_back_design(isSelected)),
-            );
-            // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: MyHomePage()));
-          }
-        },
-        currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Previous.png')),
-
-          BottomNavigationBarItem(
-            icon: Image.asset('assets/images/Group 416.png'),
-            label: '',
-          ),
-
-          //FloatingNavbarItem(icon: Icons.help_outline_rounded, title: 'Help Desk'),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Padding(
-          padding: const EdgeInsets.only(bottom: 50),
-          child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-            FloatingActionButton(
-              backgroundColor: Color.fromRGBO(3, 43, 119, 10),
-              onPressed: () {
-                _showPicker(context);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
+              Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            isSelected == false
+                                ? Container(
+                                    child: Expanded(
+                                      child: Stack(alignment: Alignment.topRight, children: [
+                                        Stack(alignment: Alignment.bottomCenter, children: [
+                                          Container(
+                                            margin: EdgeInsets.symmetric(horizontal: 3),
+                                            height: 180,
+                                            decoration: BoxDecoration(
+                                                color: Color.fromRGBO(180, 180, 180, 1),
+                                                borderRadius: BorderRadius.circular(10)),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.photo,
+                                                size: 40,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                              margin: EdgeInsets.symmetric(horizontal: 3),
+                                              height: 42,
+                                              decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(child: SizedBox()),
+                                                  Text(
+                                                    'Front Design',
+                                                    style: TextStyle(
+                                                        color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
+                                                  ),
+                                                  Expanded(child: SizedBox()),
+                                                ],
+                                              ))
+                                        ]),
+                                        Padding(
+                                          padding: const EdgeInsets.all(7.0),
+                                          child: Icon(Icons.close, size: 15, color: Colors.white),
+                                        )
+                                      ]),
+                                    ),
+                                  )
+                                : Container(
+                                    child: Expanded(
+                                      child: Stack(alignment: Alignment.topRight, children: [
+                                        Stack(alignment: Alignment.bottomCenter, children: [
+                                          Container(
+                                            margin: EdgeInsets.symmetric(horizontal: 3),
+                                            height: 180,
+                                            decoration: BoxDecoration(
+                                                color: Color.fromRGBO(180, 180, 180, 1),
+                                                borderRadius: BorderRadius.circular(10)),
+                                            child: Center(child: Image.asset('assets/images/3d woman 1.png')),
+                                          ),
+                                          Container(
+                                              margin: EdgeInsets.symmetric(horizontal: 3),
+                                              height: 42,
+                                              decoration: BoxDecoration(
+                                                color: primaryColor,
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft: Radius.circular(10),
+                                                  bottomRight: Radius.circular(10),
+                                                ),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Expanded(child: SizedBox()),
+                                                  Text(
+                                                    'Front Design',
+                                                    style: TextStyle(
+                                                        color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
+                                                  ),
+                                                  Expanded(child: SizedBox()),
+                                                ],
+                                              ))
+                                        ]),
+                                        Padding(
+                                          padding: const EdgeInsets.all(7.0),
+                                          child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  isSelected = !isSelected;
+                                                });
+                                              },
+                                              child: Icon(Icons.close, size: 15, color: Colors.white)),
+                                        )
+                                      ]),
+                                    ),
+                                  ),
+                            imageContainer("Back Design"),
+                            imageContainer("Sleeve Design"),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: MasonryGridView.count(
+                          physics: ScrollPhysics(),
+                          itemCount: value.selectFrontDesignClass!.length,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 4,
+                          itemBuilder: (context, index) {
+                            return design(value.selectFrontDesignClass![index].attributes!.productName!,value.selectFrontDesignClass![index].attributes!.image!.data!.attributes!.name);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            Text("Upload Your Photo")
-          ])),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.white,
+            selectedItemColor: Color.fromRGBO(69, 89, 210, 10),
+            unselectedItemColor: Colors.black54,
+            onTap: (int val) {
+              setState(() {
+                _index = val;
+              });
+
+              if (val == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MeasurementScreen(selectVal: 8.00)),
+                );
+                // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: DailyLiaScreen()));
+              }
+              if (val == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => select_back_design(isSelected)),
+                );
+                // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: MyHomePage()));
+              }
+            },
+            currentIndex: 0,
+            items: [
+              BottomNavigationBarItem(title: Text(''), icon: Image.asset('assets/images/Previous.png')),
+
+              BottomNavigationBarItem(
+                icon: Image.asset('assets/images/Group 416.png'),
+                title: Text(''),
+              ),
+
+              //FloatingNavbarItem(icon: Icons.help_outline_rounded, title: 'Help Desk'),
+            ],
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Padding(
+              padding: const EdgeInsets.only(bottom: 50),
+              child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                FloatingActionButton(
+                  backgroundColor: Color.fromRGBO(3, 43, 119, 10),
+                  onPressed: () {
+                    _showPicker(context);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                ),
+                Text("Upload Your Photo")
+              ])),
+        );
+      }
     );
   }
 }
