@@ -19,6 +19,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
     var provider = Provider.of<HomepageController>(context, listen: false);
     provider.dateFormat();
     provider.fetchAllCustomer();
+    provider.getUsername();
     super.initState();
   }
 
@@ -39,9 +40,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    // '${widget.name}' 
-                    // ?? 
-                    'Boutique Name',
+                    '${value.username ?? ''}',
                     style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10), fontSize: 22.0, fontFamily: 'Poppins'),
                   ),
                   Text(

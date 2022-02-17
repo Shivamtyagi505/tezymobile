@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_services.dart';
 import 'package:quikieappps1/api/add_customer/all_customer_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomepageController extends ChangeNotifier {
   AllCustomerModel? allCustomerModel;
   List<AllCustomerData>? filteredAllCustomerModel;
+  String? username = '';
   var formatter = new DateFormat('yyyy-MM-dd');
 
   String dateFormat() {
@@ -24,9 +26,16 @@ class HomepageController extends ChangeNotifier {
             .toList();
         filteredAllCustomerModel = filter;
       }
-       notifyListeners();
+      notifyListeners();
     } catch (e) {
       Exception('Unable to add customer');
     }
+  }
+
+    getUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String value = prefs.get('username').toString();
+    username = value;
+    notifyListeners();
   }
 }

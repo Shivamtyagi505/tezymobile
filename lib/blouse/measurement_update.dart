@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:quikieappps1/blouse/design/select_front_design.dart';
+import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
 import 'package:quikieappps1/blouse/image_class.dart';
 import 'package:quikieappps1/blouse/input_sample.dart';
 import 'package:quikieappps1/excel_data/excel_value.dart';
