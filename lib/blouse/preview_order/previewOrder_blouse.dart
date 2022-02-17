@@ -3,21 +3,30 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:quikieappps1/blouse/Drawing_Pad.dart';
-import 'package:quikieappps1/screens/placeOrder.dart';
-import 'package:quikieappps1/blouse/design/select_front_design.dart';
+import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
+import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
+import 'package:quikieappps1/blouse/place_order/placeOrder.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
 class PreviewOrdersBlouse extends StatefulWidget {
+  var frontImage;
+  var backImage;
+  var sleeveImage;
+  String? frontType;
+  String? backType;
+  String? sleeveType;
+  PreviewOrdersBlouse(
+      {this.frontImage, this.backImage, this.sleeveImage, this.frontType, this.backType, this.sleeveType});
   @override
   _PreviewOrdersBlouseState createState() => _PreviewOrdersBlouseState();
 }
 
 class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
-  dynamic status = [true, true, true, true];
-   File? _image;
-   File? _galleryImage;
+  File? _image;
+  File? _galleryImage;
   var loading = false;
   final picker = ImagePicker();
 
@@ -143,7 +152,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
     );
   }
 
-  Widget toggle(String text, int i) {
+  Widget toggle(String text, int i, PreviewOrderBlouseController value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
@@ -162,402 +171,492 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
             borderRadius: 33.0,
             onToggle: (val) {
               setState(() {
-                status[i] = val;
+                value.status[i] = val;
               });
             },
-            value: status[i],
+            value: value.status[i],
           ),
         ],
       ),
     );
   }
 
-
   Widget appBar() {
-    return Column(
-      children: [
-        SizedBox(height: 35),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 15,
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: primaryColor,
+    return Consumer<AddCustomerController>(builder: (context, value, child) {
+      return Column(
+        children: [
+          SizedBox(height: 35),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 15,
               ),
-              onPressed: () {
-                Navigator.pop(context,true);
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Customer Name",
-                      style: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w500)),
-                  SizedBox(height: 5),
-                  Text("+91 99999 999999", style: TextStyle(color: grey, fontSize: 12, fontWeight: FontWeight.w500)),
-                  SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text("Order Type : ", style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
-                      Text("Hand work Blouse",
-                          style: TextStyle(color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                ],
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: primaryColor,
+                ),
+                onPressed: () {
+                  Navigator.pop(context, true);
+                },
               ),
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-          child: Divider(thickness: 1.5),
-        ),
-      ],
-    );
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("${value.addCustomerModel!.data!.attributes.name}",
+                        style: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w500)),
+                    SizedBox(height: 5),
+                    Text("${value.addCustomerModel!.data!.attributes.mobile}",
+                        style: TextStyle(color: grey, fontSize: 12, fontWeight: FontWeight.w500)),
+                    SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text("Order Type : ", style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
+                        Text("Hand work Blouse",
+                            style: TextStyle(color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w500)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+            child: Divider(thickness: 1.5),
+          ),
+        ],
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xffF3F7FB),
-        body: Container(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                appBar(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                  child:
-                      Text("Selected Images", style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 11, vertical: 5),
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  child: Expanded(
-                                    child: Stack(alignment: Alignment.bottomCenter, children: [
-                                      InkWell(
-                                        onTap: (){
-                                          _imgFromCamera();
-                                        },
-                                        child: Container(
-                                          height: 200,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20),
-                                              bottomLeft: Radius.circular(20),
-                                              topRight: Radius.circular(0),
-                                              bottomRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: 
-                                          _image != null
-                                          ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.file(
-                                  _image!,
-                                  width: double.infinity,
-                                  height: 100,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                                          :Center(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  size: 40,
-                                                  color: Colors.black,
-                                                ),
-                                                SizedBox(height: 10,),
-                                                Container(
-                                                  margin: EdgeInsets.symmetric(horizontal: 40),
-                                                  child: Text('Take Customer Fabric Photo',textAlign: TextAlign.center,))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                          height: 28,
-                                          decoration: BoxDecoration(
-                                            color: labelGrey,
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(0),
-                                              bottomRight: Radius.circular(0),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(child: SizedBox()),
-                                              Text(
-                                                'Customer Fabric',
-                                                style: TextStyle(color: textColor, fontSize: 12),
-                                              ),
-                                              Expanded(child: SizedBox()),
-                                            ],
-                                          ))
-                                    ]),
-                                  ),
-                                ),
-                                SizedBox(width: 5,),
-                                Container(
-                                  child: Expanded(
-                                    child: Stack(alignment: Alignment.bottomCenter, children: [
-                                      InkWell(
-                                        onTap: (){
-                                          _imgFromGallery();
-                                        },
-                                        child: Container(
-                                          height: 200,
-                                          decoration: BoxDecoration(
-                                            color: darkGrey,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(0),
-                                              bottomLeft: Radius.circular(20),
-                                              topRight: Radius.circular(20),
-                                              bottomRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child:
-                                          _galleryImage != null 
-                                         ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.file(
-                                  _galleryImage!,
-                                  width: double.infinity,
-                                  height: 100,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                                         : Center(
-                                            child: Icon(
-                                              Icons.photo,
-                                              size: 40,
-                                              color: textColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                          height: 28,
-                                          decoration: BoxDecoration(
-                                            color: labelGrey,
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(0),
-                                              bottomRight: Radius.circular(0),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(child: SizedBox()),
-                                              Text(
-                                                'Front Neck Design',
-                                                style: TextStyle(color: textColor, fontSize: 12),
-                                              ),
-                                              Expanded(child: SizedBox()),
-                                            ],
-                                          ))
-                                    ]),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              children: [
-                                Container(
-                                  child: Expanded(
-                                    child: Stack(alignment: Alignment.bottomCenter, children: [
-                                      InkWell(
-                                        onTap: (){
-                                           _imgFromGallery();
-                                        },
-                                        child: Container(
-                                          height: 200,
-                                          decoration: BoxDecoration(
-                                            color: darkGrey,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(0),
-                                              bottomLeft: Radius.circular(20),
-                                              topRight: Radius.circular(0),
-                                              bottomRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.photo,
-                                              size: 40,
-                                              color: textColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                          height: 28,
-                                          decoration: BoxDecoration(
-                                            color: labelGrey,
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(20),
-                                              bottomRight: Radius.circular(0),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(child: SizedBox()),
-                                              Text(
-                                                'Back Neck Design',
-                                                style: TextStyle(color: textColor, fontSize: 12),
-                                              ),
-                                              Expanded(child: SizedBox()),
-                                            ],
-                                          ))
-                                    ]),
-                                  ),
-                                ),
-                                SizedBox(width: 5,),
-                                Container(
-                                  child: Expanded(
-                                    child: Stack(alignment: Alignment.bottomCenter, children: [
-                                      InkWell(
-                                        onTap: (){
-                                           _imgFromGallery();
-                                        },
-                                        child: Container(
-                                          height: 200,
-                                          decoration: BoxDecoration(
-                                            color: darkGrey,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(0),
-                                              bottomLeft: Radius.circular(20),
-                                              topRight: Radius.circular(0),
-                                              bottomRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.photo,
-                                              size: 40,
-                                              color: textColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                          height: 28,
-                                          decoration: BoxDecoration(
-                                            color: labelGrey,
-                                            borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(0),
-                                              bottomRight: Radius.circular(20),
-                                            ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(child: SizedBox()),
-                                              Text(
-                                                'Sleeves Design',
-                                                style: TextStyle(color: textColor, fontSize: 12),
-                                              ),
-                                              Expanded(child: SizedBox()),
-                                            ],
-                                          ))
-                                    ]),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        height: 67,
-                        decoration:
-                            BoxDecoration(color: primaryColor, borderRadius: BorderRadius.all(Radius.circular(20))),
-                        child: Row(
-                          children: [
-                            Expanded(child: SizedBox()),
-                            Text(
-                              "REVIEW MEASUREMENT",
-                              style: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w600),
-                            ),
-                            Expanded(child: SizedBox()),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 14, left: 27, right: 39),
-                        child: Column(
-                          children: [toggle("CUPS", 1),
-                            Divider(),
-                            toggle("PIPING", 0),
-                            Divider(),
-                            toggle("ZIP TYPE", 3),
-                            SizedBox(height: 10),
-                            if (status[3]) zipType(),
-                            SizedBox(height: 5),
-                            Divider(),
-                            toggle("HOOKS", 2),
-                            SizedBox(height: 10),
-                            if (status[2]) hooks(),
-                            SizedBox(height: 5),
-                            Divider(),
-                            SizedBox(height: 10),
-                          
-                          ],
-                        ),
-                      )
-                    ],
+    return Consumer<PreviewOrderBlouseController>(builder: (context, value, child) {
+      return Scaffold(
+          backgroundColor: Color(0xffF3F7FB),
+          body: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  appBar(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                    child: Text("Selected Images",
+                        style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20))),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    child: Expanded(
+                                      child: Stack(alignment: Alignment.bottomCenter, children: [
+                                        InkWell(
+                                          onTap: () {
+                                            _imgFromCamera();
+                                          },
+                                          child: Container(
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                bottomLeft: Radius.circular(20),
+                                                topRight: Radius.circular(0),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            child: _image != null
+                                                ? ClipRRect(
+                                                    borderRadius: BorderRadius.circular(20),
+                                                    child: Image.file(
+                                                      _image!,
+                                                      width: double.infinity,
+                                                      height: 100,
+                                                      fit: BoxFit.fill,
+                                                    ),
+                                                  )
+                                                : Center(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.camera_alt_outlined,
+                                                          size: 40,
+                                                          color: Colors.black,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Container(
+                                                            margin: EdgeInsets.symmetric(horizontal: 40),
+                                                            child: Text(
+                                                              'Take Customer Fabric Photo',
+                                                              textAlign: TextAlign.center,
+                                                            ))
+                                                      ],
+                                                    ),
+                                                  ),
+                                          ),
+                                        ),
+                                        Container(
+                                            height: 28,
+                                            decoration: BoxDecoration(
+                                              color: labelGrey,
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(0),
+                                                bottomRight: Radius.circular(0),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(child: SizedBox()),
+                                                Text(
+                                                  'Customer Fabric',
+                                                  style: TextStyle(color: textColor, fontSize: 12),
+                                                ),
+                                                Expanded(child: SizedBox()),
+                                              ],
+                                            ))
+                                      ]),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    child: Expanded(
+                                      child: Stack(alignment: Alignment.bottomCenter, children: [
+                                        Container(
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                              color: darkGrey,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(0),
+                                                bottomLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            child: widget.frontImage == null
+                                                ? ClipRRect(
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(0),
+                                                      bottomLeft: Radius.circular(20),
+                                                      topRight: Radius.circular(20),
+                                                      bottomRight: Radius.circular(20),
+                                                    ),
+                                                    child: Center(
+                                                      child: Icon(
+                                                        Icons.photo,
+                                                        size: 40,
+                                                        color: textColor,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : widget.frontImage != null && widget.frontType == 'Gallery' ||
+                                                        widget.frontType == 'Camera'
+                                                    ? ClipRRect(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(0),
+                                                          bottomLeft: Radius.circular(20),
+                                                          topRight: Radius.circular(20),
+                                                          bottomRight: Radius.circular(20),
+                                                        ),
+                                                        child: Image.file(
+                                                          widget.frontImage,
+                                                          fit: BoxFit.fill,
+                                                        ))
+                                                    : ClipRRect(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(0),
+                                                          bottomLeft: Radius.circular(20),
+                                                          topRight: Radius.circular(20),
+                                                          bottomRight: Radius.circular(20),
+                                                        ),
+                                                        child: Image.network(
+                                                          'http://172.105.253.131:1337${widget.frontImage}',
+                                                          width: double.infinity,
+                                                          height: 100,
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      )),
+                                        Container(
+                                            height: 28,
+                                            decoration: BoxDecoration(
+                                              color: labelGrey,
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(0),
+                                                bottomRight: Radius.circular(0),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(child: SizedBox()),
+                                                Text(
+                                                  'Front Neck Design',
+                                                  style: TextStyle(color: textColor, fontSize: 12),
+                                                ),
+                                                Expanded(child: SizedBox()),
+                                              ],
+                                            ))
+                                      ]),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Container(
+                                    child: Expanded(
+                                      child: Stack(alignment: Alignment.bottomCenter, children: [
+                                        Container(
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                              color: darkGrey,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(0),
+                                                bottomLeft: Radius.circular(20),
+                                                topRight: Radius.circular(0),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            child: widget.backImage == null
+                                                ? ClipRRect(
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(0),
+                                                      bottomLeft: Radius.circular(20),
+                                                      topRight: Radius.circular(20),
+                                                      bottomRight: Radius.circular(20),
+                                                    ),
+                                                    child: Center(
+                                                      child: Icon(
+                                                        Icons.photo,
+                                                        size: 40,
+                                                        color: textColor,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : widget.backImage != null && widget.backType == 'Gallery' ||
+                                                        widget.backType == 'Camera'
+                                                    ? ClipRRect(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(0),
+                                                          bottomLeft: Radius.circular(20),
+                                                          topRight: Radius.circular(20),
+                                                          bottomRight: Radius.circular(20),
+                                                        ),
+                                                        child: Image.file(
+                                                          widget.backImage,
+                                                          fit: BoxFit.fill,
+                                                        ))
+                                                    : ClipRRect(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(0),
+                                                          bottomLeft: Radius.circular(20),
+                                                          topRight: Radius.circular(20),
+                                                          bottomRight: Radius.circular(20),
+                                                        ),
+                                                        child: Image.network(
+                                                          'http://172.105.253.131:1337${widget.backImage}',
+                                                          width: double.infinity,
+                                                          height: 100,
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      )),
+                                        Container(
+                                            height: 28,
+                                            decoration: BoxDecoration(
+                                              color: labelGrey,
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(20),
+                                                bottomRight: Radius.circular(0),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(child: SizedBox()),
+                                                Text(
+                                                  'Back Neck Design',
+                                                  style: TextStyle(color: textColor, fontSize: 12),
+                                                ),
+                                                Expanded(child: SizedBox()),
+                                              ],
+                                            ))
+                                      ]),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    child: Expanded(
+                                      child: Stack(alignment: Alignment.bottomCenter, children: [
+                                        Container(
+                                            height: 200,
+                                            decoration: BoxDecoration(
+                                              color: darkGrey,
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(0),
+                                                bottomLeft: Radius.circular(20),
+                                                topRight: Radius.circular(0),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            child: widget.sleeveImage == null
+                                                ? ClipRRect(
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(0),
+                                                      bottomLeft: Radius.circular(20),
+                                                      topRight: Radius.circular(20),
+                                                      bottomRight: Radius.circular(20),
+                                                    ),
+                                                    child: Center(
+                                                      child: Icon(
+                                                        Icons.photo,
+                                                        size: 40,
+                                                        color: textColor,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : widget.sleeveImage != null && widget.sleeveType == 'Gallery' ||
+                                                        widget.sleeveType == 'Camera'
+                                                    ? ClipRRect(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(0),
+                                                          bottomLeft: Radius.circular(20),
+                                                          topRight: Radius.circular(20),
+                                                          bottomRight: Radius.circular(20),
+                                                        ),
+                                                        child: Image.file(
+                                                          widget.sleeveImage,
+                                                          fit: BoxFit.fill,
+                                                        ))
+                                                    : ClipRRect(
+                                                        borderRadius: BorderRadius.only(
+                                                          topLeft: Radius.circular(0),
+                                                          bottomLeft: Radius.circular(20),
+                                                          topRight: Radius.circular(20),
+                                                          bottomRight: Radius.circular(20),
+                                                        ),
+                                                        child: Image.network(
+                                                          'http://172.105.253.131:1337${widget.sleeveImage}',
+                                                          width: double.infinity,
+                                                          height: 100,
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      )),
+                                        Container(
+                                            height: 28,
+                                            decoration: BoxDecoration(
+                                              color: labelGrey,
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(0),
+                                                bottomRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Expanded(child: SizedBox()),
+                                                Text(
+                                                  'Sleeves Design',
+                                                  style: TextStyle(color: textColor, fontSize: 12),
+                                                ),
+                                                Expanded(child: SizedBox()),
+                                              ],
+                                            ))
+                                      ]),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: 67,
+                          decoration:
+                              BoxDecoration(color: primaryColor, borderRadius: BorderRadius.all(Radius.circular(20))),
+                          child: Row(
+                            children: [
+                              Expanded(child: SizedBox()),
+                              Text(
+                                "REVIEW MEASUREMENT",
+                                style: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w600),
+                              ),
+                              Expanded(child: SizedBox()),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 14, left: 27, right: 39),
+                          child: Column(
+                            children: [
+                              toggle("CUPS", 0, value),
+                              Divider(),
+                              toggle("PIPING", 1, value),
+                              Divider(),
+                              toggle("ZIP TYPE", 2, value),
+                              SizedBox(height: 10),
+                              if (value.status[2]) zipType(),
+                              SizedBox(height: 5),
+                              Divider(),
+                              toggle("HOOKS", 3, value),
+                              SizedBox(height: 10),
+                              if (value.status[3]) hooks(),
+                              SizedBox(height: 5),
+                              Divider(),
+                              SizedBox(height: 10),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => select_front_design()),
-                  );
-                },
-                child: Image.asset("assets/images/Previous.png"),
-              ),
-              FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PlaceOrder()),
-                  );
-                },
-                child: Image.asset("assets/images/Group 416 (2).png"),
-              )
-            ],
-          ),
-        ));
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                FloatingActionButton(
+                  heroTag: null,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Image.asset("assets/images/Previous.png"),
+                ),
+                FloatingActionButton(
+                  heroTag: null,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => PlaceOrder()),
+                    );
+                  },
+                  child: Image.asset("assets/images/Group 416 (2).png"),
+                )
+              ],
+            ),
+          ));
+    });
   }
 }

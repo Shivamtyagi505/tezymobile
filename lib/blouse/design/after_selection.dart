@@ -3,8 +3,9 @@ import 'package:overscroll_pop/overscroll_pop.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class After_Selection_image extends StatefulWidget {
+  var image;
+  After_Selection_image({this.image});
   @override
   After_Selection_imageState createState() => After_Selection_imageState();
 }
@@ -22,13 +23,16 @@ class After_Selection_imageState extends State<After_Selection_image> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: Color(0xffF4F8FC),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color.fromRGBO(60, 60, 61, 10),
+        backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
-          onPressed: () { Navigator.pop(context, false);},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -36,14 +40,17 @@ class After_Selection_imageState extends State<After_Selection_image> {
           child: Column(children: [
             OverscrollPop(
               scrollToPopOption: ScrollToPopOption.both,
-          dragToPopDirection: DragToPopDirection.toBottom,
+              dragToPopDirection: DragToPopDirection.toBottom,
               child: Container(
-                height: height * 0.5,
+                // height: height * 0.5,
                 width: width,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(60, 60, 61, 10),
                 ),
-                child: Image.asset('assets/images/3d woman 1.png'),
+                child: Image.network(
+                  'http://172.105.253.131:1337${widget.image}',
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             Container(
@@ -61,14 +68,15 @@ class After_Selection_imageState extends State<After_Selection_image> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       InkWell(
-                        onTap: ()async{
-                          const url = "https://www.google.com/search?q=tailor+image&rlz=1C1ONGR_enIN946IN946&sxsrf=AOaemvI7SvR5oWL3plPP3pyGTvtaWCc_kQ:1638341754568&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiar7TSgsL0AhXVTWwGHaZ4CN0Q_AUoAXoECAIQAw&biw=1280&bih=569&dpr=1.5#imgrc=d5BKzXt5M8Z04M";
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
+                      InkWell(
+                        onTap: () async {
+                          const url =
+                              "https://www.google.com/search?q=tailor+image&rlz=1C1ONGR_enIN946IN946&sxsrf=AOaemvI7SvR5oWL3plPP3pyGTvtaWCc_kQ:1638341754568&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiar7TSgsL0AhXVTWwGHaZ4CN0Q_AUoAXoECAIQAw&biw=1280&bih=569&dpr=1.5#imgrc=d5BKzXt5M8Z04M";
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -81,10 +89,12 @@ class After_Selection_imageState extends State<After_Selection_image> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,),
+                      SizedBox(
+                        width: 20,
+                      ),
                       InkWell(
-                        onTap: (){
-                         Navigator.pop(context,isSelected);
+                        onTap: () {
+                          Navigator.pop(context, widget.image);
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -107,37 +117,37 @@ class After_Selection_imageState extends State<After_Selection_image> {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design")
-                        ],
-                      ),
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        design("Scrlet Blouse Design"),
+                        design("Scrlet Blouse Design"),
+                        design("Scrlet Blouse Design")
+                      ],
                     ),
-                    SizedBox(width: 6),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          designSmall("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          SizedBox(height: 50)
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
+                  ),
+                  SizedBox(width: 6),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        designSmall("Scrlet Blouse Design"),
+                        design("Scrlet Blouse Design"),
+                        design("Scrlet Blouse Design"),
+                        SizedBox(height: 50)
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
           ]),
         ),
       ),
-   bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: Color.fromRGBO(69, 89, 210, 10),
         unselectedItemColor: Colors.black54,
@@ -147,11 +157,9 @@ class After_Selection_imageState extends State<After_Selection_image> {
           });
 
           if (val == 0) {
-            
             // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: DailyLiaScreen()));
           }
           if (val == 1) {
-           
             // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: MyHomePage()));
           }
         },
@@ -173,8 +181,7 @@ class After_Selection_imageState extends State<After_Selection_image> {
           child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
             FloatingActionButton(
               backgroundColor: Color.fromRGBO(3, 43, 119, 10),
-              onPressed: () {
-              },
+              onPressed: () {},
               child: Icon(
                 Icons.add,
                 color: Colors.white,
@@ -184,7 +191,6 @@ class After_Selection_imageState extends State<After_Selection_image> {
           ])),
     );
   }
-
 
   Widget design(String text) {
     return InkWell(
@@ -229,4 +235,5 @@ class After_Selection_imageState extends State<After_Selection_image> {
         )
       ],
     );
-  }}
+  }
+}

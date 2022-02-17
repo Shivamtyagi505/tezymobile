@@ -22,7 +22,8 @@ Future<LoginModel> getLogin(LoginData data) async {
   if (response.statusCode == 200) {
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
-    return LoginModel.fromJson(jsonDecode(response.body));
+    final items =  LoginModel.fromJson(jsonDecode(response.body));
+    return items;
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.

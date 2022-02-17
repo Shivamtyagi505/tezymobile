@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
 import 'package:quikieappps1/blouse/measurement.dart';
-import 'package:quikieappps1/blouse/design/select_back_design.dart';
+import 'package:quikieappps1/blouse/design/select_design/select_back_design.dart';
 
 class selectotherdesign extends StatefulWidget {
   @override
@@ -334,7 +334,7 @@ class selectotherdesignState extends State<selectotherdesign> {
           if (val == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => select_back_design(isSelected)),
+              MaterialPageRoute(builder: (context) => select_back_design()),
             );
             // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: MyHomePage()));
           }

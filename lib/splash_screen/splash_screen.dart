@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/home/bottomNavigation.dart';
-import 'package:quikieappps1/main.dart';
+import 'package:quikieappps1/login/login_page.dart';
 import 'package:quikieappps1/util/shared_preferences.dart';
 
 
