@@ -6,7 +6,7 @@ class PlaceOrderController extends ChangeNotifier{
 
   InvoiceNumber? invoiceNumber;
 
-  
+
   Future<void> fetchInvoiceNumberSuggestions() async {
     invoiceNumber = await getInvoiceNumberSuggestion();
     notifyListeners();

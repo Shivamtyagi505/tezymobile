@@ -9,6 +9,8 @@ import 'package:quikieappps1/blouse/design/select_design/select_front_design.dar
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
+import '../bottomdesign/bottommeasurement.dart';
+
 class PreviewOrdersBlouse extends StatefulWidget {
   @override
   _PreviewOrdersBlouseState createState() => _PreviewOrdersBlouseState();
@@ -488,19 +490,24 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                         ),
                       ),
                       SizedBox(height: 10),
-                      Container(
-                        height: 67,
-                        decoration:
-                            BoxDecoration(color: primaryColor, borderRadius: BorderRadius.all(Radius.circular(20))),
-                        child: Row(
-                          children: [
-                            Expanded(child: SizedBox()),
-                            Text(
-                              "REVIEW MEASUREMENT",
-                              style: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w600),
-                            ),
-                            Expanded(child: SizedBox()),
-                          ],
+                      InkWell(
+                        onTap: () {
+                          //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                        },
+                        child: Container(
+                          height: 67,
+                          decoration:
+                              BoxDecoration(color: primaryColor, borderRadius: BorderRadius.all(Radius.circular(20))),
+                          child: Row(
+                            children: [
+                              Expanded(child: SizedBox()),
+                              Text(
+                                "REVIEW MEASUREMENT",
+                                style: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w600),
+                              ),
+                              Expanded(child: SizedBox()),
+                            ],
+                          ),
                         ),
                       ),
                       Padding(

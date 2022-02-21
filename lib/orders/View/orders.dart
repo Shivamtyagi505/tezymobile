@@ -1,32 +1,49 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:quikieappps1/api/datafromfrontend/api_orders_class.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/review.dart';
+import '../Controller/orders_put_services.dart';
 import '../Controller/orders_services.dart';
 import '../Model/orders_model.dart';
+import '../Model/orders_put_model.dart';
 
 class Orders extends StatefulWidget {
-
   @override
   _OrdersState createState() => _OrdersState();
 }
 
 class _OrdersState extends State<Orders> {
-   OrdersModel? order;
-   OrdersModel? order2;
+  OrdersModel? order;
+  OrdersModel? order2;
+
+ bool? get checkedValue => null;
+
+ int? get balancePayment => null;
+  // OrdersPut? putOrder;
+  // OrdersPut? putOrder2;
 
   void modelData() async {
     order2 = await ordersModel();
+    //putOrder2 = await ordersPutRequest(data);
     setState(() {
       order = order2;
+    //  putOrder = putOrder2;
     });
   }
 
+  // Future<OrdersPut>? _futureOrdersPutModel();
+  // void collectCompletedOrders() {
+  //   setState(() {
+  //     _futureOrdersModel = ordersPutRequest(ApiOrdersData(manualBillCompletion:checkedValue, balancePayment: balancePayment))
+  //   });
+  // }
   @override
   void initState() {
     modelData();
     _futureOrdersModel = ordersModel();
+
     // ordersModel();
     super.initState();
   }
@@ -135,6 +152,7 @@ class _OrdersState extends State<Orders> {
               ],
             ),
           ),
+
         ],
       ),
     );
@@ -267,158 +285,172 @@ class _OrdersState extends State<Orders> {
       future: _futureOrdersModel,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          bool? checkedValue =
-              order!.data.attributes.totalBills[0].manualBillCompletion;
-          return ListView.builder(
-            padding: EdgeInsets.zero,
-            itemCount: snapshot.data!.data.attributes.totalBills.length,
-            itemBuilder: (BuildContext context, int index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Review()));
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 3, horizontal: 13),
-                  height: 90,
-                  child: Row(
-                    children: [
-                      Image.asset("assets/images/Rectangle 555.png"),
-                      Expanded(
-                          child: Container(
-                        padding: EdgeInsets.only(top: 10, left: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  itemCount: snapshot.data?.data.attributes.totalBills.length ?? 0,
+                  itemBuilder: (BuildContext context, int index) {
+                    bool? checkedValue =
+                        order?.data.attributes.totalBills[index].manualBillCompletion ?? false;
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Review()));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 3, horizontal: 13),
+                        height: 90,
+                        child: Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 11),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                            Image.asset("assets/images/Rectangle 555.png"),
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.only(top: 10, left: 12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        order!.data.attributes.totalBills[0]
-                                            .customerName.toString(),
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      // Text(
-                                      //   "Handwork Blouse",
-                                      //   textAlign: TextAlign.left,
-                                      //   style: TextStyle(
-                                      //       color: labelGrey,
-                                      //       fontSize: 12,
-                                      //       fontWeight: FontWeight.w600),
-                                      // )
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 11),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            order?.data.attributes.totalBills[index]
+                                                        .customerName ==
+                                                    null
+                                                ? Text('')
+                                                : Text(
+                                                    order!.data.attributes
+                                                        .totalBills[index].customerName
+                                                        .toString(),
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w700),
+                                                  )
+                                          ],
+                                        ),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              "Due",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                  color: labelGrey,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            order?.data.attributes.totalBills[index]
+                                                        .dueDate ==
+                                                    null
+                                                ? Text('')
+                                                : Text(
+                                                    order!.data.attributes
+                                                        .totalBills[index].dueDate!
+                                                        .substring(3, 16),
+                                                    textAlign: TextAlign.right,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12,
+                                                        fontWeight: FontWeight.w400),
+                                                  ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                  //SizedBox(height: 1),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Due",
-                                        textAlign: TextAlign.right,
+                                        'Bill No. ${snapshot.data!.data.attributes.totalBills[index].invoiceNumber}',
                                         style: TextStyle(
-                                            color: labelGrey,
-                                            fontSize: 10,
+                                            color: Color.fromRGBO(17, 112, 222, 1),
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      Text(
-                                        order!.data.attributes.totalBills[0]
-                                            .dueDate!.substring(3,16),
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w400),
-                                      ),
+                                      Expanded(child: SizedBox()),
+                                      checkedValue == false
+                                          ? Row(
+                                              children: [
+                                                Text(
+                                                  "Not Completed",
+                                                  style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          17, 112, 222, 1),
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w600),
+                                                ),
+                                                Checkbox(
+                                                    focusColor: Color(0xff1170DE),
+                                                    activeColor: Color(0xff1170DE),
+                                                    shape: CircleBorder(),
+                                                    value: checkedValue,
+                                                    onChanged: (newValue) {
+                                                      setState(() {
+                                                        checkedValue = newValue;
+                                                      });
+                                                    }),
+                                              ],
+                                            )
+                                         :
+                                Row(
+                                              children: [
+                                                Text(
+                                                  "Completed",
+                                                  style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          17, 112, 222, 1),
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w600),
+                                                ),
+                                                Checkbox(
+                                                    focusColor: Color(0xff1170DE),
+                                                    activeColor: Color(0xff1170DE),
+                                                    shape: CircleBorder(),
+                                                    value: checkedValue,
+                                                    onChanged: (newValue) {
+                                                      setState(() {
+                                                        checkedValue = newValue;
+                                                      });
+                                                    }),
+                                              ],
+                                            ),
                                     ],
                                   )
                                 ],
                               ),
-                            ),
-                            //SizedBox(height: 1),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Bill No. ${snapshot.data!.data.attributes.totalBills[index].invoiceNumber}',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(17, 112, 222, 1),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Expanded(child: SizedBox()),
-                                checkedValue == false
-                                    ? Row(
-                                        children: [
-                                          Text(
-                                            "Not Completed",
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    17, 112, 222, 1),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Checkbox(
-                                              focusColor: Color(0xff1170DE),
-                                              activeColor: Color(0xff1170DE),
-                                              shape: CircleBorder(),
-                                              value: checkedValue,
-                                              onChanged: (newValue) {
-                                                setState(() {
-                                                  checkedValue = newValue;
-                                                });
-                                              }),
-                                        ],
-                                      )
-                                    : Row(
-                                        children: [
-                                          Text(
-                                            "Completed",
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    17, 112, 222, 1),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Checkbox(
-                                              focusColor: Color(0xff1170DE),
-                                              activeColor: Color(0xff1170DE),
-                                              shape: CircleBorder(),
-                                              value: checkedValue,
-                                              onChanged: (newValue) {
-                                                setState(() {
-                                                  checkedValue = newValue;
-                                                });
-                                              }),
-                                        ],
-                                      ),
-                              ],
-                            )
+                            ))
                           ],
                         ),
-                      ))
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(15))),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(15))),
+                      ),
+                    ); //categoryCard1();
+                  },
                 ),
-              ); //categoryCard1();
-            },
+              ),
+              TextButton(onPressed: () {}, child: Text('load more'))
+            ],
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
+        // else if (snapshot.data == null ){
+        //   return CircularProgressIndicator();
+        // }
         return Column(
           children: [
             Center(child: const CircularProgressIndicator()),

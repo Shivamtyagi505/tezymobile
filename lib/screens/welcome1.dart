@@ -35,7 +35,8 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                 Expanded(
                   flex: 9,
                   child: Container(
-                      padding: const EdgeInsets.only(left: 28.0, right: 28.0, bottom: 8.0, top: 10.0),
+                      padding: const EdgeInsets.only(
+                          left: 28.0, right: 28.0, bottom: 8.0, top: 10.0),
                       child: StreamBuilder<Object>(
                           stream: null,
                           builder: (context, snapshot) {
@@ -54,18 +55,22 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                     height: 30.0,
                                   ),
                                   Container(
-                                      margin: EdgeInsets.symmetric(horizontal: 20),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 20),
                                       width: width,
                                       child: Text(
                                         "Create your Account",
-                                        style:
-                                            TextStyle(fontWeight: FontWeight.w600, fontSize: 18, color: Colors.black),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            color: Colors.black),
                                       )),
                                   SizedBox(
                                     height: 30.0,
                                   ),
                                   Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 10),
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     height: 55.0,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -76,7 +81,9 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                       controller: boutiqueController,
                                       //obscureText: true,
                                       decoration: InputDecoration(
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
                                         labelText: 'Boutique Name',
                                         hintText: 'Enter Boutique Name',
                                       ),
@@ -86,7 +93,8 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                     height: 20.0,
                                   ),
                                   Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 10),
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     height: 55.0,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -94,9 +102,11 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                     ),
                                     child: TextField(
                                       controller: emailIdController,
-                                    //  obscureText: true,
+                                      //  obscureText: true,
                                       decoration: InputDecoration(
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
                                         labelText: 'Email',
                                         hintText: 'Enter Email',
                                       ),
@@ -110,7 +120,8 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                 * Password
                                 * */
                                   Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 10),
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     height: 55.0,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -121,8 +132,8 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                       obscureText: true,
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(8)
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
                                         labelText: 'Password',
                                         hintText: 'Enter Password',
                                       ),
@@ -162,52 +173,66 @@ class welcomeScreen1State extends State<welcomeScreen1> {
                                     ),
 
                                   ),*/
-                                  InkWell( onTap: () {
-                                   /* Navigator.push(
+                                  InkWell(
+                                    onTap: () {
+                                      /* Navigator.push(
                                         context, MaterialPageRoute(builder: (context) => BottomNavigation()));*/
-                                    collectAllRegistrationInfo();
-
-                                  },
-                                    child: _futureRegistrationModel==null?Container(
-                                      height: 55,
-                                      width: 296,
-                                      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                                      decoration: const BoxDecoration(
-                                        color: Color(0xff029EFF),
-                                        borderRadius: BorderRadius.all(Radius.circular(80.0)),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            'Sign Up',
-                                            style: TextStyle(color: Colors.white, fontSize: 18),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    ):buildRegistrationFutureBuilder(),
+                                      collectAllRegistrationInfo();
+                                    },
+                                    child: _futureRegistrationModel == null
+                                        ? Container(
+                                            height: 55,
+                                            width: 296,
+                                            margin: EdgeInsets.symmetric(
+                                                horizontal: 25, vertical: 10),
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xff029EFF),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(80.0)),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(
+                                                  'Sign Up',
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : buildRegistrationFutureBuilder(),
                                   ),
-                                  InkWell(onTap: (){
-                                   // Navigator.push(context, MaterialPageRoute(builder: (context) => welcomeScreen1()));
-                                  },
+                                  InkWell(
+                                    onTap: () {
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => welcomeScreen1()));
+                                    },
                                     child: Container(
                                       height: 55,
                                       width: 296,
-                                      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 0),
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 25, vertical: 0),
                                       decoration: const BoxDecoration(
                                         color: Color(0xFFE5F3FD),
-                                        borderRadius: BorderRadius.all(Radius.circular(80.0)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(80.0)),
                                       ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
                                         children: [
                                           Image.asset(
                                             'assets/images/google 1.png',
                                           ),
                                           Text(
                                             'Sign in with Google ',
-                                            style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.w600),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
                                             textAlign: TextAlign.center,
                                           ),
                                         ],
@@ -253,19 +278,20 @@ class welcomeScreen1State extends State<welcomeScreen1> {
               ],
             ),
           ),
-
         ));
   }
+
   Future<RegistrationModel>? _futureRegistrationModel;
-  void collectAllRegistrationInfo(){
-    String email=emailIdController.text;
-    String password=passwordController.text;
-    String name=boutiqueController.text;
+  void collectAllRegistrationInfo() {
+    String email = emailIdController.text;
+    String password = passwordController.text;
+    String name = boutiqueController.text;
     setState(() {
-      _futureRegistrationModel= createUser(RegistrationData(email: email,name: name,password: password));
+      _futureRegistrationModel = createUser(
+          RegistrationData(email: email, name: name, password: password));
     });
 
-   // print("email:  ${email} password: ${password} name: ${name}");
+    // print("email:  ${email} password: ${password} name: ${name}");
   }
 
   FutureBuilder<RegistrationModel> buildRegistrationFutureBuilder() {
@@ -273,13 +299,10 @@ class welcomeScreen1State extends State<welcomeScreen1> {
       future: _futureRegistrationModel,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          WidgetsBinding.instance!.addPostFrameCallback((_){
-
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => PreLoginScree()));
-
+          WidgetsBinding.instance!.addPostFrameCallback((_) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => PreLoginScree()));
           });
-
         } else if (snapshot.hasError) {
           return Container(
             height: 55,
@@ -307,4 +330,3 @@ class welcomeScreen1State extends State<welcomeScreen1> {
     );
   }
 }
-
