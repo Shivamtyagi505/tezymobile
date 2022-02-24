@@ -6,7 +6,6 @@ import 'package:quikieappps1/blouse/input_sample.dart';
 import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
-
 import '../bodymeasure/horizontal_numberpicker_wrapper.dart';
 
 class HomePage extends StatefulWidget {

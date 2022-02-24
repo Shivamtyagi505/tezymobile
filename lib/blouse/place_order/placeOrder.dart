@@ -38,14 +38,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
   }
 
   Widget buildEditIcon(Color color) => buildCircle(
-        color: Colors.white,
-        all: 1,
-        child: buildCircle(
-          color: color,
-          all: 1,
-          child: Image.asset('assets/images/Edit Profile.png'),
-        ),
-      );
+    color: Colors.white,
+    all: 1,
+    child: buildCircle(
+      color: color,
+      all: 1,
+      child: Image.asset('assets/images/Edit Profile.png'),
+    ),
+  );
 
   Widget buildCircle({
     Widget? child,
@@ -139,7 +139,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
   Widget date(String day, int date, bool select) {
     return Container(
         decoration:
-            BoxDecoration(color: select ? Colors.white : secondaryColor, borderRadius: BorderRadius.circular(16)),
+        BoxDecoration(color: select ? Colors.white : secondaryColor, borderRadius: BorderRadius.circular(16)),
         margin: EdgeInsets.symmetric(horizontal: 6),
         padding: EdgeInsets.all(15),
         child: Column(

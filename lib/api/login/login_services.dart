@@ -15,7 +15,6 @@ Future<LoginModel> getLogin(LoginData data) async {
     body: jsonEncode(<String, String>{
       "identifier": data.identifier!,
       "password": data.password!,
-
     }),
   );
 

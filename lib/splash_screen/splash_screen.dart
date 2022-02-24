@@ -5,21 +5,23 @@ import 'package:quikieappps1/home/bottomNavigation.dart';
 import 'package:quikieappps1/login/login_page.dart';
 import 'package:quikieappps1/util/shared_preferences.dart';
 
-
 class SplashScreen extends StatefulWidget {
-
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-    _data() async {
+  _data() async {
     try {
-      Timer(Duration(seconds: 3),
-             (await SharedData().userLogged())
+      Timer(
+          Duration(seconds: 3),
+          (await SharedData().userLogged())
               ? () => Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => BottomNavigation()))
-          : () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PreLoginScreeDesign())));
+              : () => Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PreLoginScreeDesign())));
     } catch (e) {
       print(e);
     }

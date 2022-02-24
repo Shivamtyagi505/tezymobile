@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/blouse/design/design.dart';
 import 'package:quikieappps1/home/home_page/homepage.dart';
-import 'package:quikieappps1/orders/View/customer_order.dart';
+import '../allcustomerpage/View/customer_order.dart';
 import 'package:quikieappps1/orders/View/orders.dart';
 
 
