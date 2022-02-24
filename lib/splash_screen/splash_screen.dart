@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _data();
+     _data();
     super.initState();
   }
 
@@ -40,34 +40,22 @@ class _SplashScreenState extends State<SplashScreen> {
         width: double.maxFinite,
         color: Color(0xff032B77),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 60, bottom: 10),
-              child: Image.asset('assets/images/splashtwo.png'),
+              padding: const EdgeInsets.only(top: 150),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 60,bottom: 10),
+                  child: Image.asset('assets/images/splashtwo.png'),
+                ),
+                Text('Tezy',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 50),textAlign: TextAlign.center,)
+              ],),
             ),
-            Text(
-              'Tezy',
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 50),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 8,
-            ),
-            Text(
-              'Made with ❤ in India',
-              style: TextStyle(
-                  fontFamily: 'Poppins',
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14),
-              textAlign: TextAlign.center,
-            ),
+
+            Text('Made with ❤ ️ in India',style: TextStyle(color: Colors.white),)
           ],
         ),
       ),

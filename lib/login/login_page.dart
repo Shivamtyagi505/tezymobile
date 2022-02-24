@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quikieappps1/api/datafromfrontend/login_data_class.dart';
-import 'package:quikieappps1/api/login/login_model.dart';
-import 'package:quikieappps1/api/login/login_services.dart';
-import 'package:quikieappps1/home/bottomNavigation.dart';
 import 'package:quikieappps1/login/login_page_controller.dart';
 import 'package:quikieappps1/screens/welcome1.dart';
-import 'package:quikieappps1/util/shared_preferences.dart';
 import 'package:quikieappps1/util/validators.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PreLoginScreeDesign extends StatefulWidget {
   @override

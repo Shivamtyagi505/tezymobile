@@ -45,7 +45,6 @@ Future<AllCustomerModel> getCustomerApi() async {
     Uri.parse(addCustomer),
     headers: <String, String>{
      'Authorization': 'Bearer $jwt',
-     'Content-Type': 'application/json; charset=UTF-8',
     },
   );
 

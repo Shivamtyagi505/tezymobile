@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/api/select_design/select_design_model.dart';
 import 'package:quikieappps1/api/select_design/select_design_services.dart';
@@ -36,12 +35,6 @@ class BlouseSelectDesignController extends ChangeNotifier {
       hashTags.add(selectBackDesignClass![i].attributes!.hashTag);
     }
     print(hashTags);
-
-// final splitNames= names.split(',');
-// List splitList;
-//   for (int i = 0; i < split.length; i++){
-//     splitList.add(splitNames[i]);
-// }
   }
 
   Widget imageContainer(String text) {

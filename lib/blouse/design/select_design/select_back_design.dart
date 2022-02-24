@@ -507,7 +507,7 @@ class select_back_designState extends State<select_back_design> {
                   BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Previous.png')),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/Next1.png'),
-                    label: '',
+                    label:'',
                   ),
                 ],
               ),
