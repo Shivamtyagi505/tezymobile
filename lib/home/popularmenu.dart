@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/bottomdesign/selectcustomerbottom.dart';
-import 'package:quikieappps1/customer/selectcustomer.dart';
+import 'package:quikieappps1/customer/select_customer/selectcustomer.dart';
 import 'package:quikieappps1/other_design/selectcustomerother.dart';
 import 'package:quikieappps1/topdesign/selectcustomertop.dart';
 

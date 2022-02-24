@@ -434,11 +434,11 @@ class select_front_designState extends State<select_front_design> {
                 },
                 currentIndex: 0,
                 items: [
-                  BottomNavigationBarItem(title: Text(''), icon: Image.asset('assets/images/Previous.png')),
+                  BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Previous.png')),
 
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/Group 416.png'),
-                    title: Text(''),
+                    label: '',
                   ),
                 ],
               ),

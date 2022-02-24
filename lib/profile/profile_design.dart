@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quikieappps1/customer/updateboutiquedetails.dart';
+import 'package:quikieappps1/customer/update_boutique/updateboutiquedetails.dart';
 
 class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {

@@ -23,6 +23,8 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
   bool isSelected = false;
   bool ontap = false;
   List<int> arrange = [];
+  List<double> items  =[];
+  List<double> isSelectedItems  =[];
   List<String> _listViewData = [
     'Shoulder',
     'Full Length',
@@ -297,6 +299,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                           },
                           itemCount: _listViewData.length,
                           itemBuilder: (context, index) {
+                            isSelectedItems = getdataval[widget.selectVal]!;
                             mesuringList.add('Soulder');
                             return InkWell(
                               onTap: () {
@@ -338,6 +341,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                     subGridCountPerGrid: 10,
                                     subGridWidth: 8,
                                     onSelectedChanged: (value) {
+                                       var updatedValue = getUpdatedValue(value);
+                                      getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])] = updatedValue + 1;
+                                      isSelectedItems = getdataval[widget.selectVal]!;
+                                      print(isSelectedItems);
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');
@@ -439,7 +446,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                           },
                           itemCount: _listViewData.length,
                           itemBuilder: (context, index) {
-                            // print(getdataval[widget.selectVal][returnindex.indexOf(_listViewData[index])]);
+                            items = getdataval[widget.selectVal]!;
                             return InkWell(
                               onTap: () {
                                 // selectedImage = images[index];
@@ -482,6 +489,7 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                     onSelectedChanged: (value) {
                                       var updatedValue = getUpdatedValue(value);
                                       getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])] = updatedValue + 1;
+                                      items = getdataval[widget.selectVal]!;
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');

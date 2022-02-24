@@ -151,8 +151,6 @@ class _AddCustomerState extends State<AddCustomer> {
                             ),
                           ],
                         ),
-                        // (_futureAddCustomerModel == null)
-                        // ?
                         MaterialButton(
                           onPressed: ()async {
                             if (_formKey.currentState!.validate()) {
@@ -170,7 +168,6 @@ class _AddCustomerState extends State<AddCustomer> {
                           height: 54,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30.0))),
                         )
-                        // : buildAddCustomerFutureBuilder(),
                       ],
                     ),
                   ),
@@ -182,52 +179,4 @@ class _AddCustomerState extends State<AddCustomer> {
       );
     });
   }
-
-//   Future<AddCustomerModel>? _futureAddCustomerModel;
-//   void fetchAddCustomerApi() {
-//     String name = nameController.text;
-//     String mobile = mobileController.text;
-//     setState(() {
-//       _futureAddCustomerModel = addCustomerApi(AddCustomerData(name: name, mobile: mobile));
-//     });
-
-//     // print("email:  ${email} password: ${password} name: ${name}");
-//   }
-
-//   FutureBuilder<AddCustomerModel> buildAddCustomerFutureBuilder() {
-//     return FutureBuilder<AddCustomerModel>(
-//       future: _futureAddCustomerModel,
-//       builder: (context, snapshot) {
-//         if (snapshot.hasData) {
-//           print(snapshot.data);
-//           WidgetsBinding.instance!.addPostFrameCallback((_) {
-//             Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
-//           });
-//         } else if (snapshot.hasError) {
-//           return Container(
-//             height: 55,
-//             width: 296,
-//             margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-//             decoration: const BoxDecoration(
-//               color: Color(0xff029EFF),
-//               borderRadius: BorderRadius.all(Radius.circular(80.0)),
-//             ),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceAround,
-//               children: [
-//                 Text(
-//                   'Sign Up',
-//                   style: TextStyle(color: Colors.white, fontSize: 18),
-//                   textAlign: TextAlign.center,
-//                 ),
-//               ],
-//             ),
-//           );
-//         }
-
-//         return const CircularProgressIndicator();
-//       },
-//     );
-//   }
-// }
 }

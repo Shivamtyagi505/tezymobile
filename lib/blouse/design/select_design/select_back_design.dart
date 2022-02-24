@@ -504,10 +504,10 @@ class select_back_designState extends State<select_back_design> {
                 },
                 currentIndex: 0,
                 items: [
-                  BottomNavigationBarItem(title: Text(''), icon: Image.asset('assets/images/Previous.png')),
+                  BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Previous.png')),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/Next1.png'),
-                    title: Text(''),
+                    label:'',
                   ),
                 ],
               ),

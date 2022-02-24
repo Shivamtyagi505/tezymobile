@@ -8,6 +8,7 @@ import 'package:quikieappps1/blouse/Drawing_Pad.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
 import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
 import 'package:quikieappps1/blouse/place_order/placeOrder.dart';
+import 'package:quikieappps1/screens/hangings/hangings.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
@@ -26,23 +27,17 @@ class PreviewOrdersBlouse extends StatefulWidget {
 
 class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
   File? _image;
-  File? _galleryImage;
-  var loading = false;
   final picker = ImagePicker();
+  bool isFabric = false;
 
   Future _imgFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
-      _image = File(pickedFile!.path);
-    });
-  }
-
-  Future _imgFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      _galleryImage = File(pickedFile!.path);
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        isFabric = false;
+      }
     });
   }
 
@@ -70,41 +65,33 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
   }
 
   Widget picWithHead(String head, String subHead) {
-    return Flexible(
-      child: Container(
-        padding: EdgeInsets.all(5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              head,
+    return Container(
+      padding: EdgeInsets.all(5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            head,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: primaryColor),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+            child: Text(
+              subHead,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: primaryColor),
+              style: TextStyle(fontSize: 8, fontWeight: FontWeight.w400, color: labelGrey),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              child: Text(
-                subHead,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 8, fontWeight: FontWeight.w400, color: labelGrey),
-              ),
+          ),
+          Container(
+            height: 124,
+            decoration: BoxDecoration(color: Color.fromRGBO(196, 196, 196, 1), borderRadius: BorderRadius.circular(20)),
+            child: Image.asset(
+              'assets/images/Click Open Gallery.png',
+              fit: BoxFit.fill,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Drawing_Pad()));
-              },
-              child: Container(
-                height: 124,
-                decoration:
-                    BoxDecoration(color: Color.fromRGBO(196, 196, 196, 1), borderRadius: BorderRadius.circular(20)),
-                child: Image.asset(
-                  'assets/images/Click Open Gallery.png',
-                  fit: BoxFit.fill,
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -259,80 +246,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                             children: [
                               Row(
                                 children: [
-                                  Container(
-                                    child: Expanded(
-                                      child: Stack(alignment: Alignment.bottomCenter, children: [
-                                        InkWell(
-                                          onTap: () {
-                                            _imgFromCamera();
-                                          },
-                                          child: Container(
-                                            height: 200,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                bottomLeft: Radius.circular(20),
-                                                topRight: Radius.circular(0),
-                                                bottomRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            child: _image != null
-                                                ? ClipRRect(
-                                                    borderRadius: BorderRadius.circular(20),
-                                                    child: Image.file(
-                                                      _image!,
-                                                      width: double.infinity,
-                                                      height: 100,
-                                                      fit: BoxFit.fill,
-                                                    ),
-                                                  )
-                                                : Center(
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.camera_alt_outlined,
-                                                          size: 40,
-                                                          color: Colors.black,
-                                                        ),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Container(
-                                                            margin: EdgeInsets.symmetric(horizontal: 40),
-                                                            child: Text(
-                                                              'Take Customer Fabric Photo',
-                                                              textAlign: TextAlign.center,
-                                                            ))
-                                                      ],
-                                                    ),
-                                                  ),
-                                          ),
-                                        ),
-                                        Container(
-                                            height: 28,
-                                            decoration: BoxDecoration(
-                                              color: labelGrey,
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(0),
-                                                bottomRight: Radius.circular(0),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Expanded(child: SizedBox()),
-                                                Text(
-                                                  'Customer Fabric',
-                                                  style: TextStyle(color: textColor, fontSize: 12),
-                                                ),
-                                                Expanded(child: SizedBox()),
-                                              ],
-                                            ))
-                                      ]),
-                                    ),
-                                  ),
+                                  fabricWidget(),
                                   SizedBox(
                                     width: 5,
                                   ),
@@ -623,7 +537,28 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                               SizedBox(height: 10),
                             ],
                           ),
-                        )
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Hangings()),
+                                  );
+                                },
+                                child: picWithHead('HANGINGS', '')),
+                            InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Drawing_Pad()),
+                                  );
+                                },
+                                child: picWithHead('DRAWING PAD', '')),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -647,10 +582,16 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                 FloatingActionButton(
                   heroTag: null,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PlaceOrder()),
-                    );
+                    if (_image != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PlaceOrder(fabricImage: _image,)),
+                      );
+                    } else {
+                      setState(() {
+                        isFabric = true;
+                      });
+                    }
                   },
                   child: Image.asset("assets/images/Group 416 (2).png"),
                 )
@@ -658,5 +599,164 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
             ),
           ));
     });
+  }
+
+  Container fabricWidget() {
+    return isFabric == false
+        ? Container(
+            child: Expanded(
+              child: Stack(alignment: Alignment.bottomCenter, children: [
+                InkWell(
+                  onTap: () {
+                    _imgFromCamera();
+                  },
+                  child: Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                        topRight: Radius.circular(0),
+                        bottomRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: _image != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomLeft: Radius.circular(20),
+                              topRight: Radius.circular(0),
+                              bottomRight: Radius.circular(20),
+                            ),
+                            child: Image.file(
+                              _image!,
+                              width: double.infinity,
+                              height: 100,
+                              fit: BoxFit.fill,
+                            ),
+                          )
+                        : Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 40,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 40),
+                                    child: Text(
+                                      'Take Customer Fabric Photo',
+                                      textAlign: TextAlign.center,
+                                    ))
+                              ],
+                            ),
+                          ),
+                  ),
+                ),
+                Container(
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: labelGrey,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(0),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(child: SizedBox()),
+                        Text(
+                          'Customer Fabric',
+                          style: TextStyle(color: textColor, fontSize: 12),
+                        ),
+                        Expanded(child: SizedBox()),
+                      ],
+                    ))
+              ]),
+            ),
+          )
+        : Container(
+            child: Expanded(
+              child: Stack(alignment: Alignment.bottomCenter, children: [
+                InkWell(
+                  onTap: () {
+                    _imgFromCamera();
+                  },
+                  child: Container(
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.red),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                        topRight: Radius.circular(0),
+                        bottomRight: Radius.circular(20),
+                      ),
+                    ),
+                    child: _image != null
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.file(
+                              _image!,
+                              width: double.infinity,
+                              height: 100,
+                              fit: BoxFit.fill,
+                            ),
+                          )
+                        : Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 40,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 40),
+                                    child: Text(
+                                      'Take Customer Fabric Photo',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(color: Colors.red),
+                                    ))
+                              ],
+                            ),
+                          ),
+                  ),
+                ),
+                Container(
+                    height: 28,
+                    decoration: BoxDecoration(
+                      color: labelGrey,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(0),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(child: SizedBox()),
+                        Text(
+                          'Customer Fabric',
+                          style: TextStyle(color: textColor, fontSize: 12),
+                        ),
+                        Expanded(child: SizedBox()),
+                      ],
+                    ))
+              ]),
+            ),
+          );
   }
 }
