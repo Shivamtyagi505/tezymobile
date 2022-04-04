@@ -1,12 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:quikieappps1/api/add_customer/add_customer_model.dart';
-import 'package:quikieappps1/api/add_customer/add_customer_services.dart';
-import 'package:quikieappps1/api/datafromfrontend/add_customer_class.dart';
-import 'package:quikieappps1/blouse/input_sample.dart';
 import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
-import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:quikieappps1/util/validators.dart';
 
 class AddCustomer extends StatefulWidget {
@@ -110,6 +105,7 @@ class _AddCustomerState extends State<AddCustomer> {
                               child: Container(
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
                                 child: TextFormField(
+                                  maxLength: 15,
                                   validator: (value) => validateNames(value!),
                                   controller: value.nameController,
                                   decoration: InputDecoration(
@@ -152,7 +148,7 @@ class _AddCustomerState extends State<AddCustomer> {
                           ],
                         ),
                         MaterialButton(
-                          onPressed: ()async {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
                               value.fetchAddCustomer(context);

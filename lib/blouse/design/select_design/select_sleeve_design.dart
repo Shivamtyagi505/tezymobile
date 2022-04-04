@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
 import 'package:quikieappps1/blouse/design/after_selection.dart';
-import 'package:quikieappps1/blouse/design/select_design/select_back_design.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse.dart';
@@ -25,57 +24,36 @@ class select_sleeve_design extends StatefulWidget {
 
 class select_sleeve_designState extends State<select_sleeve_design> {
   int? _index;
-  File? _image;
-  final picker = ImagePicker();
-  DesignImage? sleeveDesignImage = DesignImage();
-
-  Future _imgFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) _image = File(pickedFile.path);
-      sleeveDesignImage!.image = _image;
-      sleeveDesignImage!.type = 'Camera';
-    });
-  }
-
-  Future _imgFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) _image = File(pickedFile.path);
-      sleeveDesignImage!.image = _image;
-      sleeveDesignImage!.type = 'Gallery';
-    });
-  }
 
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+          return Consumer<BlouseSelectDesignController>(builder: (context, value, child) {
+            return SafeArea(
+              child: Container(
+                child: new Wrap(
+                  children: <Widget>[
+                    new ListTile(
+                        leading: new Icon(Icons.photo_library),
+                        title: new Text('Photo Library'),
+                        onTap: () {
+                          value.imgFromGallerySleeves();
+                          Navigator.of(context).pop();
+                        }),
+                    new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text('Camera'),
                       onTap: () {
-                        _imgFromGallery();
+                        value.imgFromCameraSleeves();
                         Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          });
         });
   }
 
@@ -316,12 +294,13 @@ class select_sleeve_designState extends State<select_sleeve_design> {
           );
   }
 
-  Widget sleevesDesign(String text, var image) {
+  Widget sleevesDesign(String text, var image, BlouseSelectDesignController value) {
     return InkWell(
       onDoubleTap: () {
         setState(() {
-          sleeveDesignImage!.image = image;
-          sleeveDesignImage!.type = 'Categorie';
+          value.sleeveDesignImage!.image = image;
+          value.sleeveDesignImage!.type = 'Categorie';
+          value.sleevesImageUrl = image;
         });
       },
       onTap: () async {
@@ -333,8 +312,9 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                     )));
         if (data != null) {
           setState(() {
-            sleeveDesignImage!.image = data;
-            sleeveDesignImage!.type = 'Categorie';
+            value.sleeveDesignImage!.image = data;
+            value.sleeveDesignImage!.type = 'Categorie';
+            value.sleevesImageUrl = image;
           });
         }
       },
@@ -460,7 +440,7 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                         children: [
                           frontImageContainer("Front Design"),
                           backImageContainer("Back Design"),
-                          sleeveDesignImage!.image == null
+                          value.sleeveDesignImage!.image == null
                               ? Container(
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.topRight, children: [
@@ -512,8 +492,9 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.topRight, children: [
                                       Stack(alignment: Alignment.bottomCenter, children: [
-                                        (sleeveDesignImage!.image != null && sleeveDesignImage!.type == 'Gallery' ||
-                                                sleeveDesignImage!.type == 'Camera')
+                                        (value.sleeveDesignImage!.image != null &&
+                                                    value.sleeveDesignImage!.type == 'Gallery' ||
+                                                value.sleeveDesignImage!.type == 'Camera')
                                             ? Container(
                                                 margin: EdgeInsets.symmetric(horizontal: 3),
                                                 height: 180,
@@ -523,7 +504,7 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                                                 child: ClipRRect(
                                                     borderRadius: BorderRadius.circular(8),
                                                     child: Image.file(
-                                                      sleeveDesignImage!.image,
+                                                      value.sleeveDesignImage!.image,
                                                       fit: BoxFit.cover,
                                                     )),
                                               )
@@ -536,7 +517,7 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                                                 child: ClipRRect(
                                                     borderRadius: BorderRadius.circular(8),
                                                     child: Image.network(
-                                                      'http://172.105.253.131:1337${sleeveDesignImage!.image}',
+                                                      'http://172.105.253.131:1337${value.sleeveDesignImage!.image}',
                                                       fit: BoxFit.cover,
                                                     )),
                                               ),
@@ -567,7 +548,7 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                                         child: InkWell(
                                             onTap: () {
                                               setState(() {
-                                                sleeveDesignImage!.image = null;
+                                                value.sleeveDesignImage!.image = null;
                                               });
                                             },
                                             child: Icon(Icons.close, size: 15, color: Colors.white)),
@@ -591,7 +572,8 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                           itemBuilder: (BuildContext context, int index) => sleevesDesign(
                               value.selectSleeveDesignClass![index].attributes!.productName!,
                               value.selectSleeveDesignClass![index].attributes!.image!.data!.attributes!.formats!.large!
-                                  .url),
+                                  .url,
+                              value),
                           staggeredTileBuilder: (index) {
                             return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
                           }),
@@ -612,7 +594,9 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                     Navigator.pop(context);
                   }
                   if (val == 1) {
-                    if (widget.frontImage == null && widget.backImage == null && sleeveDesignImage!.image == null) {
+                    if (widget.frontImage == null &&
+                        widget.backImage == null &&
+                        value.sleeveDesignImage!.image == null) {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -645,16 +629,17 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                         },
                       );
                     } else {
+                      // value.updateValue();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PreviewOrdersBlouse(
                                   frontImage: widget.frontImage,
                                   backImage: widget.backImage,
-                                  sleeveImage: sleeveDesignImage!.image,
+                                  sleeveImage: value.sleeveDesignImage!.image,
                                   frontType: widget.frontType,
                                   backType: widget.backType,
-                                  sleeveType: sleeveDesignImage!.type,
+                                  sleeveType: value.sleeveDesignImage!.type,
                                 )),
                       );
                     }

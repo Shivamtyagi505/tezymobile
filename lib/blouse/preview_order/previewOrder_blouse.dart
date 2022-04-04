@@ -8,6 +8,7 @@ import 'package:quikieappps1/blouse/Drawing_Pad.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
 import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
 import 'package:quikieappps1/blouse/place_order/placeOrder.dart';
+import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
 import 'package:quikieappps1/screens/hangings/hangings.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:quikieappps1/assets/colors.dart';
@@ -26,41 +27,28 @@ class PreviewOrdersBlouse extends StatefulWidget {
 }
 
 class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
-  File? _image;
-  final picker = ImagePicker();
-  bool isFabric = false;
-
-  Future _imgFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        isFabric = false;
-      }
-    });
-  }
-
   void _showCameraPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+          return Consumer<PreviewOrderBlouseController>(builder: (context, value, child) {
+            return SafeArea(
+              child: Container(
+                child: new Wrap(
+                  children: <Widget>[
+                    new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text('Camera'),
+                      onTap: () {
+                        value.imgFromCameraFabric();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          });
         });
   }
 
@@ -170,53 +158,110 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
 
   Widget appBar() {
     return Consumer<AddCustomerController>(builder: (context, value, child) {
-      return Column(
-        children: [
-          SizedBox(height: 35),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 15,
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: primaryColor,
-                ),
-                onPressed: () {
-                  Navigator.pop(context, true);
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
+      //print('name value is  ${value.addCustomerModel?.data?.attributes.name}');
+      //return value.allCustomerModel!.data!.attributes!.name != null ?
+      return value.addCustomerModel?.data?.attributes.name != null
+          ? Column(
+              children: [
+                SizedBox(height: 35),
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("${value.addCustomerModel!.data!.attributes.name}",
-                        style: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w500)),
-                    SizedBox(height: 5),
-                    Text("${value.addCustomerModel!.data!.attributes.mobile}",
-                        style: TextStyle(color: grey, fontSize: 12, fontWeight: FontWeight.w500)),
-                    SizedBox(height: 5),
-                    Row(
-                      children: [
-                        Text("Order Type : ", style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
-                        Text("Hand work Blouse",
-                            style: TextStyle(color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w500)),
-                      ],
+                    SizedBox(
+                      width: 15,
                     ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: primaryColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${value.addCustomerModel!.data!.attributes.name}",
+                              style: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w500)),
+                          SizedBox(height: 5),
+                          Text("${value.addCustomerModel!.data!.attributes.mobile}",
+                              style: TextStyle(color: grey, fontSize: 12, fontWeight: FontWeight.w500)),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Text("Order Type : ",
+                                  style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
+                              Text("Hand work Blouse",
+                                  style: TextStyle(color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w500)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // }
+                    // ),
                   ],
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-            child: Divider(thickness: 1.5),
-          ),
-        ],
-      );
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                  child: Divider(thickness: 1.5),
+                ),
+              ],
+            )
+          : Column(
+              children: [
+                SizedBox(height: 35),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 15,
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: primaryColor,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Consumer<SelectCustomerController>(builder: (context, value, child) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("",
+                                  style: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w500)),
+                              SizedBox(height: 5),
+                              Text("", style: TextStyle(color: grey, fontSize: 12, fontWeight: FontWeight.w500)),
+                              SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Text("Order Type : ",
+                                      style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
+                                  Text("Hand work Blouse",
+                                      style:
+                                          TextStyle(color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w500)),
+                                ],
+                              ),
+                            ],
+                          );
+                        })),
+                    // }
+                    // ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                  child: Divider(thickness: 1.5),
+                ),
+              ],
+            );
     });
   }
 
@@ -246,7 +291,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                             children: [
                               Row(
                                 children: [
-                                  fabricWidget(),
+                                  fabricWidget(value),
                                   SizedBox(
                                     width: 5,
                                   ),
@@ -582,14 +627,17 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                 FloatingActionButton(
                   heroTag: null,
                   onPressed: () {
-                    if (_image != null) {
+                    if (value.image != null) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PlaceOrder(fabricImage: _image,)),
+                        MaterialPageRoute(
+                            builder: (context) => PlaceOrder(
+                                  fabricImage: value.image,
+                                )),
                       );
                     } else {
                       setState(() {
-                        isFabric = true;
+                        value.isFabric = true;
                       });
                     }
                   },
@@ -601,14 +649,14 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
     });
   }
 
-  Container fabricWidget() {
-    return isFabric == false
+  Container fabricWidget(PreviewOrderBlouseController value) {
+    return value.isFabric == false
         ? Container(
             child: Expanded(
               child: Stack(alignment: Alignment.bottomCenter, children: [
                 InkWell(
                   onTap: () {
-                    _imgFromCamera();
+                    value.imgFromCameraFabric();
                   },
                   child: Container(
                     height: 200,
@@ -621,7 +669,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child: _image != null
+                    child: value.image != null
                         ? ClipRRect(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
@@ -630,7 +678,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                               bottomRight: Radius.circular(20),
                             ),
                             child: Image.file(
-                              _image!,
+                              value.image!,
                               width: double.infinity,
                               height: 100,
                               fit: BoxFit.fill,
@@ -687,7 +735,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
               child: Stack(alignment: Alignment.bottomCenter, children: [
                 InkWell(
                   onTap: () {
-                    _imgFromCamera();
+                    value.imgFromCameraFabric();
                   },
                   child: Container(
                     height: 200,
@@ -701,11 +749,11 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child: _image != null
+                    child: value.image != null
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: Image.file(
-                              _image!,
+                              value.image!,
                               width: double.infinity,
                               height: 100,
                               fit: BoxFit.fill,

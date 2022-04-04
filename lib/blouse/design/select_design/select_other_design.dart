@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
+import 'package:quikieappps1/blouse/measurement/measurement.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_back_design.dart';
 
 class selectotherdesign extends StatefulWidget {

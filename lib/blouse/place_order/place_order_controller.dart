@@ -3,13 +3,17 @@ import 'package:intl/intl.dart';
 import 'package:quikieappps1/api/place_order/invoice_number_model.dart';
 import 'package:quikieappps1/api/place_order/place_order_services.dart';
 
+import '../../util/custom_datePicker/date_picker_timeline.dart';
+
 class PlaceOrderController extends ChangeNotifier {
   InvoiceNumber? invoiceNumber;
   String dropdownValue = '';
   var month;
-  int counter = 0;
+  int quantity = 0;
   int newContainer = 0;
   TextEditingController textEditingController = TextEditingController();
+  DatePickerController controller = DatePickerController();
+  DateTime selectedValue = DateTime.now();
 
   Future<void> fetchInvoiceNumberSuggestions() async {
     invoiceNumber = await getInvoiceNumberSuggestion();
@@ -17,12 +21,12 @@ class PlaceOrderController extends ChangeNotifier {
   }
 
   void incrementCounter() {
-    counter++;
+    quantity++;
     notifyListeners();
   }
 
   void decrementCounter() {
-    counter--;
+    quantity--;
     notifyListeners();
   }
 
@@ -31,7 +35,7 @@ class PlaceOrderController extends ChangeNotifier {
       month = 1;
     } else if (dropdownValue == 'Feb') {
       month = 2;
-    } else if (dropdownValue == 'March') {
+    } else if (dropdownValue == 'Mar') {
       month = 3;
     } else if (dropdownValue == 'April') {
       month = 4;
@@ -61,21 +65,21 @@ class PlaceOrderController extends ChangeNotifier {
     month = dateString.month;
     var formatDate = DateFormat('MMM').format(dateString);
     dropdownValue = formatDate;
-    // notifyListeners();
+    notifyListeners();
   }
 
   double? get grandTotalAmount {
     if (textEditingController.text.isEmpty) {
       return 0;
     } else {
-      if (counter == 0) {
+      if (quantity == 0) {
         return double.parse(textEditingController.text);
       } else {
         if (newContainer == 0) {
-          double value = double.parse(textEditingController.text) * counter;
+          double value = double.parse(textEditingController.text) * quantity;
           return value;
         } else {
-          double value = double.parse(textEditingController.text) * counter;
+          double value = double.parse(textEditingController.text) * quantity;
           return value * (newContainer + 1);
         }
       }

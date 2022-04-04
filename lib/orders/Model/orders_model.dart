@@ -93,7 +93,7 @@ class TotalBill {
   final String? grandTotalPayment;
   final String? balancePayment;
   final bool? automaticBillCompletion;
-  final bool? manualBillCompletion;
+  late  bool? manualBillCompletion;
   final String? customerName;
 
   factory TotalBill.fromJson(Map<String, dynamic> json) => TotalBill(

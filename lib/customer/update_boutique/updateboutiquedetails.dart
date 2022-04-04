@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/blouse/input_sample.dart';
 import 'package:quikieappps1/customer/update_boutique/update_boutique_controller.dart';
@@ -29,7 +31,8 @@ class UpdateBoutiqueDetailsDesign extends State<UpdateBoutiqueDetails> {
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height * 0.15,
-                  padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).padding.top + 27, 0, 0),
+                  padding: EdgeInsets.fromLTRB(
+                      0, MediaQuery.of(context).padding.top + 27, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -50,7 +53,8 @@ class UpdateBoutiqueDetailsDesign extends State<UpdateBoutiqueDetails> {
                           children: [
                             Text(
                               "Boutique Detiles",
-                              style: TextStyle(fontSize: 25, color: Color(0xFF032B77)),
+                              style: TextStyle(
+                                  fontSize: 25, color: Color(0xFF032B77)),
                             ),
                             Text("Add Customer"),
                           ],
@@ -70,19 +74,31 @@ class UpdateBoutiqueDetailsDesign extends State<UpdateBoutiqueDetails> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          margin: EdgeInsets.all(15),
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xff032B77),
-                            border: Border.all(
-                              color: Color.fromRGBO(3, 43, 119, 10),
+                        Stack(children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.all(15),
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xff032B77),
+                              border: Border.all(
+                                color: Color.fromRGBO(3, 43, 119, 10),
+                              ),
                             ),
+                            child: Image.asset(
+                                'assets/images/addcustomerprofile.png'),
                           ),
-                          child: Image.asset('assets/images/addcustomerprofile.png'),
-                        ),
+                          Positioned(left: 95,top: 75,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle
+                                ),
+                                child: SvgPicture.asset('assets/images/plus.svg',
+                                color: Color(0xff280D78)),
+                              ),)
+                        ]),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -209,7 +225,9 @@ class UpdateBoutiqueDetailsDesign extends State<UpdateBoutiqueDetails> {
                           color: Color(0xFF032B77),
                           minWidth: 283,
                           height: 50,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(24.0))),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(24.0))),
                         ),
                       ],
                     ),

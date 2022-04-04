@@ -423,7 +423,7 @@ class TabBarWidget extends StatelessWidget {
     return GestureDetector(
       // When the child is tapped, show a snackbar.
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => selectcustomer()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => selectCustomer()));
       },
       child: Container(
         height: 95,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:quikieappps1/bill/generate_bill_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
+import 'package:quikieappps1/blouse/measurement/measurement_controller.dart';
 import 'package:quikieappps1/blouse/place_order/place_order_controller.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
 import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
@@ -28,6 +30,8 @@ void main() {
       ChangeNotifierProvider(create: (ctx) => SelectCustomerController()),
       ChangeNotifierProvider(create: (ctx) => SelectHangingsController()),
       ChangeNotifierProvider(create: (ctx) => UpdateBoutiqueController()),
+      ChangeNotifierProvider(create: (ctx) => GenerateBillController()),
+      ChangeNotifierProvider(create: (ctx) => MeasurementController()),
       ChangeNotifierProvider<ImageNotif>.value(
         value: ImageNotif(),
       ),
@@ -39,22 +43,22 @@ class PreLoginScree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "PreLoginScreeDesign",
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.white,
-          fontFamily: "Poppins",
-          appBarTheme: AppBarTheme(
-            shadowColor: Colors.blue,
-            textTheme: TextTheme(
-              headline1: TextStyle(
-                  // fontFamily: "OpenSans",
-                  ),
-            ),
+      debugShowCheckedModeBanner: false,
+      title: "PreLoginScreeDesign",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        accentColor: Colors.white,
+        fontFamily: "Poppins",
+        appBarTheme: AppBarTheme(
+          shadowColor: Colors.blue,
+          textTheme: TextTheme(
+            headline1: TextStyle(
+                // fontFamily: "OpenSans",
+                ),
           ),
         ),
-        home: SplashScreen(),
+      ),
+      home: SplashScreen(),
     );
   }
 }

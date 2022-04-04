@@ -20,58 +20,36 @@ class select_back_design extends StatefulWidget {
 
 class select_back_designState extends State<select_back_design> {
   int? _index;
-  File? _image;
-  final picker = ImagePicker();
-  var backImage;
-  DesignImage? backDesignImage = DesignImage();
-
-  Future _imgFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) _image = File(pickedFile.path);
-      backDesignImage!.image = _image;
-      backDesignImage!.type = 'Camera';
-    });
-  }
-
-  Future _imgFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) _image = File(pickedFile.path);
-      backDesignImage!.image = _image;
-      backDesignImage!.type = 'Gallery';
-    });
-  }
 
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+          return Consumer<BlouseSelectDesignController>(builder: (context, value, child) {
+            return SafeArea(
+              child: Container(
+                child: new Wrap(
+                  children: <Widget>[
+                    new ListTile(
+                        leading: new Icon(Icons.photo_library),
+                        title: new Text('Photo Library'),
+                        onTap: () {
+                          value.imgFromGalleryBack();
+                          Navigator.of(context).pop();
+                        }),
+                    new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text('Camera'),
                       onTap: () {
-                        _imgFromGallery();
+                        value.imgFromCameraBack();
                         Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          });
         });
   }
 
@@ -200,12 +178,13 @@ class select_back_designState extends State<select_back_design> {
           );
   }
 
-  Widget backDesign(String text, var image) {
+  Widget backDesign(String text, var image, BlouseSelectDesignController value) {
     return InkWell(
       onDoubleTap: () {
         setState(() {
-          backDesignImage!.image = image;
-          backDesignImage!.type = 'Categorie';
+          value.backDesignImage!.image = image;
+          value.backDesignImage!.type = 'Categorie';
+          value.backImageUrl = image;
         });
       },
       onTap: () async {
@@ -217,8 +196,9 @@ class select_back_designState extends State<select_back_design> {
                     )));
         if (data != null) {
           setState(() {
-            backDesignImage!.image = data;
-            backDesignImage!.type = 'Categorie';
+            value.backDesignImage!.image = data;
+            value.backDesignImage!.type = 'Categorie';
+            value.backImageUrl = image;
           });
         }
       },
@@ -343,7 +323,7 @@ class select_back_designState extends State<select_back_design> {
                       child: Row(
                         children: [
                           imageContainerDependsOnFrontSection("Front Design"),
-                          backDesignImage!.image == null
+                          value.backDesignImage!.image == null
                               ? Container(
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.topRight, children: [
@@ -395,8 +375,9 @@ class select_back_designState extends State<select_back_design> {
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.topRight, children: [
                                       Stack(alignment: Alignment.bottomCenter, children: [
-                                        (backDesignImage!.image != null && backDesignImage!.type == 'Gallery' ||
-                                                backDesignImage!.type == 'Camera')
+                                        (value.backDesignImage!.image != null &&
+                                                    value.backDesignImage!.type == 'Gallery' ||
+                                                value.backDesignImage!.type == 'Camera')
                                             ? Container(
                                                 margin: EdgeInsets.symmetric(horizontal: 3),
                                                 height: 180,
@@ -406,7 +387,7 @@ class select_back_designState extends State<select_back_design> {
                                                 child: ClipRRect(
                                                     borderRadius: BorderRadius.circular(8),
                                                     child: Image.file(
-                                                      backDesignImage!.image,
+                                                      value.backDesignImage!.image,
                                                       fit: BoxFit.cover,
                                                     )),
                                               )
@@ -419,7 +400,7 @@ class select_back_designState extends State<select_back_design> {
                                                 child: ClipRRect(
                                                     borderRadius: BorderRadius.circular(8),
                                                     child: Image.network(
-                                                      'http://172.105.253.131:1337${backDesignImage!.image}',
+                                                      'http://172.105.253.131:1337${value.backDesignImage!.image}',
                                                       fit: BoxFit.cover,
                                                     )),
                                               ),
@@ -450,7 +431,7 @@ class select_back_designState extends State<select_back_design> {
                                         child: InkWell(
                                             onTap: () {
                                               setState(() {
-                                                backDesignImage!.image = null;
+                                                value.backDesignImage!.image = null;
                                               });
                                             },
                                             child: Icon(Icons.close, size: 15, color: Colors.white)),
@@ -475,7 +456,8 @@ class select_back_designState extends State<select_back_design> {
                           itemBuilder: (BuildContext context, int index) => backDesign(
                               value.selectBackDesignClass![index].attributes!.productName!,
                               value.selectBackDesignClass![index].attributes!.image!.data!.attributes!.formats!.large!
-                                  .url),
+                                  .url,
+                              value),
                           staggeredTileBuilder: (index) {
                             return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
                           }),
@@ -499,7 +481,12 @@ class select_back_designState extends State<select_back_design> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => select_sleeve_design(frontImage:widget.frontImage, backImage:backDesignImage!.image,frontType: widget.type,backType: backDesignImage!.type,)));
+                            builder: (context) => select_sleeve_design(
+                                  frontImage: widget.frontImage,
+                                  backImage: value.backDesignImage!.image,
+                                  frontType: widget.type,
+                                  backType: value.backDesignImage!.type,
+                                )));
                   }
                 },
                 currentIndex: 0,
@@ -507,7 +494,7 @@ class select_back_designState extends State<select_back_design> {
                   BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Previous.png')),
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/Next1.png'),
-                    label:'',
+                    label: '',
                   ),
                 ],
               ),

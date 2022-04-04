@@ -19,7 +19,7 @@ class reviewState extends State<Review> {
   late OrdersModel review2;
 
   void modelData() async {
-    review2 = await ordersModel();
+    review2 = await fetchOrders();
     setState(() {
       review = review2;
     });
@@ -29,7 +29,7 @@ class reviewState extends State<Review> {
   void initState() {
     modelData();
     reviewFutureBuilder();
-    _futureReviewModel = ordersModel();
+    _futureReviewModel = fetchOrders();
     super.initState();
   }
 

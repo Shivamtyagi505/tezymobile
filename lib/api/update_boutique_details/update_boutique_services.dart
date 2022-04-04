@@ -39,5 +39,23 @@ class UpdateBoutiqueData {
   String? mobileNumber;
   String? address;
 
-  UpdateBoutiqueData({this.userName, this.email, this.password, this.mobileNumber, this.address});
+  UpdateBoutiqueData(
+      {this.userName,
+      this.email,
+      this.password,
+      this.mobileNumber,
+      this.address});
 }
+
+// Future UpdateProfilePhoto() async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   String? jwt = prefs.getString('jwt');
+//
+//   final response =
+//       await http.post(Uri.parse(profilePhoto), headers: <String, String>{
+//     'Authorization': 'Bearer $jwt',
+//     'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001'
+//   });
+//
+//   if (response.statusCode == 200) {}
+// }

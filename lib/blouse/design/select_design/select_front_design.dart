@@ -9,7 +9,6 @@ import 'package:quikieappps1/blouse/design/after_selection.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_back_design.dart';
 
-
 class select_front_design extends StatefulWidget {
   @override
   select_front_designState createState() => select_front_designState();
@@ -17,59 +16,36 @@ class select_front_design extends StatefulWidget {
 
 class select_front_designState extends State<select_front_design> {
   int? _index;
-  File? _image;
-  final picker = ImagePicker();
-  DesignImage? frontDesignImage = DesignImage();
-
-  Future _imgFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      if(pickedFile != null)
-      _image = File(pickedFile.path);
-      frontDesignImage!.image = _image;
-      frontDesignImage!.type = 'Camera';
-    });
-  }
-
-  Future _imgFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      if(pickedFile != null)
-      _image = File(pickedFile.path);
-      frontDesignImage!.image = _image;
-      frontDesignImage!.type = 'Gallery';
-    });
-  }
 
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+          return Consumer<BlouseSelectDesignController>(builder: (context, value, child) {
+            return SafeArea(
+              child: Container(
+                child: new Wrap(
+                  children: <Widget>[
+                    new ListTile(
+                        leading: new Icon(Icons.photo_library),
+                        title: new Text('Photo Library'),
+                        onTap: () {
+                          value.imgFromGalleryFront();
+                          Navigator.of(context).pop();
+                        }),
+                    new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text('Camera'),
                       onTap: () {
-                        _imgFromGallery();
+                        value.imgFromCameraFront();
                         Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          });
         });
   }
 
@@ -86,12 +62,13 @@ class select_front_designState extends State<select_front_design> {
         ));
   }
 
-  Widget frontDesign(String text, var image) {
+  Widget frontDesign(String text, var image, BlouseSelectDesignController value) {
     return InkWell(
       onDoubleTap: () {
         setState(() {
-          frontDesignImage!.image = image;
-          frontDesignImage!.type = 'Categorie';
+          value.frontDesignImage!.image = image;
+          value.frontDesignImage!.type = 'Categorie';
+          value.frontImageUrl = image;
         });
       },
       onTap: () async {
@@ -103,8 +80,9 @@ class select_front_designState extends State<select_front_design> {
                     )));
         if (data != null) {
           setState(() {
-            frontDesignImage!.image = data;
-            frontDesignImage!.type = 'Categorie';
+            value.frontDesignImage!.image = data;
+            value.frontDesignImage!.type = 'Categorie';
+            value.frontImageUrl = image;
           });
         }
       },
@@ -133,14 +111,13 @@ class select_front_designState extends State<select_front_design> {
     );
   }
 
-@override
+  @override
   void initState() {
-    var provider = Provider.of<BlouseSelectDesignController>(context,listen: false);
+    var provider = Provider.of<BlouseSelectDesignController>(context, listen: false);
     provider.fetchSelectFrontDesignApi();
     provider.splitHastTag();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +210,7 @@ class select_front_designState extends State<select_front_design> {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                frontDesignImage!.image == null 
+                                value.frontDesignImage!.image == null
                                     ? Container(
                                         child: Expanded(
                                           child: Stack(alignment: Alignment.topRight, children: [
@@ -287,33 +264,35 @@ class select_front_designState extends State<select_front_design> {
                                         child: Expanded(
                                           child: Stack(alignment: Alignment.topRight, children: [
                                             Stack(alignment: Alignment.bottomCenter, children: [
-                                              (frontDesignImage!.image != null && frontDesignImage!.type == 'Gallery' || frontDesignImage!.type == 'Camera')
-                                              ?Container(
-                                                margin: EdgeInsets.symmetric(horizontal: 3),
-                                                height: 180,
-                                                decoration: BoxDecoration(
-                                                    color: Color.fromRGBO(180, 180, 180, 1),
-                                                    borderRadius: BorderRadius.circular(10)),
-                                                child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    child: Image.file(
-                                                      frontDesignImage!.image,
-                                                      fit: BoxFit.cover,
-                                              )),
-                                              )
-                                              :Container(
-                                                margin: EdgeInsets.symmetric(horizontal: 3),
-                                                height: 180,
-                                                decoration: BoxDecoration(
-                                                    color: Color.fromRGBO(180, 180, 180, 1),
-                                                    borderRadius: BorderRadius.circular(10)),
-                                                child: ClipRRect(
-                                                    borderRadius: BorderRadius.circular(8),
-                                                    child: Image.network(
-                                                      'http://172.105.253.131:1337${frontDesignImage!.image}',
-                                                      fit: BoxFit.cover,
-                                                    )),
-                                              ),
+                                              (value.frontDesignImage!.image != null &&
+                                                          value.frontDesignImage!.type == 'Gallery' ||
+                                                      value.frontDesignImage!.type == 'Camera')
+                                                  ? Container(
+                                                      margin: EdgeInsets.symmetric(horizontal: 3),
+                                                      height: 180,
+                                                      decoration: BoxDecoration(
+                                                          color: Color.fromRGBO(180, 180, 180, 1),
+                                                          borderRadius: BorderRadius.circular(10)),
+                                                      child: ClipRRect(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          child: Image.file(
+                                                            value.frontDesignImage!.image,
+                                                            fit: BoxFit.cover,
+                                                          )),
+                                                    )
+                                                  : Container(
+                                                      margin: EdgeInsets.symmetric(horizontal: 3),
+                                                      height: 180,
+                                                      decoration: BoxDecoration(
+                                                          color: Color.fromRGBO(180, 180, 180, 1),
+                                                          borderRadius: BorderRadius.circular(10)),
+                                                      child: ClipRRect(
+                                                          borderRadius: BorderRadius.circular(8),
+                                                          child: Image.network(
+                                                            'http://172.105.253.131:1337${value.frontDesignImage!.image}',
+                                                            fit: BoxFit.cover,
+                                                          )),
+                                                    ),
                                               Container(
                                                   margin: EdgeInsets.symmetric(horizontal: 3),
                                                   height: 42,
@@ -343,7 +322,7 @@ class select_front_designState extends State<select_front_design> {
                                               child: InkWell(
                                                   onTap: () {
                                                     setState(() {
-                                                      frontDesignImage!.image = null; 
+                                                      value.frontDesignImage!.image = null;
                                                     });
                                                   },
                                                   child: Icon(Icons.close, size: 15, color: Colors.white)),
@@ -351,7 +330,7 @@ class select_front_designState extends State<select_front_design> {
                                           ]),
                                         ),
                                       ),
-                               value.imageContainer("Back Design"),
+                                value.imageContainer("Back Design"),
                                 value.imageContainer("Sleeve Design"),
                               ],
                             ),
@@ -369,7 +348,8 @@ class select_front_designState extends State<select_front_design> {
                                 itemBuilder: (BuildContext context, int index) => frontDesign(
                                     value.selectFrontDesignClass![index].attributes!.productName!,
                                     value.selectFrontDesignClass![index].attributes!.image!.data!.attributes!.formats!
-                                        .large!.url),
+                                        .large!.url,
+                                    value),
                                 staggeredTileBuilder: (index) {
                                   return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
                                 }),
@@ -394,48 +374,47 @@ class select_front_designState extends State<select_front_design> {
                   }
                   if (val == 1) {
                     // if (frontImage == null) {
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return AlertDialog(
-                      //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      //       title: Text('Tezy Tailor'),
-                      //       content: Text('Select Any Front Design!!'),
-                      //       actions: [
-                      //         FlatButton(
-                      //           textColor: Colors.black,
-                      //           onPressed: () {
-                      //             Navigator.pop(context);
-                      //           },
-                      //           child: Text('CANCEL'),
-                      //         ),
-                      //         FlatButton(
-                      //           textColor: Colors.black,
-                      //           onPressed: () {
-                      //             Navigator.pop(context);
-                      //           },
-                      //           child: Text('OK'),
-                      //         ),
-                      //       ],
-                      //     );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) {
+                    //     return AlertDialog(
+                    //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    //       title: Text('Tezy Tailor'),
+                    //       content: Text('Select Any Front Design!!'),
+                    //       actions: [
+                    //         FlatButton(
+                    //           textColor: Colors.black,
+                    //           onPressed: () {
+                    //             Navigator.pop(context);
+                    //           },
+                    //           child: Text('CANCEL'),
+                    //         ),
+                    //         FlatButton(
+                    //           textColor: Colors.black,
+                    //           onPressed: () {
+                    //             Navigator.pop(context);
+                    //           },
+                    //           child: Text('OK'),
+                    //         ),
+                    //       ],
+                    //     );
                     //    },
                     //  );
                     // } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => select_back_design(
-                                  frontImage: frontDesignImage!.image,
-                                  type: frontDesignImage!.type,
-                                )),
-                      );
-                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => select_back_design(
+                                frontImage: value.frontDesignImage!.image,
+                                type: value.frontDesignImage!.type,
+                              )),
+                    );
+                  }
                   // }
                 },
                 currentIndex: 0,
                 items: [
                   BottomNavigationBarItem(label: '', icon: Image.asset('assets/images/Previous.png')),
-
                   BottomNavigationBarItem(
                     icon: Image.asset('assets/images/Group 416.png'),
                     label: '',
@@ -463,9 +442,8 @@ class select_front_designState extends State<select_front_design> {
   }
 }
 
-
-class DesignImage{
+class DesignImage {
   var image;
   String? type;
-  DesignImage({this.image,this.type});
+  DesignImage({this.image, this.type});
 }

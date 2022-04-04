@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_model.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_services.dart';
 import 'package:quikieappps1/api/datafromfrontend/add_customer_class.dart';
-import 'package:quikieappps1/blouse/input_sample.dart';
 import 'package:quikieappps1/util/custom_message.dart';
 
 class AddCustomerController extends ChangeNotifier {
@@ -18,7 +17,8 @@ class AddCustomerController extends ChangeNotifier {
       addCustomerModel = result;
       if (addCustomerModel!.data != null) {
         CustomMessage.toast('Custom Added Successfully!!');
-        Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
+        Navigator.pop(context);
+        //Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
         notifyListeners();
       }
     } catch (e) {

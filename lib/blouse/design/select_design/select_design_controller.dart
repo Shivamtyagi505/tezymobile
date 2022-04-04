@@ -1,15 +1,85 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:quikieappps1/api/select_design/select_design_model.dart';
 import 'package:quikieappps1/api/select_design/select_design_services.dart';
 import 'package:quikieappps1/assets/colors.dart';
+import 'package:quikieappps1/bill/generate_bill_controller.dart';
+import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
 
-class BlouseSelectDesignController extends ChangeNotifier {
+class BlouseSelectDesignController extends GenerateBillController {
   ReferenceImageType? selectFrontDesign;
   ReferenceImageType? selectBackDesign;
   ReferenceImageType? selectSleeveDesign;
   List<SelectDesignClass>? selectFrontDesignClass = [];
   List<SelectDesignClass>? selectBackDesignClass = [];
   List<SelectDesignClass>? selectSleeveDesignClass = [];
+  File? _frontimage;
+  final picker = ImagePicker();
+  DesignImage? frontDesignImage = DesignImage();
+  File? _backimage;
+  var backImage;
+  DesignImage? backDesignImage = DesignImage();
+  File? _sleevesimage;
+  DesignImage? sleeveDesignImage = DesignImage();
+  var frontImageUrl;
+  var backImageUrl;
+  var sleevesImageUrl;
+
+  Future imgFromCameraSleeves() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    if (pickedFile != null) _sleevesimage = File(pickedFile.path);
+    sleeveDesignImage!.image = _sleevesimage;
+    sleeveDesignImage!.type = 'Camera';
+    files.putIfAbsent('files.sleevesImage_blouse1', () => sleeveDesignImage!.image);
+    notifyListeners();
+  }
+
+  Future imgFromGallerySleeves() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    if (pickedFile != null) _sleevesimage = File(pickedFile.path);
+    sleeveDesignImage!.image = _sleevesimage;
+    sleeveDesignImage!.type = 'Gallery';
+    files.putIfAbsent('files.sleevesImage_blouse1', () => sleeveDesignImage!.image);
+    notifyListeners();
+  }
+
+  Future imgFromCameraBack() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    if (pickedFile != null) _backimage = File(pickedFile.path);
+    backDesignImage!.image = _backimage;
+    backDesignImage!.type = 'Camera';
+    files.putIfAbsent('files.backImage_blouse1', () => backDesignImage!.image);
+    notifyListeners();
+  }
+
+  Future imgFromGalleryBack() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    if (pickedFile != null) _backimage = File(pickedFile.path);
+    backDesignImage!.image = _backimage;
+    backDesignImage!.type = 'Gallery';
+    files.putIfAbsent('files.backImage_blouse1', () => backDesignImage!.image);
+    notifyListeners();
+  }
+
+  Future imgFromCameraFront() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    if (pickedFile != null) _frontimage = File(pickedFile.path);
+    frontDesignImage!.image = _frontimage;
+    frontDesignImage!.type = 'Camera';
+    files.putIfAbsent('files.frontImage_blouse1', () => frontDesignImage!.image);
+    notifyListeners();
+  }
+
+  Future imgFromGalleryFront() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    if (pickedFile != null) _frontimage = File(pickedFile.path);
+    frontDesignImage!.image = _frontimage;
+    frontDesignImage!.type = 'Gallery';
+    files.putIfAbsent('files.frontImage_blouse1', () => frontDesignImage!.image);
+    notifyListeners();
+  }
 
   Future<void> fetchSelectFrontDesignApi() async {
     selectFrontDesign = await selectDesignApi('blouse', 'front');

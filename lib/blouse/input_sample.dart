@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:quikieappps1/bodymeasure/input_sample_numberpicker.dart';
-import 'package:quikieappps1/blouse/measurement.dart';
-import 'package:quikieappps1/home/home_page/homepage.dart';
+import 'package:quikieappps1/blouse/measurement/measurement.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
 
 class input_sample extends StatefulWidget {
@@ -11,19 +9,20 @@ class input_sample extends StatefulWidget {
 }
 
 class input_sampleState extends State<input_sample> {
-  ScaleNo scaleData=ScaleNo();
+  ScaleNo scaleData = ScaleNo();
   @override
   void initState() {
     super.initState();
     scaleData.setValue(48.00);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xFFE5F3FD),
         appBar: new AppBar(
           elevation: 0.0,
-          backgroundColor:Color(0xFFE5F3FD),
+          backgroundColor: Color(0xFFE5F3FD),
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -41,8 +40,7 @@ class input_sampleState extends State<input_sample> {
               children: [
                 Text(
                   'Blouse',
-                  style: TextStyle(
-                      color: Color.fromRGBO(3, 43, 119, 10), fontSize: 22.0),
+                  style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10), fontSize: 22.0),
                 ),
                 Text(
                   'Select Measurement Below',
@@ -71,14 +69,18 @@ class input_sampleState extends State<input_sample> {
               Container(
                 padding: EdgeInsets.all(20),
                 child: Center(
-                  child: Text('We will Predicts The Body Measurement Later You Can Change Please Fill Your',style: TextStyle(fontSize: 24,fontWeight: FontWeight.w300,height: 1.5),textAlign: TextAlign.center,)),
+                    child: Text(
+                  'We will Predicts The Body Measurement Later You Can Change Please Fill Your',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, height: 1.5),
+                  textAlign: TextAlign.center,
+                )),
               ),
               Container(
-                margin: EdgeInsets.only(top: 20),
+                  margin: EdgeInsets.only(top: 20),
                   child: Text(
-                "Shoulder",
-                style: TextStyle(fontSize: 24, color: Colors.black87),
-              )),
+                    "Shoulder",
+                    style: TextStyle(fontSize: 24, color: Colors.black87),
+                  )),
               Container(
                 child: inputsamplePickerWrapper(
                   titleTextColor: Color(0xffF12874),
@@ -92,7 +94,7 @@ class input_sampleState extends State<input_sample> {
                   subGridCountPerGrid: 10,
                   subGridWidth: 10,
                   onSelectedChanged: (value) {
-                    scaleData.setValue(value-2);
+                    scaleData.setValue(value - 2);
                   }, //scaleTransformer: (int ) {  return ''; }, titleTransformer: (int ) {  return ''; },
                 ),
               )
@@ -101,47 +103,26 @@ class input_sampleState extends State<input_sample> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Padding(
-          
           padding: const EdgeInsets.all(8.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               FloatingActionButton(
-                
-                    heroTag: null,
+                heroTag: null,
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                          duration:
-                          Duration(milliseconds: 300),
-                          type:
-                          PageTransitionType.leftToRight,
-                          child: HomePageScreen()),
-                      ModalRoute.withName(""));
+                  Navigator.pop(context);
                 },
                 child: Image.asset("assets/images/Previous.png"),
               ),
               FloatingActionButton(
-                
-                    heroTag: null,
+                heroTag: null,
                 onPressed: () {
                   double keyValue;
-                   keyValue=(8+(scaleData.selectScaleValue!-8)*0.25);
-                 /* Navigator.pushAndRemoveUntil(
-                      context,
-                      PageTransition(
-                          duration:
-                          Duration(milliseconds: 300),
-                          type:
-                          PageTransitionType.leftToRight,
-                          child: HomePage(selectVal: keyValue)),
-                      ModalRoute.withName(""));*/
+                  keyValue = (8 + (scaleData.selectScaleValue! - 8) * 0.25);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => MeasurementScreen(selectVal: keyValue)),
                   );
-
                 },
                 child: Image.asset("assets/images/Next Step.png"),
               )

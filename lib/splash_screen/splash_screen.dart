@@ -16,12 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(
           Duration(seconds: 3),
           (await SharedData().userLogged())
-              ? () => Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => BottomNavigation()))
-              : () => Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PreLoginScreeDesign())));
+              ? () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigation()))
+              : () =>
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PreLoginScreeDesign())));
     } catch (e) {
       print(e);
     }
@@ -29,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-     _data();
+    _data();
     super.initState();
   }
 
@@ -47,15 +44,22 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 60,bottom: 10),
-                  child: Image.asset('assets/images/splashtwo.png'),
-                ),
-                Text('Tezy',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 50),textAlign: TextAlign.center,)
-              ],),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 60, bottom: 10),
+                    child: Image.asset('assets/images/splashtwo.png'),
+                  ),
+                  Text(
+                    'Tezy',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 50),
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
             ),
-
-            Text('Made with ❤ ️ in India',style: TextStyle(color: Colors.white),)
+            Text(
+              'Made with ❤ ️ in India',
+              style: TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),

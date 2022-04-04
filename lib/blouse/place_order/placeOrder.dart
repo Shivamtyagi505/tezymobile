@@ -1,4 +1,3 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +10,7 @@ import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:quikieappps1/home/popularmenu.dart';
 import 'package:intl/intl.dart';
 import 'package:quikieappps1/screens/previewOrders.dart';
+import 'package:quikieappps1/util/custom_datePicker/date_picker_timeline.dart';
 
 class PlaceOrder extends StatefulWidget {
   var fabricImage;
@@ -22,8 +22,6 @@ class PlaceOrder extends StatefulWidget {
 class _PlaceOrderState extends State<PlaceOrder> {
   bool container = false;
   var nameController = TextEditingController();
-  DatePickerController _controller = DatePickerController();
-  DateTime _selectedValue = DateTime.now();
   int selectedDate = 1;
   var fabricImage;
   Widget buildImage() {
@@ -38,14 +36,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
   }
 
   Widget buildEditIcon(Color color) => buildCircle(
-    color: Colors.white,
-    all: 1,
-    child: buildCircle(
-      color: color,
-      all: 1,
-      child: Image.asset('assets/images/Edit Profile.png'),
-    ),
-  );
+        color: Colors.white,
+        all: 1,
+        child: buildCircle(
+          color: color,
+          all: 1,
+          child: Image.asset('assets/images/Edit Profile.png'),
+        ),
+      );
 
   Widget buildCircle({
     Widget? child,
@@ -139,7 +137,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
   Widget date(String day, int date, bool select) {
     return Container(
         decoration:
-        BoxDecoration(color: select ? Colors.white : secondaryColor, borderRadius: BorderRadius.circular(16)),
+            BoxDecoration(color: select ? Colors.white : secondaryColor, borderRadius: BorderRadius.circular(16)),
         margin: EdgeInsets.symmetric(horizontal: 6),
         padding: EdgeInsets.all(15),
         child: Column(
@@ -192,42 +190,81 @@ class _PlaceOrderState extends State<PlaceOrder> {
                         style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w400)),
                   ),
                   Consumer<AddCustomerController>(builder: (context, value, child) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      padding: EdgeInsets.symmetric(horizontal: 11, vertical: 8),
-                      height: 75,
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    return value.addCustomerModel?.data?.attributes.name != null
+                        ? Container(
+                            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 11, vertical: 8),
+                            height: 75,
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                            child: Row(
                               children: [
-                                Text("${value.addCustomerModel!.data!.attributes.name}",
-                                    style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600)),
-                                Divider(
-                                  color: Colors.black,
-                                  thickness: 0.5,
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("${value.addCustomerModel!.data!.attributes.name}",
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600)),
+                                      Divider(
+                                        color: Colors.black,
+                                        thickness: 0.5,
+                                      ),
+                                      Text("Mobile No:  ${value.addCustomerModel!.data!.attributes.mobile}",
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(102, 102, 102, 1),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500)),
+                                    ],
+                                  ),
                                 ),
-                                Text("Mobile No:  ${value.addCustomerModel!.data!.attributes.mobile}",
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(102, 102, 102, 1),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w500)),
+                                SizedBox(width: 14),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Image.asset(
+                                    "assets/images/Edit Button.png",
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                          SizedBox(width: 14),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Image.asset(
-                              "assets/images/Edit Button.png",
-                            ),
                           )
-                        ],
-                      ),
-                    );
+                        : Container(
+                            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            padding: EdgeInsets.symmetric(horizontal: 11, vertical: 8),
+                            height: 75,
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Name : ",
+                                          style: TextStyle(
+                                              color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600)),
+                                      Divider(
+                                        color: Colors.black,
+                                        thickness: 0.5,
+                                      ),
+                                      Text("Mobile No: ",
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(102, 102, 102, 1),
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500)),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 14),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Image.asset(
+                                    "assets/images/Edit Button.png",
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
                   }),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -244,15 +281,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
                         child: Container(
                           width: 200,
                           child: Text('${value.invoiceNumber!.data!.attributes!.nextInvoiceNumberSuggestion}'),
-                          //  TextField(
-                          //     decoration: InputDecoration(
-                          //         border: InputBorder.none,
-                          //         focusedBorder: InputBorder.none,
-                          //         enabledBorder: InputBorder.none,
-                          //         errorBorder: InputBorder.none,
-                          //         disabledBorder: InputBorder.none,
-                          //         contentPadding: EdgeInsets.all(10),
-                          //         hintText: 'Enter Invoice Number')),
                         ),
                       ),
                     ]),
@@ -286,7 +314,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                             items: <String>[
                               'Jan',
                               'Feb',
-                              'March',
+                              'Mar',
                               'April',
                               'May',
                               'June',
@@ -305,81 +333,22 @@ class _PlaceOrderState extends State<PlaceOrder> {
                           ),
                         ],
                       )),
-                  Container(
-                    height: 90,
-                    width: double.infinity,
-                    child: ListView.builder(
-                        itemCount: 30,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: () {
-                              setState(() {
-                                selectedDate = index;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(20.0),
-                                    bottomRight: Radius.circular(20.0),
-                                    topLeft: Radius.circular(20.0),
-                                    bottomLeft: Radius.circular(20.0)),
-                                color: selectedDate == index ? Color(0xff181059) : Colors.white,
-                                border: Border.all(
-                                  color: Color(0xffC4C4C4),
-                                ),
-                              ),
-                              margin: EdgeInsets.all(5),
-                              height: 73.58,
-                              width: 49.34,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(0, 13, 0, 10),
-                                    child: Text(
-                                      DateFormat('E').format(
-                                          DateTime(DateTime.now().year, value.month, DateTime.now().day - 1)
-                                              .add(Duration(days: index))),
-                                      style: TextStyle(color: selectedDate == index ? Colors.white : Colors.black),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      DateFormat('d').format(
-                                          DateTime(DateTime.now().year, value.month, DateTime.now().day - 1)
-                                              .add(Duration(days: index))),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: selectedDate == index ? Colors.white : Colors.black),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }) /*DatePicker(
-                        DateTime.now(),
-
-                        height: 73,width: 49,
-                        dateTextStyle: TextStyle(fontSize: 12),
-                        //monthTextStyle: TextStyle(fontSize: 12),
-                       // dayTextStyle: TextStyle(fontSize: 12),
-                        controller: _controller,
-                        initialSelectedDate: DateTime.now(),
-                        selectionColor: Color(0xff181059),
-                        selectedTextColor: Colors.white,
-
-
-
-                        onDateChange: (date) {
-                          // New date selected
-                          setState(() {
-                            _selectedValue = date;
-                          });
-                        },
-                      )*/
-                    ,
+                  DatePicker(
+                    DateTime.now(),
+                    height: 73.58,
+                    width: 49.34,
+                    controller: value.controller,
+                    initialSelectedDate: DateTime.now(),
+                    selectionColor: Color(0xff181059),
+                    selectedTextColor: Colors.white,
+                    dateTextStyle: TextStyle(fontSize: 12),
+                    inactiveDates: [],
+                    onDateChange: (date) {
+                      // New date selected
+                      setState(() {
+                        value.selectedValue = date;
+                      });
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -459,10 +428,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                     width: 40,
                                                     // height: 30,
                                                     child: TextField(
-                                                      onSubmitted: (value){
-                                                        setState(() {
-                                                          
-                                                        });
+                                                      onSubmitted: (value) {
+                                                        setState(() {});
                                                       },
                                                       keyboardType: TextInputType.number,
                                                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -489,7 +456,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                     onTap: () {
                                                       value.decrementCounter();
                                                     },
-                                                    child: (value.counter == 0)
+                                                    child: (value.quantity == 0)
                                                         ? Container()
                                                         : SvgPicture.asset("assets/images/Minus circle.svg",
                                                             height: 20, width: 20, color: secondaryColor),
@@ -497,7 +464,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                   Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 5),
                                                     child: Text(
-                                                      "${value.counter}",
+                                                      "${value.quantity}",
                                                       style: TextStyle(
                                                           color: secondaryColor,
                                                           fontSize: 18,
@@ -515,92 +482,6 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                               ),
                                             ],
                                           )
-                                          // Container(
-                                          //   child: Row(
-                                          //     mainAxisAlignment: MainAxisAlignment.start,
-                                          //     crossAxisAlignment: CrossAxisAlignment.start,
-                                          //     children: [
-                                          //       Column(
-                                          //           mainAxisAlignment: MainAxisAlignment.start,
-                                          //           crossAxisAlignment: CrossAxisAlignment.start,
-                                          //           children: [
-                                          //             Text(
-                                          //               "Price",
-                                          //               style: TextStyle(
-                                          //                   color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
-                                          //             ),
-                                          //             Row(
-                                          //               children: [
-                                          //                 Text(
-                                          //                   "₹",
-                                          //                   style: TextStyle(
-                                          //                       color: secondaryColor,
-                                          //                       fontSize: 20,
-                                          //                       fontWeight: FontWeight.w600),
-                                          //                 ),
-                                          //                SizedBox(width: 3,),
-                                          //                                 Container(
-                                          //                                   width: 40,
-                                          //                                   // height: 30,
-                                          //                                   child: TextField(
-                                          //                                     decoration: InputDecoration(
-                                          //                                        contentPadding: EdgeInsets.symmetric(horizontal: 1),
-                                          //                                         border: InputBorder.none,
-                                          //                                         focusedBorder: InputBorder.none,
-                                          //                                         enabledBorder: InputBorder.none,
-                                          //                                         errorBorder: InputBorder.none,
-                                          //                                         disabledBorder: InputBorder.none,
-                                          //                                         hintText: 'Price',
-                                          //                                         hintStyle: TextStyle(fontSize: 14)),
-                                          //                                   ),
-                                          //                                 )
-                                          //               ],
-                                          //             ),
-                                          //           ]),
-                                          //       Expanded(child: SizedBox()),
-                                          //       Column(
-                                          //         children: [
-                                          //           Text(
-                                          //             "Quantity",
-                                          //             style: TextStyle(
-                                          //                 color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
-                                          //           ),
-                                          //           Row(
-                                          //             children: [
-                                          //               InkWell(
-                                          //                 onTap: () {
-                                          //                   _decrementCounter();
-                                          //                 },
-                                          //                 child: (_counter == 0)
-                                          //                     ? Container()
-                                          //                     : SvgPicture.asset("assets/images/Minus circle.svg",
-                                          //                         height: 20, width: 20, color: secondaryColor),
-                                          //               ),
-                                          //               Padding(
-                                          //                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                                          //                 child: Text(
-                                          //                   "$_counter",
-                                          //                   style: TextStyle(
-                                          //                       color: secondaryColor,
-                                          //                       fontSize: 18,
-                                          //                       fontWeight: FontWeight.w600),
-                                          //                 ),
-                                          //               ),
-                                          //               InkWell(
-                                          //                 onTap: () {
-                                          //                   _incrementCounter();
-                                          //                 },
-                                          //                 child: SvgPicture.asset("assets/images/Add circle.svg",
-                                          //                     height: 20, width: 20, color: secondaryColor),
-                                          //               ),
-                                          //             ],
-                                          //           ),
-                                          //         ],
-                                          //       ),
-                                          //       Expanded(child: SizedBox()),
-                                          //     ],
-                                          //   ),
-                                          // )
                                         ],
                                       ),
                                     )),
@@ -649,7 +530,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                 )
                               : Container(
                                   child: ListView.builder(
-                                    physics: ScrollPhysics(),
+                                      physics: ScrollPhysics(),
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
@@ -757,7 +638,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                                           onTap: () {
                                                                             value.decrementCounter();
                                                                           },
-                                                                          child: (value.counter == 0)
+                                                                          child: (value.quantity == 0)
                                                                               ? Container()
                                                                               : SvgPicture.asset(
                                                                                   "assets/images/Minus circle.svg",
@@ -769,7 +650,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                                           padding:
                                                                               const EdgeInsets.symmetric(horizontal: 5),
                                                                           child: Text(
-                                                                            "${value.counter}",
+                                                                            "${value.quantity}",
                                                                             style: TextStyle(
                                                                                 color: secondaryColor,
                                                                                 fontSize: 18,
@@ -778,7 +659,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                                         ),
                                                                         InkWell(
                                                                           onTap: () {
-                                                                          value.incrementCounter();
+                                                                            value.incrementCounter();
                                                                           },
                                                                           child: SvgPicture.asset(
                                                                               "assets/images/Add circle.svg",
@@ -938,7 +819,13 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                 ModalRoute.withName(""));*/
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => GeneratedBill()),
+                        MaterialPageRoute(
+                            builder: (context) => GeneratedBill(
+                                  fabricImage: fabricImage,
+                                  selectedDate: selectedDate,
+                                  quantity: value.quantity,
+                                  grandTotal: value.grandTotalAmount!,
+                                )),
                       );
                     },
                     child: Container(

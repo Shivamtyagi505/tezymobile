@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:quikieappps1/bodymeasure/input_sample_numberpicker.dart';
@@ -12,13 +11,14 @@ class input_sample extends StatefulWidget {
 }
 
 class input_sampleState extends State<input_sample> {
-  ScaleNo scaleData=ScaleNo();
+  ScaleNo scaleData = ScaleNo();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     scaleData.setValue(48.00);
   }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -27,7 +27,7 @@ class input_sampleState extends State<input_sample> {
         backgroundColor: Color(0xFFE5F3FD),
         appBar: new AppBar(
           elevation: 0.0,
-          backgroundColor:Color(0xFFE5F3FD),
+          backgroundColor: Color(0xFFE5F3FD),
           leading: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -45,8 +45,7 @@ class input_sampleState extends State<input_sample> {
               children: [
                 Text(
                   'Blouse',
-                  style: TextStyle(
-                      color: Color.fromRGBO(3, 43, 119, 10), fontSize: 22.0),
+                  style: TextStyle(color: Color.fromRGBO(3, 43, 119, 10), fontSize: 22.0),
                 ),
                 Text(
                   'Select Measurement Below',
@@ -75,14 +74,18 @@ class input_sampleState extends State<input_sample> {
               Container(
                 padding: EdgeInsets.all(20),
                 child: Center(
-                  child: Text('We will Predicts The Body Measurement Later You Can Change Please Fill Your',style: TextStyle(fontSize: 24,fontWeight: FontWeight.w300,height: 1.5),textAlign: TextAlign.center,)),
+                    child: Text(
+                  'We will Predicts The Body Measurement Later You Can Change Please Fill Your',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300, height: 1.5),
+                  textAlign: TextAlign.center,
+                )),
               ),
               Container(
-                margin: EdgeInsets.only(top: 20),
+                  margin: EdgeInsets.only(top: 20),
                   child: Text(
-                "Shoulder",
-                style: TextStyle(fontSize: 24, color: Colors.black87),
-              )),
+                    "Shoulder",
+                    style: TextStyle(fontSize: 24, color: Colors.black87),
+                  )),
               Container(
                 child: inputsamplePickerWrapper(
                   titleTextColor: Color(0xffF12874),
@@ -96,8 +99,8 @@ class input_sampleState extends State<input_sample> {
                   subGridCountPerGrid: 10,
                   subGridWidth: 10,
                   onSelectedChanged: (value) {
-                    print("what value select on shoulder scale : "+value.toString());
-                    scaleData.setValue(value-2);
+                    print("what value select on shoulder scale : " + value.toString());
+                    scaleData.setValue(value - 2);
                   }, //scaleTransformer: (int ) {  return ''; }, titleTransformer: (int ) {  return ''; },
                 ),
               )
@@ -115,10 +118,8 @@ class input_sampleState extends State<input_sample> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       PageTransition(
-                          duration:
-                          Duration(milliseconds: 300),
-                          type:
-                          PageTransitionType.leftToRight,
+                          duration: Duration(milliseconds: 300),
+                          type: PageTransitionType.leftToRight,
                           child: HomePageScreen()),
                       ModalRoute.withName(""));
                 },
@@ -127,9 +128,9 @@ class input_sampleState extends State<input_sample> {
               FloatingActionButton(
                 onPressed: () {
                   double keyValue;
-                   keyValue=(8+(scaleData.selectScaleValue!-8)*0.25);
-print("keyVAlue : $keyValue");
-                 /* Navigator.pushAndRemoveUntil(
+                  keyValue = (8 + (scaleData.selectScaleValue! - 8) * 0.25);
+                  print("keyVAlue : $keyValue");
+                  /* Navigator.pushAndRemoveUntil(
                       context,
                       PageTransition(
                           duration:
@@ -142,7 +143,6 @@ print("keyVAlue : $keyValue");
                     context,
                     MaterialPageRoute(builder: (context) => HomePage(selectVal: keyValue)),
                   );
-
                 },
                 child: Image.asset("assets/images/Next Step.png"),
               )
