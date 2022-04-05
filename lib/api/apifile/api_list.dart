@@ -7,3 +7,4 @@ String updateBoutique = "http://172.105.253.131:1337/api/auth/local/register";
 String allCustomers = "http://172.105.253.131:1337/api/customers";
 String ordersPut = "http://172.105.253.131:1337/api/orders/19";
 String profilePhoto = "http://172.105.253.131:1337/api/profiles";
+String searchUrl = "http://172.105.253.131:1337/api/customers?filter";

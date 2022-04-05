@@ -41,8 +41,14 @@ Future<AddCustomerModel> addCustomerApi(AddCustomerData data) async {
 Future<AllCustomerModel> getCustomerApi() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? jwt = prefs.getString('jwt');
+
+  Map <String,String> paramsQuery;
+
   final response = await http.get(
-    Uri.parse(addCustomer),
+    Uri.parse(addCustomer).replace(queryParameters: paramsQuery = {
+      'start':'0',
+      'limit' : '300'
+    }),
     headers: <String, String>{
      'Authorization': 'Bearer $jwt',
     },
