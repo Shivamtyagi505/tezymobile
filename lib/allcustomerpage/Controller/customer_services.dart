@@ -13,9 +13,13 @@ Future<AllCustomers> allCustomerModel() async {
   String? jwt = prefs.getString('jwt');
 
   http.Response response;
+  Map <String,String> paramsQuery;
 
   response = await http.get(
-    Uri.parse(allCustomers),
+    Uri.parse(addCustomer).replace(queryParameters: paramsQuery = {
+      'start':'0',
+      'limit' : '300'
+    }),
     headers: <String, String>{
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $jwt'

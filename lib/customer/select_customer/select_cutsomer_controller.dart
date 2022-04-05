@@ -35,11 +35,10 @@ class SelectCustomerController extends ChangeNotifier {
     }
   }
 
-    getShopUsername() async {
+  getShopUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String value = prefs.get('username').toString();
     username = value;
     notifyListeners();
   }
-
 }
