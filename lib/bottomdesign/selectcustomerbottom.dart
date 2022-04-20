@@ -71,7 +71,7 @@ class selectcustomerState extends State<selectcustomerbottom> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomePage(
+                            builder: (context) => BottomMeasurement(
                                   selectVal: 100.25,
                                 )));
                   },

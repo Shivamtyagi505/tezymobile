@@ -141,7 +141,7 @@ class input_sampleState extends State<input_sample> {
                       ModalRoute.withName(""));*/
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomePage(selectVal: keyValue)),
+                    MaterialPageRoute(builder: (context) => TopMeasurement(selectVal: keyValue)),
                   );
                 },
                 child: Image.asset("assets/images/Next Step.png"),

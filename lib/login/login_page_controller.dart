@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quikieappps1/api/datafromfrontend/login_data_class.dart';
 import 'package:quikieappps1/api/login/login_model.dart';

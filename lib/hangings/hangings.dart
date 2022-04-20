@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/assets/colors.dart';
-import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
-import 'package:quikieappps1/screens/hangings/hangings_controller.dart';
+import 'package:quikieappps1/hangings/hangings_controller.dart';
 
 class Hangings extends StatefulWidget {
   @override
@@ -14,58 +10,35 @@ class Hangings extends StatefulWidget {
 }
 
 class HangingsState extends State<Hangings> {
-  int? _index;
-  File? _image;
-  final picker = ImagePicker();
-  DesignImage? hangingsDesignImage = DesignImage();
-
-  Future _imgFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) _image = File(pickedFile.path);
-      hangingsDesignImage!.image = _image;
-      hangingsDesignImage!.type = 'Camera';
-    });
-  }
-
-  Future _imgFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
-
-    setState(() {
-      if (pickedFile != null) _image = File(pickedFile.path);
-      hangingsDesignImage!.image = _image;
-      hangingsDesignImage!.type = 'Gallery';
-    });
-  }
-
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
+          return Consumer<SelectHangingsController>(builder: (context, value, child) {
+            return SafeArea(
+              child: Container(
+                child: new Wrap(
+                  children: <Widget>[
+                    new ListTile(
+                        leading: new Icon(Icons.photo_library),
+                        title: new Text('Photo Library'),
+                        onTap: () {
+                          value.imgFromGalleryHangings();
+                          Navigator.of(context).pop();
+                        }),
+                    new ListTile(
+                      leading: new Icon(Icons.photo_camera),
+                      title: new Text('Camera'),
                       onTap: () {
-                        _imgFromGallery();
+                        value.imgFromCameraHangings();
                         Navigator.of(context).pop();
-                      }),
-                  new ListTile(
-                    leading: new Icon(Icons.photo_camera),
-                    title: new Text('Camera'),
-                    onTap: () {
-                      _imgFromCamera();
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
+            );
+          });
         });
   }
 
@@ -95,12 +68,12 @@ class HangingsState extends State<Hangings> {
         ));
   }
 
-  Widget hangingDesign(String text, var image) {
+  Widget hangingDesign(String text, var image, SelectHangingsController value) {
     return InkWell(
       onDoubleTap: () {
         setState(() {
-          hangingsDesignImage!.image = image;
-          hangingsDesignImage!.type = 'Categorie';
+          value.hangingsDesignImage!.image = image;
+          value.hangingsDesignImage!.type = 'Categorie';
         });
       },
       onTap: () async {
@@ -217,7 +190,7 @@ class HangingsState extends State<Hangings> {
           SizedBox(
             height: 20,
           ),
-          hangingsDesignImage!.image == null
+          value.hangingsDesignImage!.image == null
               ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Stack(alignment: Alignment.topRight, children: [
@@ -266,8 +239,8 @@ class HangingsState extends State<Hangings> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Stack(alignment: Alignment.topRight, children: [
                     Stack(alignment: Alignment.bottomCenter, children: [
-                      (hangingsDesignImage!.image != null && hangingsDesignImage!.type == 'Gallery' ||
-                              hangingsDesignImage!.type == 'Camera')
+                      (value.hangingsDesignImage!.image != null && value.hangingsDesignImage!.type == 'Gallery' ||
+                              value.hangingsDesignImage!.type == 'Camera')
                           ? Container(
                               width: double.maxFinite,
                               margin: EdgeInsets.symmetric(horizontal: 3),
@@ -277,7 +250,7 @@ class HangingsState extends State<Hangings> {
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.file(
-                                    hangingsDesignImage!.image,
+                                    value.hangingsDesignImage!.image,
                                     fit: BoxFit.cover,
                                   )),
                             )
@@ -290,7 +263,7 @@ class HangingsState extends State<Hangings> {
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.network(
-                                    'http://172.105.253.131:1337${hangingsDesignImage!.image}',
+                                    'http://172.105.253.131:1337${value.hangingsDesignImage!.image}',
                                     fit: BoxFit.cover,
                                   )),
                             ),
@@ -320,7 +293,7 @@ class HangingsState extends State<Hangings> {
                       child: InkWell(
                           onTap: () {
                             setState(() {
-                              hangingsDesignImage!.image = null;
+                              value.hangingsDesignImage!.image = null;
                             });
                           },
                           child: Icon(Icons.close, size: 15, color: Colors.white)),
@@ -340,7 +313,8 @@ class HangingsState extends State<Hangings> {
                   itemCount: value.items!.length,
                   itemBuilder: (BuildContext context, int index) => hangingDesign(
                       value.items![index].attributes!.productName!,
-                      value.items![index].attributes!.image!.data!.attributes!.formats!.small!.url),
+                      value.items![index].attributes!.image!.data!.attributes!.formats!.small!.url,
+                      value),
                   staggeredTileBuilder: (index) {
                     return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
                   }),
@@ -381,16 +355,24 @@ class HangingsState extends State<Hangings> {
               ),
               Text("Upload Your Photo"),
               SizedBox(height: 10),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                alignment: Alignment.center,
-                height: 50,
-                width: double.maxFinite,
-                decoration:
-                    BoxDecoration(color: Color.fromRGBO(3, 43, 119, 10), borderRadius: BorderRadius.circular(33)),
-                child: Text(
-                  "Save",
-                  style: TextStyle(color: Colors.white),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  if (value.hangingsDesignImage!.image != null) {
+                    value.saveHangingsImage('hangingsImage', value.hangingsDesignImage!);
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  alignment: Alignment.center,
+                  height: 50,
+                  width: double.maxFinite,
+                  decoration:
+                      BoxDecoration(color: Color.fromRGBO(3, 43, 119, 10), borderRadius: BorderRadius.circular(33)),
+                  child: Text(
+                    "Save",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ])),

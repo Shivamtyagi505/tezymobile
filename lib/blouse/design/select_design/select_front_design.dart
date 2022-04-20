@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
@@ -364,7 +361,7 @@ class select_front_designState extends State<select_front_design> {
                 backgroundColor: Colors.white,
                 selectedItemColor: Color.fromRGBO(69, 89, 210, 10),
                 unselectedItemColor: Colors.black54,
-                onTap: (int val) {
+                onTap: (int val) async {
                   setState(() {
                     _index = val;
                   });
@@ -410,7 +407,9 @@ class select_front_designState extends State<select_front_design> {
                               )),
                     );
                   }
-                  // }
+                  if (value.frontDesignImage!.image != null) {
+                    value.saveImage('frontImage', value.frontDesignImage!);
+                  }
                 },
                 currentIndex: 0,
                 items: [

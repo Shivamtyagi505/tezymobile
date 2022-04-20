@@ -5,7 +5,7 @@ import 'package:quikieappps1/api/create_order/create_order_services.dart';
 import 'package:quikieappps1/bill/generate_bill_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/place_order/place_order_controller.dart';
-import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
+import 'package:quikieappps1/blouse/place_order/place_order_model.dart';
 import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
 import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 
@@ -20,11 +20,17 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class GeneratedBill extends StatefulWidget {
+  List<PlaceOrderList>? placeOrderList;
   var fabricImage;
   double grandTotal;
   int selectedDate;
   int quantity;
-  GeneratedBill({this.fabricImage, required this.grandTotal, required this.selectedDate, required this.quantity});
+  GeneratedBill(
+      {this.placeOrderList,
+      this.fabricImage,
+      required this.grandTotal,
+      required this.selectedDate,
+      required this.quantity});
   @override
   GeneratedBillState createState() => GeneratedBillState();
 }
@@ -239,13 +245,13 @@ class GeneratedBillState extends State<GeneratedBill> {
                           ],
                         ),
                       ),
-                      Consumer<AddCustomerController>(builder: (context, value, child) {
+                      Consumer<SelectCustomerController>(builder: (context, value, child) {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("${value.addCustomerModel!.data!.attributes.name}",
+                              Text("${value.allCustomerAttributes!.name}",
                                   style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
                               Text(formattedDate,
                                   style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
@@ -253,10 +259,10 @@ class GeneratedBillState extends State<GeneratedBill> {
                           ),
                         );
                       }),
-                      Consumer<AddCustomerController>(builder: (context, value, child) {
+                      Consumer<SelectCustomerController>(builder: (context, value, child) {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          child: Text("Mobile No: ${value.addCustomerModel!.data!.attributes.mobile}",
+                          child: Text("Mobile No: ${value.allCustomerAttributes!.mobile}",
                               style: TextStyle(
                                   color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400)),
                         );
@@ -343,28 +349,23 @@ class GeneratedBillState extends State<GeneratedBill> {
                         ),
                       ),
                       SizedBox(height: 5),
-                      BillWidget(
-                        image: Image.file(
-                          widget.fabricImage,
-                          fit: BoxFit.fill,
-                        ),
-                        quantity: widget.quantity,
-                        amount: widget.grandTotal,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-                        child: DottedLine(
-                          direction: Axis.horizontal,
-                          lineLength: double.infinity,
-                          lineThickness: 1.0,
-                          dashLength: 4.0,
-                          dashColor: Colors.grey,
-                          dashRadius: 0.0,
-                          dashGapLength: 4.0,
-                          dashGapColor: Colors.transparent,
-                          dashGapRadius: 0.0,
-                        ),
-                      ),
+                      ListView.builder(
+                          physics: ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: widget.placeOrderList!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return BillWidget(
+                              image: Image.file(
+                                widget.placeOrderList![index].file!,
+                                fit: BoxFit.fill,
+                              ),
+                              quantity: widget.placeOrderList![index].quantity!,
+                              amount: widget.placeOrderList![index].priceTotal,
+                              price: widget.placeOrderList![index].price!,
+                              index: index,
+                              type: widget.placeOrderList![index].orderType!,
+                            );
+                          }),
                     ]),
               ),
               Padding(
@@ -559,7 +560,7 @@ class GeneratedBillState extends State<GeneratedBill> {
                                                 border: Border.all(color: Colors.black87),
                                                 borderRadius: BorderRadius.circular(5)),
                                             child: TextFormField(
-                                              controller: generateBill.controller,
+                                              controller: generateBill.textController,
                                               keyboardType: TextInputType.number,
                                               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                               autofocus: true,
@@ -583,7 +584,7 @@ class GeneratedBillState extends State<GeneratedBill> {
                                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                                   ),
                                                   onPressed: () {
-                                                    Navigator.pop(context, generateBill.controller.text);
+                                                    Navigator.pop(context, generateBill.textController.text);
                                                     generateBill.calculateAmount();
                                                   },
                                                 )),
@@ -714,78 +715,109 @@ class BillWidget extends StatelessWidget {
   final Image image;
   final int quantity;
   final double amount;
+  final String type;
+  final String price;
+  final int index;
 
   const BillWidget({
     required this.image,
     required this.quantity,
     required this.amount,
+    required this.type,
+    required this.price,
+    required this.index,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<HomepageController>(builder: (context, value, child) {
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5),
-        child: Container(
-          child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    height: 55,
-                    width: 65,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                    child: image),
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      var totalPrice = int.parse(price) * quantity;
+      return Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          width: 65,
+                          child: ClipRRect(
+                            child: image,
+                            borderRadius: BorderRadius.circular(10),
+                          )),
+                      SizedBox(width: 20),
+                      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Text(
+                            type,
+                            style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Text(
+                            'Rs.$price',
+                            style: TextStyle(
+                                color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Text(
+                            'View Details',
+                            style: TextStyle(
+                                color: Color.fromRGBO(17, 112, 222, 10), fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                          child: Text(
+                            'Product No: $index ',
+                            style: TextStyle(
+                                color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ]),
+                    ],
+                  ),
                   Padding(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.all(7.0),
                     child: Text(
-                      'Handwork Blouse',
+                      'Qty:$quantity',
                       style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.all(7.0),
                     child: Text(
-                      'Rs : 900',
-                      style: TextStyle(
-                          color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Text(
-                      'View Details',
-                      style:
-                          TextStyle(color: Color.fromRGBO(17, 112, 222, 10), fontSize: 12, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Text(
-                      'Order No:  1 ',
-                      style: TextStyle(
-                          color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400),
+                      'Rs.${amount.toString()}',
+                      style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ]),
-                Padding(
-                  padding: const EdgeInsets.all(7.0),
-                  child: Text(
-                    'Qty:$quantity',
-                    style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(7.0),
-                  child: Text(
-                    amount.toString(),
-                    style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ]),
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+            child: DottedLine(
+              direction: Axis.horizontal,
+              lineLength: double.infinity,
+              lineThickness: 1.0,
+              dashLength: 4.0,
+              dashColor: Colors.grey,
+              dashRadius: 0.0,
+              dashGapLength: 4.0,
+              dashGapColor: Colors.transparent,
+              dashGapRadius: 0.0,
+            ),
+          ),
+        ],
       );
     });
   }
