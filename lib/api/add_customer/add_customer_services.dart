@@ -7,29 +7,27 @@ import 'package:quikieappps1/api/apifile/api_list.dart';
 import 'package:quikieappps1/api/datafromfrontend/add_customer_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 Future<AddCustomerModel> addCustomerApi(AddCustomerData data) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? jwt = prefs.getString('jwt');
   final response = await http.post(
     Uri.parse(addCustomer),
     headers: <String, String>{
-     'Authorization': 'Bearer $jwt',
-     'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $jwt',
+      'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
       "name": data.name!,
       "mobile": data.mobile!,
-
     }),
   );
 
   if (response.statusCode == 200) {
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
-     var items = AddCustomerModel.fromJson(jsonDecode(response.body));
-  //   final items= (json.decode(response.body) as List).map((e) => AddCustomerModel.fromJson(e)).toList();
-   return items;
+    var items = AddCustomerModel.fromJson(jsonDecode(response.body));
+    //   final items= (json.decode(response.body) as List).map((e) => AddCustomerModel.fromJson(e)).toList();
+    return items;
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
@@ -42,24 +40,22 @@ Future<AllCustomerModel> getCustomerApi() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? jwt = prefs.getString('jwt');
 
-  Map <String,String> paramsQuery;
+  // ignore: unused_local_variable
+  Map<String, String> paramsQuery;
 
   final response = await http.get(
-    Uri.parse(addCustomer).replace(queryParameters: paramsQuery = {
-      'start':'0',
-      'limit' : '300'
-    }),
+    Uri.parse(addCustomer).replace(queryParameters: paramsQuery = {'start': '0', 'limit': '300'}),
     headers: <String, String>{
-     'Authorization': 'Bearer $jwt',
+      'Authorization': 'Bearer $jwt',
     },
   );
 
   if (response.statusCode == 200) {
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
-     var items = AllCustomerModel.fromJson(jsonDecode(response.body));
-  //   final items= (json.decode(response.body) as List).map((e) => AddCustomerModel.fromJson(e)).toList();
-   return items;
+    var items = AllCustomerModel.fromJson(jsonDecode(response.body));
+    //   final items= (json.decode(response.body) as List).map((e) => AddCustomerModel.fromJson(e)).toList();
+    return items;
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.

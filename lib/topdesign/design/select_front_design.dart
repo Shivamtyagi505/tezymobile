@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -84,7 +83,7 @@ class select_front_designState extends State<select_front_design> {
           style: TextStyle(fontSize: 15, color: Colors.white),
         ));
   }
-  
+
   Widget design(String text) {
     return InkWell(
       onDoubleTap: () {
@@ -92,10 +91,10 @@ class select_front_designState extends State<select_front_design> {
           isSelected = !isSelected;
         });
       },
-      onTap: () async{
+      onTap: () async {
         var data = await Navigator.push(context, MaterialPageRoute(builder: (context) => After_Selection_image()));
         setState(() {
-          isSelected =! isSelected;
+          isSelected = !isSelected;
         });
       },
       child: Column(
@@ -119,6 +118,7 @@ class select_front_designState extends State<select_front_design> {
       ),
     );
   }
+
   Widget imageContainer(String text) {
     return Container(
       child: Expanded(
@@ -161,12 +161,12 @@ class select_front_designState extends State<select_front_design> {
           Padding(
             padding: const EdgeInsets.all(7.0),
             child: InkWell(
-              onTap: (){
-                setState(() {
-                  isSelected =false;
-                });
-              },
-              child: Icon(Icons.close, size: 15, color: Colors.white)),
+                onTap: () {
+                  setState(() {
+                    isSelected = false;
+                  });
+                },
+                child: Icon(Icons.close, size: 15, color: Colors.white)),
           )
         ]),
       ),
@@ -201,31 +201,31 @@ class select_front_designState extends State<select_front_design> {
             child: Column(
               children: [
                 SizedBox(height: 35),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 20,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 20,
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Select Front Design",
+                              style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500)),
+                          SizedBox(height: 5),
+                        ],
                       ),
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                        onPressed: () {
-                          Navigator.pop(context, true);
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Select Front Design",
-                                style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500)),
-                            SizedBox(height: 5),
-
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -248,8 +248,8 @@ class select_front_designState extends State<select_front_design> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         // labelText: "Search...",
-                        hintText:"Search..." ,
-                        prefixIcon:Icon(Icons.search) ,
+                        hintText: "Search...",
+                        prefixIcon: Icon(Icons.search),
                         suffixIcon: Icon(Icons.clear_rounded),
                       ),
                     ),
@@ -276,140 +276,141 @@ class select_front_designState extends State<select_front_design> {
               child: Column(
                 children: [
                   Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  isSelected == false
-                  ?Container(
-                    child: Expanded(
-                      child: Stack(alignment: Alignment.topRight, children: [
-                        Stack(alignment: Alignment.bottomCenter, children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            height: 180,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(180, 180, 180, 1), borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                              child: Icon(
-                                Icons.photo,
-                                size: 40,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          Container(
-                              margin: EdgeInsets.symmetric(horizontal: 3),
-                              height: 42,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        isSelected == false
+                            ? Container(
+                                child: Expanded(
+                                  child: Stack(alignment: Alignment.topRight, children: [
+                                    Stack(alignment: Alignment.bottomCenter, children: [
+                                      Container(
+                                        margin: EdgeInsets.symmetric(horizontal: 3),
+                                        height: 180,
+                                        decoration: BoxDecoration(
+                                            color: Color.fromRGBO(180, 180, 180, 1),
+                                            borderRadius: BorderRadius.circular(10)),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.photo,
+                                            size: 40,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 3),
+                                          height: 42,
+                                          decoration: BoxDecoration(
+                                            color: primaryColor,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Expanded(child: SizedBox()),
+                                              Text(
+                                                'Front Design',
+                                                style: TextStyle(
+                                                    color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
+                                              ),
+                                              Expanded(child: SizedBox()),
+                                            ],
+                                          ))
+                                    ]),
+                                    Padding(
+                                      padding: const EdgeInsets.all(7.0),
+                                      child: Icon(Icons.close, size: 15, color: Colors.white),
+                                    )
+                                  ]),
+                                ),
+                              )
+                            : Container(
+                                child: Expanded(
+                                  child: Stack(alignment: Alignment.topRight, children: [
+                                    Stack(alignment: Alignment.bottomCenter, children: [
+                                      Container(
+                                        margin: EdgeInsets.symmetric(horizontal: 3),
+                                        height: 180,
+                                        decoration: BoxDecoration(
+                                            color: Color.fromRGBO(180, 180, 180, 1),
+                                            borderRadius: BorderRadius.circular(10)),
+                                        child: Center(child: Image.asset('assets/images/3d woman 1.png')),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.symmetric(horizontal: 3),
+                                          height: 42,
+                                          decoration: BoxDecoration(
+                                            color: primaryColor,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              Expanded(child: SizedBox()),
+                                              Text(
+                                                'Front Design',
+                                                style: TextStyle(
+                                                    color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
+                                              ),
+                                              Expanded(child: SizedBox()),
+                                            ],
+                                          ))
+                                    ]),
+                                    Padding(
+                                      padding: const EdgeInsets.all(7.0),
+                                      child: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              isSelected = !isSelected;
+                                            });
+                                          },
+                                          child: Icon(Icons.close, size: 15, color: Colors.white)),
+                                    )
+                                  ]),
                                 ),
                               ),
-                              child: Row(
-                                children: [
-                                  Expanded(child: SizedBox()),
-                                  Text(
-                                    'Front Design',
-                                    style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                ],
-                              ))
-                        ]),
-                        Padding(
-                          padding: const EdgeInsets.all(7.0),
-                          child: Icon(Icons.close, size: 15, color: Colors.white),
-                        )
-                      ]),
-                    ),
-                  )
-                  : Container(
-                    child: Expanded(
-                      child: Stack(alignment: Alignment.topRight, children: [
-                        Stack(alignment: Alignment.bottomCenter, children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            height: 180,
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(180, 180, 180, 1), borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                              child: Image.asset('assets/images/3d woman 1.png')
-                            ),
-                          ),
-                          Container(
-                              margin: EdgeInsets.symmetric(horizontal: 3),
-                              height: 42,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(child: SizedBox()),
-                                  Text(
-                                    'Front Design',
-                                    style: TextStyle(color: textColor, fontSize: 12, fontWeight: FontWeight.w500),
-                                  ),
-                                  Expanded(child: SizedBox()),
-                                ],
-                              ))
-                        ]),
-                        Padding(
-                          padding: const EdgeInsets.all(7.0),
-                          child: InkWell(
-                            onTap: (){
-                              setState(() {
-                                isSelected=!isSelected;
-                              });
-                            },
-                            child: Icon(Icons.close, size: 15, color: Colors.white)),
-                        )
-                      ]),
+                        imageContainer("Back Design"),
+                        imageContainer("Sleeve Design"),
+                      ],
                     ),
                   ),
-                  imageContainer("Back Design"),
-                  imageContainer("Sleeve Design"),
-                ],
-              ),
-            ),
-                   Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design")
-                        ],
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              design("Scrlet Blouse Design"),
+                              design("Scrlet Blouse Design"),
+                              design("Scrlet Blouse Design")
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              designSmall("Scrlet Blouse Design"),
+                              design("Scrlet Blouse Design"),
+                              design("Scrlet Blouse Design"),
+                              SizedBox(height: 50)
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                    SizedBox(width: 6),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          designSmall("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          design("Scrlet Blouse Design"),
-                          SizedBox(height: 50)
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )
+                  )
                 ],
               ),
             ),
           ),
-         
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -424,7 +425,7 @@ class select_front_designState extends State<select_front_design> {
           if (val == 0) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage(selectVal:8.00)),
+              MaterialPageRoute(builder: (context) => TopMeasurement(selectVal: 8.00)),
             );
             // Navigator.push(context, PageTransition(type: PageTransitionType.downToUp, child: DailyLiaScreen()));
           }

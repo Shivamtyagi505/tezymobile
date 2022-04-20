@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:quikieappps1/api/select_design/select_design_services.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/bill/generate_bill_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BlouseSelectDesignController extends GenerateBillController {
   ReferenceImageType? selectFrontDesign;
@@ -153,5 +155,20 @@ class BlouseSelectDesignController extends GenerateBillController {
         ]),
       ),
     );
+  }
+
+  saveImage(String key, DesignImage designImage) async {
+    final prefs = await SharedPreferences.getInstance();
+    if (designImage.type == 'Gallery' || designImage.type == 'Camera') {
+      List<int> imageBytes = designImage.image.readAsBytesSync();
+      String base64Image = base64Encode(imageBytes);
+      prefs.setString('${key}type', designImage.type!);
+
+      prefs.setString(key, base64Image);
+    } else {
+      prefs.setString('${key}type', designImage.type!);
+
+      prefs.setString(key, designImage.image);
+    }
   }
 }

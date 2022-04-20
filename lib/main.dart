@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:quikieappps1/api/allcustomerpage/Controller/customer_details_controller.dart';
 import 'package:quikieappps1/bill/generate_bill_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/measurement/measurement_controller.dart';
 import 'package:quikieappps1/blouse/place_order/place_order_controller.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
+import 'package:quikieappps1/blouse/review/blouse_review_controller.dart';
 import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
 import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
 import 'package:quikieappps1/customer/update_boutique/update_boutique_controller.dart';
+import 'package:quikieappps1/hangings/hangings_controller.dart';
 import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:quikieappps1/login/login_page_controller.dart';
 import 'package:quikieappps1/provider/measurement_provider.dart';
-import 'package:quikieappps1/screens/hangings/hangings_controller.dart';
 import 'package:quikieappps1/splash_screen/splash_screen.dart';
 import 'blouse/pro_vider/image_notif.dart';
 
@@ -32,6 +34,8 @@ void main() {
       ChangeNotifierProvider(create: (ctx) => UpdateBoutiqueController()),
       ChangeNotifierProvider(create: (ctx) => GenerateBillController()),
       ChangeNotifierProvider(create: (ctx) => MeasurementController()),
+      ChangeNotifierProvider(create: (ctx) => CustomerDetailsController()),
+      ChangeNotifierProvider(create: (ctx) => BlouseReviewController()),
       ChangeNotifierProvider<ImageNotif>.value(
         value: ImageNotif(),
       ),

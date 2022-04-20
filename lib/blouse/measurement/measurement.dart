@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
 import 'package:quikieappps1/blouse/image_class.dart';
-import 'package:quikieappps1/blouse/input_sample.dart';
 import 'package:quikieappps1/blouse/measurement/measurement_controller.dart';
 import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
@@ -453,11 +452,13 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                             },
                             itemCount: _listViewData.length,
                             itemBuilder: (context, index) {
-                              measurementController.data.putIfAbsent(
+                              measurementController.data!.putIfAbsent(
                                 _listViewData[index],
                                 () => getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])],
                               );
                               measurementController.items = getdataval[widget.selectVal]!;
+
+                              measurementController.save('measurementData', measurementController.data);
                               return InkWell(
                                 onTap: () {
                                   // selectedImage = images[index];
@@ -504,12 +505,13 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                         var updated =
                                             getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])] =
                                                 updatedValue + 1;
-                                        measurementController.data.update(
+                                        measurementController.data!.update(
                                             _listViewData[index],
                                             (value) => getdataval[widget.selectVal]![
                                                 returnindex.indexOf(_listViewData[index])],
                                             ifAbsent: () => updated);
                                         measurementController.items = getdataval[widget.selectVal]!;
+                                        measurementController.save('measurementData', measurementController.data);
                                         if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                         if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                         if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');

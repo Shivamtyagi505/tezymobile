@@ -1,14 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quikieappps1/bill/generate_bill_controller.dart';
 import 'package:quikieappps1/bill/generatedbill.dart';
+import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/place_order/place_order_controller.dart';
-import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
+import 'package:quikieappps1/blouse/place_order/place_order_model.dart';
+import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
+import 'package:quikieappps1/home/bottomNavigation.dart';
 import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:quikieappps1/home/popularmenu.dart';
-import 'package:intl/intl.dart';
 import 'package:quikieappps1/screens/previewOrders.dart';
 import 'package:quikieappps1/util/custom_datePicker/date_picker_timeline.dart';
 
@@ -168,13 +174,16 @@ class _PlaceOrderState extends State<PlaceOrder> {
     fabricImage = widget.fabricImage;
     var provider = Provider.of<PlaceOrderController>(context, listen: false);
     provider.fetchInvoiceNumberSuggestions();
-    provider.getDate();
+    provider.getOrderType(context);
+    provider.addPlaceItems(PlaceOrderList(provider.orderType, fabricImage, quantity: 1));
+    provider.getAllLocalData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlaceOrderController>(builder: (context, value, child) {
+    return Consumer2<PlaceOrderController, BlouseSelectDesignController>(
+        builder: (context, value, blouseController, child) {
       return value.invoiceNumber == null
           ? Center(child: CircularProgressIndicator())
           : Scaffold(
@@ -189,8 +198,8 @@ class _PlaceOrderState extends State<PlaceOrder> {
                     child: Text("Customer Details",
                         style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w400)),
                   ),
-                  Consumer<AddCustomerController>(builder: (context, value, child) {
-                    return value.addCustomerModel?.data?.attributes.name != null
+                  Consumer<SelectCustomerController>(builder: (context, value, child) {
+                    return value.allCustomerAttributes != null
                         ? Container(
                             margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                             padding: EdgeInsets.symmetric(horizontal: 11, vertical: 8),
@@ -203,14 +212,14 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("${value.addCustomerModel!.data!.attributes.name}",
+                                      Text("${value.allCustomerAttributes!.name}",
                                           style: TextStyle(
                                               color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600)),
                                       Divider(
                                         color: Colors.black,
                                         thickness: 0.5,
                                       ),
-                                      Text("Mobile No:  ${value.addCustomerModel!.data!.attributes.mobile}",
+                                      Text("Mobile No:  ${value.allCustomerAttributes!.mobile}",
                                           style: TextStyle(
                                               color: Color.fromRGBO(102, 102, 102, 1),
                                               fontSize: 13,
@@ -300,7 +309,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                             style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w400),
                           ),
                           DropdownButton<String>(
-                            value: value.dropdownValue,
+                            value: value.dropdownValue ?? '',
                             icon: const Icon(Icons.arrow_drop_down),
                             iconSize: 24,
                             elevation: 16,
@@ -315,7 +324,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                               'Jan',
                               'Feb',
                               'Mar',
-                              'April',
+                              'Apr',
                               'May',
                               'June',
                               'July',
@@ -365,163 +374,180 @@ class _PlaceOrderState extends State<PlaceOrder> {
                     child: Stack(alignment: Alignment.center, children: [
                       Container(
                         child: Column(children: [
-                          Container(
-                            height: 130,
-                            child: Row(
-                              children: [
-                                Image.file(
-                                  fabricImage,
-                                  fit: BoxFit.fill,
-                                ),
-                                Expanded(
-                                    child: Row(
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      padding: EdgeInsets.only(top: 10, left: 12),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                          ListView.builder(
+                              physics: ScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: value.placeOrderItems.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                value.quantity.add(1);
+                                value.textEditingController!.add(TextEditingController(text: ''));
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 5),
+                                  height: 130,
+                                  child: Row(
+                                    children: [
+                                      Image.file(
+                                        value.placeOrderItems[index].file!,
+                                        fit: BoxFit.fill,
+                                      ),
+                                      Expanded(
+                                          child: Row(
                                         children: [
-                                          Text(
-                                            "Description",
-                                            style:
-                                                TextStyle(color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
-                                          ),
-                                          Text(
-                                            "Handwork Blouse",
-                                            style: TextStyle(
-                                                color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w600),
-                                          ),
-                                          SizedBox(height: 20),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Price",
-                                                style: TextStyle(
-                                                    color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
-                                              ),
-                                              SizedBox(
-                                                width: 100,
-                                              ),
-                                              Text(
-                                                "Quantity",
-                                                style: TextStyle(
-                                                    color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    "₹",
-                                                    style: TextStyle(
-                                                        color: secondaryColor,
-                                                        fontSize: 20,
-                                                        fontWeight: FontWeight.w600),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 3,
-                                                  ),
-                                                  Container(
-                                                    width: 40,
-                                                    // height: 30,
-                                                    child: TextField(
-                                                      onSubmitted: (value) {
-                                                        setState(() {});
-                                                      },
-                                                      keyboardType: TextInputType.number,
-                                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                                                      controller: value.textEditingController,
-                                                      decoration: InputDecoration(
-                                                          contentPadding: EdgeInsets.symmetric(horizontal: 1),
-                                                          border: InputBorder.none,
-                                                          focusedBorder: InputBorder.none,
-                                                          enabledBorder: InputBorder.none,
-                                                          errorBorder: InputBorder.none,
-                                                          disabledBorder: InputBorder.none,
-                                                          hintText: 'Price',
-                                                          hintStyle: TextStyle(fontSize: 14)),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                width: 80,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      value.decrementCounter();
-                                                    },
-                                                    child: (value.quantity == 0)
-                                                        ? Container()
-                                                        : SvgPicture.asset("assets/images/Minus circle.svg",
-                                                            height: 20, width: 20, color: secondaryColor),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                                                    child: Text(
-                                                      "${value.quantity}",
+                                          Expanded(
+                                              child: Container(
+                                            padding: EdgeInsets.only(top: 10, left: 12),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Description",
+                                                  style: TextStyle(
+                                                      color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
+                                                ),
+                                                Text(
+                                                  value.placeOrderItems[index].orderType!,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w600),
+                                                ),
+                                                SizedBox(height: 20),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Price",
                                                       style: TextStyle(
-                                                          color: secondaryColor,
-                                                          fontSize: 18,
-                                                          fontWeight: FontWeight.w600),
+                                                          color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
                                                     ),
+                                                    SizedBox(
+                                                      width: 100,
+                                                    ),
+                                                    Text(
+                                                      "Quantity",
+                                                      style: TextStyle(
+                                                          color: labelGrey1, fontSize: 12, fontWeight: FontWeight.w500),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "₹",
+                                                          style: TextStyle(
+                                                              color: secondaryColor,
+                                                              fontSize: 20,
+                                                              fontWeight: FontWeight.w600),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 3,
+                                                        ),
+                                                        Container(
+                                                          width: 40,
+                                                          // height: 30,
+                                                          child: TextField(
+                                                            onSubmitted: (val) {
+                                                              setState(() {
+                                                                value.placeOrderItems[index].price = val;
+                                                              });
+                                                            },
+                                                            keyboardType: TextInputType.number,
+                                                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                                            controller: value.textEditingController![index],
+                                                            decoration: InputDecoration(
+                                                                contentPadding: EdgeInsets.symmetric(horizontal: 1),
+                                                                border: InputBorder.none,
+                                                                focusedBorder: InputBorder.none,
+                                                                enabledBorder: InputBorder.none,
+                                                                errorBorder: InputBorder.none,
+                                                                disabledBorder: InputBorder.none,
+                                                                hintText: 'Price',
+                                                                hintStyle: TextStyle(fontSize: 14)),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 80,
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            value.decrementCounter(index);
+                                                            value.placeOrderItems[index].quantity =
+                                                                value.quantity[index];
+                                                          },
+                                                          child: (value.quantity[index] == 1)
+                                                              ? Container()
+                                                              : SvgPicture.asset("assets/images/Minus circle.svg",
+                                                                  height: 20, width: 20, color: secondaryColor),
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                          child: Text(
+                                                            "${value.quantity[index]}",
+                                                            style: TextStyle(
+                                                                color: secondaryColor,
+                                                                fontSize: 18,
+                                                                fontWeight: FontWeight.w600),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            value.incrementCounter(index);
+                                                            value.placeOrderItems[index].quantity =
+                                                                value.quantity[index];
+                                                          },
+                                                          child: SvgPicture.asset("assets/images/Add circle.svg",
+                                                              height: 20, width: 20, color: secondaryColor),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          )),
+                                          Padding(
+                                            padding: const EdgeInsets.only(right: 5),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  "assets/images/Delete.svg",
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    // Navigator.push(context,
+                                                    //     MaterialPageRoute(builder: (context) => PreviewOrders()));
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    "assets/images/Edit Order.svg",
                                                   ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      value.incrementCounter();
-                                                    },
-                                                    child: SvgPicture.asset("assets/images/Add circle.svg",
-                                                        height: 20, width: 20, color: secondaryColor),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      value.newContainer = value.newContainer + 1;
+                                                    });
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    "assets/images/Duplicate.svg",
                                                   ),
-                                                ],
-                                              ),
-                                            ],
+                                                ),
+                                              ],
+                                            ),
                                           )
                                         ],
-                                      ),
-                                    )),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 5),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/images/Delete.svg",
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context, MaterialPageRoute(builder: (context) => PreviewOrders()));
-                                            },
-                                            child: SvgPicture.asset(
-                                              "assets/images/Edit Order.svg",
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                value.newContainer = value.newContainer + 1;
-                                              });
-                                            },
-                                            child: SvgPicture.asset(
-                                              "assets/images/Duplicate.svg",
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ))
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                                color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
-                          ),
+                                      ))
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+                                );
+                              }),
                           (value.newContainer == 0)
                               ? Container(
                                   margin: EdgeInsets.zero,
@@ -614,7 +640,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                                             inputFormatters: [
                                                                               FilteringTextInputFormatter.digitsOnly
                                                                             ],
-                                                                            controller: value.textEditingController,
+                                                                            // controller: value.textEditingController,
                                                                             decoration: InputDecoration(
                                                                                 contentPadding:
                                                                                     EdgeInsets.symmetric(horizontal: 1),
@@ -636,7 +662,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                                       children: [
                                                                         InkWell(
                                                                           onTap: () {
-                                                                            value.decrementCounter();
+                                                                            // value.decrementCounter();
                                                                           },
                                                                           child: (value.quantity == 0)
                                                                               ? Container()
@@ -650,7 +676,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                                           padding:
                                                                               const EdgeInsets.symmetric(horizontal: 5),
                                                                           child: Text(
-                                                                            "${value.quantity}",
+                                                                            "${value.quantity[index]}",
                                                                             style: TextStyle(
                                                                                 color: secondaryColor,
                                                                                 fontSize: 18,
@@ -659,7 +685,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
                                                                         ),
                                                                         InkWell(
                                                                           onTap: () {
-                                                                            value.incrementCounter();
+                                                                            // value.incrementCounter();
                                                                           },
                                                                           child: SvgPicture.asset(
                                                                               "assets/images/Add circle.svg",
@@ -779,71 +805,93 @@ class _PlaceOrderState extends State<PlaceOrder> {
                       ),
                       Positioned(
                         bottom: 90,
-                        child: InkWell(
-                          onTap: () {
-                            showModel();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(top: 7, bottom: 7, left: 14, right: 25),
-                            height: 37,
-                            width: 160,
-                            decoration: BoxDecoration(color: secondaryColor, borderRadius: BorderRadius.circular(26)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/images/Add circle.svg",
-                                  color: Colors.white,
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  "Add Items",
-                                  style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
-                                ),
-                              ],
+                        child: Consumer2<GenerateBillController, PlaceOrderController>(
+                            builder: (context, generatedBill, placeOrder, child) {
+                          return InkWell(
+                            onTap: () {
+                              if (placeOrder.textEditingController!.first.text != '') {
+                                showModel();
+                                generatedBill.clearLocalData(context);
+                              } else {
+                                Fluttertoast.showToast(msg: 'Please Add Price!!');
+                              }
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(top: 7, bottom: 7, left: 14, right: 25),
+                              height: 37,
+                              width: 160,
+                              decoration: BoxDecoration(color: secondaryColor, borderRadius: BorderRadius.circular(26)),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/images/Add circle.svg",
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    "Add Items",
+                                    style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        }),
                       ),
                     ]),
                   ),
-                  GestureDetector(
-                    // behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      /*Navigator.pushAndRemoveUntil(
-                                context,
-                                PageTransition(
-                                    duration: Duration(milliseconds: 300),
-                                    type: PageTransitionType.leftToRight,
-                                    child: GeneratedBill()),
-                                ModalRoute.withName(""));*/
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GeneratedBill(
-                                  fabricImage: fabricImage,
-                                  selectedDate: selectedDate,
-                                  quantity: value.quantity,
-                                  grandTotal: value.grandTotalAmount!,
-                                )),
-                      );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(15),
-                      height: 55,
-                      decoration:
-                          BoxDecoration(color: primaryColor, borderRadius: BorderRadius.all(Radius.circular(33))),
-                      child: Row(
-                        children: [
-                          Expanded(child: SizedBox()),
-                          Text(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            showAlertDialog(context);
+                          });
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          margin: EdgeInsets.all(15),
+                          height: 55,
+                          decoration: BoxDecoration(
+                              color: Color(0xffD8D8D8), borderRadius: BorderRadius.all(Radius.circular(33))),
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GeneratedBill(
+                                      placeOrderList: value.placeOrderItems,
+                                      fabricImage: fabricImage,
+                                      selectedDate: selectedDate,
+                                      quantity: value.quantity[0],
+                                      grandTotal: 0,
+                                    )),
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(15),
+                          margin: EdgeInsets.all(15),
+                          height: 55,
+                          width: 200,
+                          decoration: BoxDecoration(
+                              color: Color(0xff1170DE), borderRadius: BorderRadius.all(Radius.circular(33))),
+                          child: Text(
                             "Generate Bill",
                             style: TextStyle(color: textColor, fontWeight: FontWeight.w600, fontSize: 20),
                           ),
-                          Expanded(child: SizedBox()),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   )
                 ]))),
                 GestureDetector(
@@ -862,4 +910,83 @@ class _PlaceOrderState extends State<PlaceOrder> {
               ]));
     });
   }
+
+  showAlertDialog(BuildContext context) {
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        setState(() {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => BottomNavigation()),
+            (Route<dynamic> route) => false,
+          );
+        });
+      },
+    );
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        setState(() {
+          Navigator.pop(context);
+        });
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: Text("Tezy Alert"),
+      content: Text("Do you want to cancel this Order?"),
+      actions: [okButton, cancelButton],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+}
+
+class ViewOrderAndMeasurement {
+  Map<String, double>? data;
+  var frontImage;
+  var backImage;
+  var sleevesImage;
+  var fabricImage;
+  String? frontImageType;
+  String? backImageType;
+  String? sleevesImageType;
+  bool? cups;
+  bool? piping;
+  String? zipType;
+  String? hooks;
+
+  String get cupsValue {
+    if (cups == true) {
+      return 'YES';
+    } else {
+      return 'NO';
+    }
+  }
+
+  String get pipingValue {
+    if (piping == true) {
+      return 'YES';
+    } else {
+      return 'NO';
+    }
+  }
+
+  ViewOrderAndMeasurement(
+      {this.data,
+      this.frontImage,
+      this.backImage,
+      this.sleevesImage,
+      this.fabricImage,
+      this.frontImageType,
+      this.backImageType,
+      this.sleevesImageType,
+      this.cups,
+      this.piping,
+      this.zipType,
+      this.hooks});
 }

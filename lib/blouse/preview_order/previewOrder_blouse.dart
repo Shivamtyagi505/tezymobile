@@ -1,15 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/blouse/Drawing_Pad.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
-import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
 import 'package:quikieappps1/blouse/place_order/placeOrder.dart';
 import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
-import 'package:quikieappps1/screens/hangings/hangings.dart';
+import 'package:quikieappps1/hangings/hangings.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
@@ -84,7 +80,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
     );
   }
 
-  Widget zipType() {
+  Widget zipType(PreviewOrderBlouseController value) {
     return ToggleSwitch(
       minWidth: 90.0,
       cornerRadius: 20.0,
@@ -96,17 +92,18 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
       activeFgColor: secondaryColor,
       inactiveBgColor: secondaryColor,
       inactiveFgColor: Colors.white,
-      initialLabelIndex: 1,
+      initialLabelIndex: value.zipTypeLabel,
       totalSwitches: 3,
       labels: ['Back', 'Front', 'Side'],
       radiusStyle: true,
       onToggle: (index) {
-        // print('switched to: $index');
+        value.savePreviewOrderString('zipType', index!);
+        value.zipTypeIndex = true;
       },
     );
   }
 
-  Widget hooks() {
+  Widget hooks(PreviewOrderBlouseController value) {
     return ToggleSwitch(
       minWidth: 120.0,
       cornerRadius: 20.0,
@@ -117,12 +114,13 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
       activeFgColor: secondaryColor,
       inactiveBgColor: secondaryColor,
       inactiveFgColor: background,
-      initialLabelIndex: 1,
+      initialLabelIndex: value.hooksLabel,
       totalSwitches: 2,
       labels: ['Back', 'Front'],
       radiusStyle: true,
       onToggle: (index) {
-        // print('switched to: $index');
+        value.savePreviewOrderString('hooks', index!);
+        value.hooksIndex = true;
       },
     );
   }
@@ -156,11 +154,11 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
     );
   }
 
-  Widget appBar() {
-    return Consumer<AddCustomerController>(builder: (context, value, child) {
+  Widget appBar(PreviewOrderBlouseController controller) {
+    return Consumer<SelectCustomerController>(builder: (context, value, child) {
       //print('name value is  ${value.addCustomerModel?.data?.attributes.name}');
       //return value.allCustomerModel!.data!.attributes!.name != null ?
-      return value.addCustomerModel?.data?.attributes.name != null
+      return value.allCustomerAttributes != null
           ? Column(
               children: [
                 SizedBox(height: 35),
@@ -184,17 +182,17 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("${value.addCustomerModel!.data!.attributes.name}",
+                          Text("${value.allCustomerAttributes!.name}",
                               style: TextStyle(color: primaryColor, fontSize: 25, fontWeight: FontWeight.w500)),
                           SizedBox(height: 5),
-                          Text("${value.addCustomerModel!.data!.attributes.mobile}",
+                          Text("${value.allCustomerAttributes!.mobile}",
                               style: TextStyle(color: grey, fontSize: 12, fontWeight: FontWeight.w500)),
                           SizedBox(height: 5),
                           Row(
                             children: [
                               Text("Order Type : ",
                                   style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
-                              Text("Hand work Blouse",
+                              Text(controller.orderType,
                                   style: TextStyle(color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w500)),
                             ],
                           ),
@@ -244,7 +242,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                                 children: [
                                   Text("Order Type : ",
                                       style: TextStyle(color: grey, fontSize: 15, fontWeight: FontWeight.w500)),
-                                  Text("Hand work Blouse",
+                                  Text(controller.orderType,
                                       style:
                                           TextStyle(color: secondaryColor, fontSize: 15, fontWeight: FontWeight.w500)),
                                 ],
@@ -266,6 +264,13 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
   }
 
   @override
+  void initState() {
+    var provider = Provider.of<PreviewOrderBlouseController>(context, listen: false);
+    provider.getOrderType(context);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<PreviewOrderBlouseController>(builder: (context, value, child) {
       return Scaffold(
@@ -275,7 +280,7 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  appBar(),
+                  appBar(value),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
                     child: Text("Selected Images",
@@ -546,19 +551,22 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Container(
-                          height: 67,
-                          decoration:
-                              BoxDecoration(color: primaryColor, borderRadius: BorderRadius.all(Radius.circular(20))),
-                          child: Row(
-                            children: [
-                              Expanded(child: SizedBox()),
-                              Text(
-                                "REVIEW MEASUREMENT",
-                                style: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w600),
-                              ),
-                              Expanded(child: SizedBox()),
-                            ],
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            height: 67,
+                            decoration:
+                                BoxDecoration(color: primaryColor, borderRadius: BorderRadius.all(Radius.circular(20))),
+                            child: Row(
+                              children: [
+                                Expanded(child: SizedBox()),
+                                Text(
+                                  "REVIEW MEASUREMENT",
+                                  style: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w600),
+                                ),
+                                Expanded(child: SizedBox()),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
@@ -571,12 +579,12 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                               Divider(),
                               toggle("ZIP TYPE", 2, value),
                               SizedBox(height: 10),
-                              if (value.status[2]) zipType(),
+                              if (value.status[2]) zipType(value),
                               SizedBox(height: 5),
                               Divider(),
                               toggle("HOOKS", 3, value),
                               SizedBox(height: 10),
-                              if (value.status[3]) hooks(),
+                              if (value.status[3]) hooks(value),
                               SizedBox(height: 5),
                               Divider(),
                               SizedBox(height: 10),
@@ -635,6 +643,11 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                                   fabricImage: value.image,
                                 )),
                       );
+                      value.saveSleevesImage('fabricImage', value.image!);
+                      value.savePreviewOrder('cups', value.status[0]);
+                      value.savePreviewOrder('piping', value.status[1]);
+                      if (value.zipTypeIndex == false) value.savePreviewOrderString('zipType', 1);
+                      if (value.hooksIndex == false) value.savePreviewOrderString('hooks', 1);
                     } else {
                       setState(() {
                         value.isFabric = true;

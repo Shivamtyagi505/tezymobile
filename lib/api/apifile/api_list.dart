@@ -1,5 +1,5 @@
-String register="http://172.105.253.131:1337/api/auth/local/register";
-String login="http://172.105.253.131:1337/api/auth/local";
+String register = "http://172.105.253.131:1337/api/auth/local/register";
+String login = "http://172.105.253.131:1337/api/auth/local";
 String addCustomer = "http://172.105.253.131:1337/api/customers";
 String orders = "http://172.105.253.131:1337/api/orders";
 String baseUrl = "http://172.105.253.131:1337";
@@ -8,3 +8,7 @@ String allCustomers = "http://172.105.253.131:1337/api/customers";
 String ordersPut = "http://172.105.253.131:1337/api/orders/19";
 String profilePhoto = "http://172.105.253.131:1337/api/profiles";
 String searchUrl = "http://172.105.253.131:1337/api/customers?filter";
+String getProfileImageUrl = "http://172.105.253.131:1337/api/profiles";
+String updateProfileImageUrl = "http://172.105.253.131:1337/api/profiles/update";
+String deleteProfileImageUrl = "http://172.105.253.131:1337/api/profiles/delete";
+String createProfileImageUrl = "http://172.105.253.131:1337/api/profiles";

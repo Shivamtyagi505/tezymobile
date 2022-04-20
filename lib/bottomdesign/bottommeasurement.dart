@@ -7,16 +7,17 @@ import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
 
-class HomePage extends StatefulWidget {
+// ignore: must_be_immutable
+class BottomMeasurement extends StatefulWidget {
   double selectVal;
 
-  HomePage({this.selectVal = 8.00});
+  BottomMeasurement({this.selectVal = 8.00});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _BottomMeasurementState createState() => _BottomMeasurementState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _BottomMeasurementState extends State<BottomMeasurement> {
   bool isSelected = false;
   bool ontap = false;
 
@@ -381,7 +382,8 @@ class _HomePageState extends State<HomePage> {
                                                     returnindexonlybottommeasurement.indexOf(_listViewData[index])]) *
                                                 4) -
                                             3
-                                        : ((new Abc(widget.selectVal).bb[returnindex.indexOf(_listViewData[index])]) *
+                                        : ((new Abc(widget.selectVal).bb[
+                                                    returnindexonlybottommeasurement.indexOf(_listViewData[index])]) *
                                                 4) -
                                             3,
                                     minValue: 1,
@@ -471,15 +473,13 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               FloatingActionButton(
+                heroTag: null,
                 onPressed: () {
-                  /*  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => input_sample()),
-                  );*/
                 },
                 child: Image.asset("assets/images/Previous.png"),
               ),
               FloatingActionButton(
+                heroTag: null,
                 onPressed: () {
                   Navigator.push(
                     context,

@@ -1,15 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:quikieappps1/assets/colors.dart';
 
 import 'package:quikieappps1/blouse/design/after_selection.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
-import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse.dart';
 
 class select_sleeve_design extends StatefulWidget {
@@ -585,7 +581,7 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                 backgroundColor: Colors.white,
                 selectedItemColor: Color.fromRGBO(69, 89, 210, 10),
                 unselectedItemColor: Colors.black54,
-                onTap: (int val) {
+                onTap: (int val) async {
                   setState(() {
                     _index = val;
                   });
@@ -642,6 +638,9 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                                   sleeveType: value.sleeveDesignImage!.type,
                                 )),
                       );
+                    }
+                    if (value.sleeveDesignImage!.image != null) {
+                      value.saveImage('sleevesImage', value.sleeveDesignImage!);
                     }
                   }
                 },

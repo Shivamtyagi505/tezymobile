@@ -17,13 +17,19 @@ class AddCustomerController extends ChangeNotifier {
       addCustomerModel = result;
       if (addCustomerModel!.data != null) {
         CustomMessage.toast('Custom Added Successfully!!');
+        clearTextController();
         Navigator.pop(context);
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
         notifyListeners();
       }
     } catch (e) {
       Exception('Unable to add customer');
       CustomMessage.toast('Unable to add customer');
     }
+  }
+
+  void clearTextController() {
+    nameController.clear();
+    mobileController.clear();
+    notifyListeners();
   }
 }

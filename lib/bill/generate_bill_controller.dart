@@ -8,18 +8,24 @@ import 'package:quikieappps1/blouse/measurement/measurement_controller.dart';
 import 'package:quikieappps1/blouse/place_order/place_order_controller.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
 import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
+import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
+import 'package:quikieappps1/hangings/hangings_controller.dart';
+import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 
 class GenerateBillController extends ChangeNotifier {
   double amount = 0.0;
-  TextEditingController controller = TextEditingController();
+  TextEditingController textController = TextEditingController();
   double remaining = 0.0;
+  String orderType = '';
   CreateOrder createOrder = CreateOrder();
-  List<OrderList> orderList = <OrderList>[];
+  List<OrderList> orderList = [];
   Map<String, File> files = {};
+  String categorieName = '';
+  List<double> totalAmount = [];
 
   double calculateAmount() {
-    if (controller.text.isNotEmpty) {
-      var value = amount - double.parse(controller.text);
+    if (textController.text.isNotEmpty) {
+      var value = amount - double.parse(textController.text);
       remaining = value;
       return remaining;
     }
@@ -27,72 +33,92 @@ class GenerateBillController extends ChangeNotifier {
   }
 
   Future<void> createData(BuildContext context) async {
-    var addCustomer = Provider.of<AddCustomerController>(context, listen: false);
+    var addCustomer = Provider.of<SelectCustomerController>(context, listen: false);
     var placeOrder = Provider.of<PlaceOrderController>(context, listen: false);
     var selectDesign = Provider.of<BlouseSelectDesignController>(context, listen: false);
     var previewOrder = Provider.of<PreviewOrderBlouseController>(context, listen: false);
     var measurement = Provider.of<MeasurementController>(context, listen: false);
-    createOrder.customerName = addCustomer.addCustomerModel!.data!.attributes.name;
-    createOrder.customerId = addCustomer.addCustomerModel!.data!.id;
+    var homePage = Provider.of<HomepageController>(context, listen: false);
+    var hangings = Provider.of<SelectHangingsController>(context, listen: false);
+    createOrder.customerName = addCustomer.username;
+    // createOrder.customerId = addCustomer.customer.data.
     createOrder.balancePayment = remaining.toString();
-    createOrder.grandTotalPayment = placeOrder.grandTotalAmount.toString();
+    // createOrder.grandTotalPayment = placeOrder.grandTotalAmount.toString();
     createOrder.automaticBillCompletion = false;
     createOrder.manualBillCompletion = false;
-    createOrder.adavancePayment = controller.text;
+    createOrder.adavancePayment = textController.text;
     createOrder.orderDate = DateTime.now().toString();
     createOrder.dueDate = placeOrder.selectedValue.toString();
     createOrder.invoiceNumber = int.parse(placeOrder.invoiceNumber!.data!.attributes!.nextInvoiceNumberSuggestion!);
+    createOrder.orderList!.add(OrderList(
+        productType: "blouse",
+        productName: homePage.orderType,
+        price: placeOrder.grandTotalAmount.toString(),
+        quantity: placeOrder.quantity[0],
+        fullLength: measurement.data?['Full Length'].toString() ?? '',
+        shoulder: measurement.data?['Shoulder'].toString() ?? '',
+        shoulderGap: measurement.data?['Shoulder Gap'].toString() ?? '',
+        sleevesLength: measurement.data?['Shoulder'].toString() ?? '',
+        armholeRound: measurement.data?['Armhole Round'].toString() ?? '',
+        circleDownLoose: measurement.data?['Circle Down Loose'].toString() ?? '',
+        sleevesRound: measurement.data?['Sleeves Round'].toString() ?? '',
+        upperChestRound: measurement.data?['Upper Chest Round'].toString() ?? '',
+        chestRound: measurement.data?['Chest Round'].toString() ?? '',
+        lowerChestRound: measurement.data?['Lower Chest Round'].toString() ?? '',
+        waistRound: measurement.data?['Waist Round'].toString() ?? '',
+        firstDartPoint: measurement.data?['First Dart Point'].toString() ?? '',
+        secondDartPoint: measurement.data?['Second Dart Point'].toString() ?? '',
+        bustPoint: measurement.data?['Bust Point'].toString() ?? '',
+        frontNeckDeep: measurement.data?['Front Neck Deep'].toString() ?? '',
+        backNeckDeep: measurement.data?['Back Neck Deep'].toString() ?? '',
+        waistBandLength: measurement.data?['Waist Band Length'].toString() ?? '',
+        neckWidth: measurement.data?['Neck Width'].toString() ?? '',
+        backNeckWidth: measurement.data?['Back Neck Width'].toString() ?? '',
+        orderCompletion: false,
+        frontImageUrl: selectDesign.frontImageUrl,
+        backImageUrl: selectDesign.backImageUrl,
+        sleevesImageUrl: selectDesign.sleevesImageUrl,
+        hangingsImageUrl: hangings.hangingsDesignImage!.image,
+        cups: placeOrder.cups,
+        piping: placeOrder.pipings,
+        zipType: placeOrder.zipType,
+        hooks: placeOrder.hooks));
+    notifyListeners();
+  }
 
-    // for (var i = 0; i < orderList.length; i++) {
-    //   orderList[i].frontImageUrl = selectDesign.frontImageUrl ?? '';
-    //   orderList[i].backImageUrl = selectDesign.backImageUrl ?? '';
-    //   orderList[i].sleevesImageUrl = selectDesign.sleevesImageUrl ?? '';
-    //   orderList[i].price = placeOrder.grandTotalAmount.toString();
-    //   orderList[i].quantity = placeOrder.quantity;
-    //   orderList[i].productName = 'Blouse 2';
-    //   orderList[i].productType = 'blouse';
-    //   orderList[i].cups = previewOrder.status[i];
-    //   orderList[i].hooks = previewOrder.status[i];
-    //   orderList[i].piping = previewOrder.status[i];
-    //   orderList[i].zipType = previewOrder.status[i];
-    //   orderList[i].armholeRound = measurement.data.entries.where((element) => element.key == 'armholeRound').toString();
-    // }
+  void getCategorieName(BuildContext context) {
+    var home = Provider.of<HomepageController>(context, listen: false);
+    if (home.selectedIndex == 0) {
+      categorieName = 'Blouse';
+    } else if (home.selectedIndex == 1) {
+      categorieName = 'Tops';
+    } else if (home.selectedIndex == 2) {
+      categorieName = 'Bottom';
+    } else if (home.selectedIndex == 3) {
+      categorieName = 'Others';
+    }
+  }
 
-    createOrder.orderList = [
-      OrderList(
-          productType: "blouse",
-          productName: "Blouse 2",
-          price: "2000",
-          quantity: 1,
-          fullLength: "14",
-          shoulder: "14",
-          shoulderGap: "14",
-          sleevesLength: "14",
-          armholeRound: "14",
-          circleDownLoose: "14",
-          sleevesRound: "14",
-          upperChestRound: "14",
-          chestRound: "14",
-          lowerChestRound: "14",
-          waistRound: "14",
-          firstDartPoint: "14",
-          secondDartPoint: "14",
-          bustPoint: "14",
-          frontNeckDeep: "14",
-          backNeckDeep: "14",
-          waistBandLength: "14",
-          neckWidth: "14",
-          backNeckWidth: "14",
-          orderCompletion: false,
-          frontImageUrl: "100",
-          backImageUrl: "",
-          sleevesImageUrl: "102",
-          hangingsImageUrl: "104",
-          cups: false,
-          piping: true,
-          zipType: "Front",
-          hooks: "Back")
-    ];
+  void getOrderType(BuildContext context) {
+    var home = Provider.of<HomepageController>(context, listen: false);
+    orderType = home.orderType;
+  }
+
+  clearLocalData(BuildContext context) {
+    var selectDesign = Provider.of<BlouseSelectDesignController>(context, listen: false);
+    var previewOrder = Provider.of<PreviewOrderBlouseController>(context, listen: false);
+    var selectHangings = Provider.of<SelectHangingsController>(context, listen: false);
+    selectDesign.selectFrontDesignClass!.clear();
+    selectDesign.selectBackDesignClass!.clear();
+    selectDesign.selectSleeveDesignClass!.clear();
+    selectDesign.frontDesignImage!.image = null;
+    selectDesign.backDesignImage!.image = null;
+    selectDesign.sleeveDesignImage!.image = null;
+    previewOrder.image = null;
+    previewOrder.status = [true, true, true, true];
+    previewOrder.zipTypeLabel = 1;
+    previewOrder.hooksLabel = 1;
+    selectHangings.hangingsDesignImage!.image = null;
     notifyListeners();
   }
 }

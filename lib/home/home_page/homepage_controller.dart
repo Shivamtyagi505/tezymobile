@@ -1,14 +1,18 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:quikieappps1/api/add_customer/add_customer_services.dart';
 import 'package:quikieappps1/api/add_customer/all_customer_model.dart';
+import 'package:quikieappps1/bill/generate_bill_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomepageController extends ChangeNotifier {
+class HomepageController extends GenerateBillController {
+  late TabController tabController;
   AllCustomerModel? allCustomerModel;
   List<AllCustomerData>? filteredAllCustomerModel;
   String? username = '';
   var formatter = new DateFormat('yyyy-MM-dd');
+  int selectedIndex = 0;
+  String orderType = '';
 
   String dateFormat() {
     var date = DateTime.now();
@@ -32,10 +36,20 @@ class HomepageController extends ChangeNotifier {
     }
   }
 
-    getUsername() async {
+  getUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String value = prefs.get('username').toString();
     username = value;
+    notifyListeners();
+  }
+
+  void updateSelectedIndex() {
+    selectedIndex = tabController.index;
+    notifyListeners();
+  }
+
+  void updateOrderType(String orderTypeValue) {
+    orderType = orderTypeValue;
     notifyListeners();
   }
 }

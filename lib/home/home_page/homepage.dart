@@ -12,13 +12,16 @@ class HomePageScreen extends StatefulWidget {
   _HomePageScreenState createState() => _HomePageScreenState();
 }
 
-class _HomePageScreenState extends State<HomePageScreen> {
+class _HomePageScreenState extends State<HomePageScreen> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     var provider = Provider.of<HomepageController>(context, listen: false);
     provider.dateFormat();
     provider.fetchAllCustomer();
     provider.getUsername();
+    provider.tabController = TabController(length: 4, vsync: this);
+    provider.tabController.addListener(provider.updateSelectedIndex);
+    provider.getCategorieName(context);
     super.initState();
   }
 
@@ -196,13 +199,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               ),
                             ),
                             Todaycustomers(),
-                            Container(
-                              height: 1,
-                              color: Colors.white,
-                            ),
+                            Container(height: 1, color: Colors.white),
                             Expanded(
                               child: Container(
-                                // height: 230,
                                 width: MediaQuery.of(context).size.width,
                                 child: Tabview(),
                               ),

@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import 'package:quikieappps1/blouse/input_sample/input_sample.dart';
-import 'package:quikieappps1/bodymeasure/horizontal_numberpicker_wrapper.dart';
+import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
+import 'package:quikieappps1/blouse/image_class.dart';
 import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
-import 'package:quikieappps1/topdesign/design/select_front_design.dart';
-import 'package:quikieappps1/topdesign/topimage_class.dart';
+
+import '../bodymeasure/horizontal_numberpicker_wrapper.dart';
 
 // ignore: must_be_immutable
-class TopMeasurement extends StatefulWidget {
+class MeasurementScreen extends StatefulWidget {
   double selectVal;
 
-  TopMeasurement({this.selectVal = 8.00});
+  MeasurementScreen({this.selectVal = 8.00});
 
   @override
-  _TopMeasurementState createState() => _TopMeasurementState();
+  _MeasurementScreenState createState() => _MeasurementScreenState();
 }
 
-class _TopMeasurementState extends State<TopMeasurement> {
+class _MeasurementScreenState extends State<MeasurementScreen> {
   bool isSelected = false;
   bool ontap = false;
-
+  List<int> arrange = [];
+  List<double> items = [];
+  List<double> isSelectedItems = [];
   List<String> _listViewData = [
     'Shoulder',
     'Full Length',
+    // 'Shoulder Gap',
     'Sleeves Length',
-    'Sleeves Round',
     'Armhole Round',
-    // 'Circle Down Loose',//Disable
-
+    // 'Circle Down Loose',
+    'Sleeves Round',
     'Upper Chest Round',
     'Lower Chest Round',
     'Waist Round',
-    'Hip',
-    // 'Waist Length',//Disable
-    'Slit Length',
+    // 'First Dart Point',
+    // 'Second Dart Point',
+    'Bust Point',
+    // 'Front AC',
     'Front Neck Deep',
     'Back Neck Deep',
+    'Waist Band Length',
     'Neck Width',
-    //'Bust Point',//Disable
-    //'Bottom Round',//Disable
+    // 'Chest Round',
+    //'Back Neck Width',
   ];
   String selectedImage = "assets/images/3d woman 1.png";
   List<String> deleted = [];
@@ -97,17 +100,22 @@ class _TopMeasurementState extends State<TopMeasurement> {
   Color abc = Color(0xff032B77);
   int value = 0;
   List<String> delete = [
+    'Shoulder Gap',
     'Circle Down Loose',
-    'Waist Length',
-    'Bust Point',
-    'Bottom Round',
+    'First Dart Point',
+    'Second Dart Point',
+    'Front AC',
+    'Chest Round',
+    'Back Neck Width',
   ];
+
+  // ignore: missing_required_param
   List<String> mesuringList = [];
   int FIRST_TIME = 0;
   String getalistName = 'Shoulder';
   ScaleNo scaleData =
       ScaleNo(); //this will set the name of scale and that name of scale will search in map and update the image on scrolling.
-  List<int> arrange = [];
+
   @override
   void initState() {
     super.initState();
@@ -124,7 +132,7 @@ class _TopMeasurementState extends State<TopMeasurement> {
           backgroundColor: Colors.white,
           centerTitle: true,
           title: new Text(
-            'Tops',
+            'Blouse',
             style: TextStyle(
               fontSize: 24.0,
               color: Color.fromRGBO(3, 43, 119, 10),
@@ -140,17 +148,24 @@ class _TopMeasurementState extends State<TopMeasurement> {
                     setState(() {
                       isSelected = !isSelected;
                       if (isSelected && FIRST_TIME == 0) {
+                        mesuringList.add('Shoulder Gap');
                         mesuringList.add(
                           'Circle Down Loose',
                         );
                         mesuringList.add(
-                          'Waist Length',
+                          'First Dart Point',
                         );
                         mesuringList.add(
-                          'Bust Point',
+                          'Second Dart Point',
                         );
                         mesuringList.add(
-                          'Bottom Round',
+                          'Front AC',
+                        );
+                        mesuringList.add(
+                          'Chest Round',
+                        );
+                        mesuringList.add(
+                          'Back Neck Width',
                         );
                         // _listViewData.add('Shoulder');
                         //delete.add('Shoulder');
@@ -159,7 +174,6 @@ class _TopMeasurementState extends State<TopMeasurement> {
 
                       if (!delete.isEmpty) {
                         delete.forEach((element) {
-                          print("hello delete item name  ${element}");
                           _listViewData.remove(element);
 
                           deleted.add(element);
@@ -168,12 +182,9 @@ class _TopMeasurementState extends State<TopMeasurement> {
                       }
                     });
                     if (isSelected) {
-                      print("enter in isSelected");
                       if (!deleted.isEmpty) {
-                        print("enter in !deleted.isEmpty");
                         deleted.forEach((element) {
                           if (!_listViewData.contains(element)) {
-                            print(" !_listViewData.contains(element) $element");
                             setState(() {
                               _listViewData.add(element);
                               _listViewData.forEach((element) {
@@ -287,6 +298,7 @@ class _TopMeasurementState extends State<TopMeasurement> {
                           },
                           itemCount: _listViewData.length,
                           itemBuilder: (context, index) {
+                            isSelectedItems = getdataval[widget.selectVal]!;
                             mesuringList.add('Soulder');
                             return InkWell(
                               onTap: () {
@@ -328,6 +340,11 @@ class _TopMeasurementState extends State<TopMeasurement> {
                                     subGridCountPerGrid: 10,
                                     subGridWidth: 8,
                                     onSelectedChanged: (value) {
+                                      var updatedValue = getUpdatedValue(value);
+                                      getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])] =
+                                          updatedValue + 1;
+                                      isSelectedItems = getdataval[widget.selectVal]!;
+                                      print(isSelectedItems);
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');
@@ -353,10 +370,9 @@ class _TopMeasurementState extends State<TopMeasurement> {
                                       if (_listViewData[index] == 'Waist Band Length')
                                         scaleData.setName('Waist Band Length');
                                       if (_listViewData[index] == 'Neck Width') scaleData.setName('Neck Width');
-                                      if (_listViewData[index] == 'Waist Length') scaleData.setName('Waist Length');
-                                      if (_listViewData[index] == 'Hip') scaleData.setName('Hip');
-                                      if (_listViewData[index] == 'Slit Length') scaleData.setName('Slit Length');
-                                      if (_listViewData[index] == 'Bottom Round') scaleData.setName('Bottom Round');
+                                      if (_listViewData[index] == 'Back Neck Width')
+                                        scaleData.setName('Back Neck Width');
+                                      if (_listViewData[index] == 'Chest Round') scaleData.setName('Chest Round');
                                     },
                                   ),
                                 ),
@@ -430,7 +446,7 @@ class _TopMeasurementState extends State<TopMeasurement> {
                           },
                           itemCount: _listViewData.length,
                           itemBuilder: (context, index) {
-                            print("helloooooooo  :" + widget.selectVal.toString());
+                            items = getdataval[widget.selectVal]!;
                             return InkWell(
                               onTap: () {
                                 // selectedImage = images[index];
@@ -471,7 +487,10 @@ class _TopMeasurementState extends State<TopMeasurement> {
                                     subGridCountPerGrid: 10,
                                     subGridWidth: 8,
                                     onSelectedChanged: (value) {
-                                      //
+                                      var updatedValue = getUpdatedValue(value);
+                                      getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])] =
+                                          updatedValue + 1;
+                                      items = getdataval[widget.selectVal]!;
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');
@@ -497,10 +516,9 @@ class _TopMeasurementState extends State<TopMeasurement> {
                                       if (_listViewData[index] == 'Waist Band Length')
                                         scaleData.setName('Waist Band Length');
                                       if (_listViewData[index] == 'Neck Width') scaleData.setName('Neck Width');
-                                      if (_listViewData[index] == 'Waist Length') scaleData.setName('Waist Length');
-                                      if (_listViewData[index] == 'Hip') scaleData.setName('Hip');
-                                      if (_listViewData[index] == 'Slit Length') scaleData.setName('Slit Length');
-                                      if (_listViewData[index] == 'Bottom Round') scaleData.setName('Bottom Round');
+                                      if (_listViewData[index] == 'Back Neck Width')
+                                        scaleData.setName('Back Neck Width');
+                                      if (_listViewData[index] == 'Chest Round') scaleData.setName('Chest Round');
                                     },
                                   ),
                                 ),
@@ -573,10 +591,7 @@ class _TopMeasurementState extends State<TopMeasurement> {
               FloatingActionButton(
                 heroTag: null,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => input_sample()),
-                  );
+                  Navigator.pop(context);
                 },
                 child: Image.asset("assets/images/Previous.png"),
               ),
@@ -593,6 +608,12 @@ class _TopMeasurementState extends State<TopMeasurement> {
             ],
           ),
         ));
+  }
+
+  double getUpdatedValue(val) {
+    double base = 1.00;
+    double finalva = ((((val / 1 - (val % 1)) - base)) * 0.25) + (val % 1);
+    return finalva;
   }
 
   void changeImageOnScroll(int index) {
@@ -614,9 +635,7 @@ class _TopMeasurementState extends State<TopMeasurement> {
     if (_listViewData[index] == 'Back Neck Deep') scaleData.setName('Back Neck Deep');
     if (_listViewData[index] == 'Waist Band Length') scaleData.setName('Waist Band Length');
     if (_listViewData[index] == 'Neck Width') scaleData.setName('Neck Width');
-    if (_listViewData[index] == 'Waist Length') scaleData.setName('Waist Length');
-    if (_listViewData[index] == 'Hip') scaleData.setName('Hip');
-    if (_listViewData[index] == 'Slit Length') scaleData.setName('Slit Length');
-    if (_listViewData[index] == 'Bottom Round') scaleData.setName('Bottom Round');
+    if (_listViewData[index] == 'Back Neck Width') scaleData.setName('Back Neck Width');
+    if (_listViewData[index] == 'Chest Round') scaleData.setName('Chest Round');
   }
 }
