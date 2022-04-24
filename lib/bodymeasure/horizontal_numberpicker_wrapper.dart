@@ -42,11 +42,11 @@ class HorizontalNumberPickerWrapper extends StatefulWidget {
 
   ///刻度文字颜色
   final Color? scaleTextColor;
-  
+
   final ImageNotif? imageNotif;
 
   HorizontalNumberPickerWrapper({
-     Key? key,
+    Key? key,
     this.imageNotif,
     this.initialValue = 500,
     this.minValue = 100,
@@ -85,8 +85,7 @@ class HorizontalNumberPickerWrapper extends StatefulWidget {
   }
 }
 
-class HorizontalNumberPickerWrapperState
-    extends State<HorizontalNumberPickerWrapper> {
+class HorizontalNumberPickerWrapperState extends State<HorizontalNumberPickerWrapper> {
   double? _selectedValue;
   ScaleNo? scaleData = ScaleNo();
 
@@ -103,11 +102,8 @@ class HorizontalNumberPickerWrapperState
     _selectedValue = widget.initialValue;
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
-
     int numberPickerHeight = 60;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -124,18 +120,15 @@ class HorizontalNumberPickerWrapperState
               Text(
                 ' ${widget.name}',
                 style: TextStyle(
-                    color: widget.titleTextColor,
-                    fontSize: 13,
-                   // fontWeight: FontWeight.w700
-                    //fontFamily: "Montserrat",
-                    ),
+                  color: widget.titleTextColor,
+                  fontSize: 13,
+                  // fontWeight: FontWeight.w700
+                  //fontFamily: "Montserrat",
+                ),
               ),
               Text(
                 widget.titleTransformer!(getScalePrintVal(_selectedValue)),
-                style: TextStyle(
-                    color: widget.titleTextColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700
+                style: TextStyle(color: widget.titleTextColor, fontSize: 20, fontWeight: FontWeight.w700
                     //fontFamily: "Montserrat",
                     ),
               ),
@@ -148,9 +141,7 @@ class HorizontalNumberPickerWrapperState
             Container(
               height: 50,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                 color: Colors.white,
               ),
               child: HorizontalNumberPicker(
@@ -170,7 +161,7 @@ class HorizontalNumberPickerWrapperState
                   });
 
                   if (widget.name == 'Shoulder') {
-                  //  scaleData.setValue(value);
+                    //  scaleData.setValue(value);
                     //widget.imageNotif.shoulderImage();
                   }
                   /*
@@ -246,13 +237,9 @@ class HorizontalNumberPickerWrapperState
     );
   }
 
-
-
-
   double getScalePrintVal(val) {
     double base = 1.00;
     double finalva = ((((val / 1 - (val % 1)) - base)) * 0.25) + (val % 1);
-    print('fnal$finalva');
     return finalva;
   }
 

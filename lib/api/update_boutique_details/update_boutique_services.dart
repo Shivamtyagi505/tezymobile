@@ -27,7 +27,6 @@ Future updateBoutiqueDetails(UpdateBoutiqueData updateBoutiqueData) async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    print("error ${response.statusCode}");
     throw Exception('Failed to AddCustomer');
   }
 }
@@ -39,12 +38,7 @@ class UpdateBoutiqueData {
   String? mobileNumber;
   String? address;
 
-  UpdateBoutiqueData(
-      {this.userName,
-      this.email,
-      this.password,
-      this.mobileNumber,
-      this.address});
+  UpdateBoutiqueData({this.userName, this.email, this.password, this.mobileNumber, this.address});
 }
 
 // Future UpdateProfilePhoto() async {

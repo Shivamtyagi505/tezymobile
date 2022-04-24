@@ -6,6 +6,7 @@ import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller
 import 'package:quikieappps1/blouse/place_order/placeOrder.dart';
 import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
 import 'package:quikieappps1/hangings/hangings.dart';
+import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:quikieappps1/assets/colors.dart';
 
@@ -13,11 +14,20 @@ class PreviewOrdersBlouse extends StatefulWidget {
   var frontImage;
   var backImage;
   var sleeveImage;
+  var bottomImage;
   String? frontType;
   String? backType;
   String? sleeveType;
+  String? bottomType;
   PreviewOrdersBlouse(
-      {this.frontImage, this.backImage, this.sleeveImage, this.frontType, this.backType, this.sleeveType});
+      {this.frontImage,
+      this.backImage,
+      this.sleeveImage,
+      this.bottomImage,
+      this.frontType,
+      this.backType,
+      this.sleeveType,
+      this.bottomType});
   @override
   _PreviewOrdersBlouseState createState() => _PreviewOrdersBlouseState();
 }
@@ -156,8 +166,6 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
 
   Widget appBar(PreviewOrderBlouseController controller) {
     return Consumer<SelectCustomerController>(builder: (context, value, child) {
-      //print('name value is  ${value.addCustomerModel?.data?.attributes.name}');
-      //return value.allCustomerModel!.data!.attributes!.name != null ?
       return value.allCustomerAttributes != null
           ? Column(
               children: [
@@ -266,13 +274,16 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
   @override
   void initState() {
     var provider = Provider.of<PreviewOrderBlouseController>(context, listen: false);
+    var homepage = Provider.of<HomepageController>(context, listen: false);
     provider.getOrderType(context);
+    homepage.categoriesName();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PreviewOrderBlouseController>(builder: (context, value, child) {
+    return Consumer2<PreviewOrderBlouseController, HomepageController>(
+        builder: (context, value, homepageController, child) {
       return Scaffold(
           backgroundColor: Color(0xffF3F7FB),
           body: Container(
@@ -300,253 +311,340 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  Container(
-                                    child: Expanded(
-                                      child: Stack(alignment: Alignment.bottomCenter, children: [
-                                        Container(
-                                            height: 200,
-                                            decoration: BoxDecoration(
-                                              color: darkGrey,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(0),
-                                                bottomLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                                bottomRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            child: widget.frontImage == null
-                                                ? ClipRRect(
+                                  (homepageController.productName == 'blouse' ||
+                                          homepageController.productName == 'top')
+                                      ? Container(
+                                          child: Expanded(
+                                            child: Stack(alignment: Alignment.bottomCenter, children: [
+                                              Container(
+                                                  height: 200,
+                                                  decoration: BoxDecoration(
+                                                    color: darkGrey,
                                                     borderRadius: BorderRadius.only(
                                                       topLeft: Radius.circular(0),
                                                       bottomLeft: Radius.circular(20),
                                                       topRight: Radius.circular(20),
                                                       bottomRight: Radius.circular(20),
                                                     ),
-                                                    child: Center(
-                                                      child: Icon(
-                                                        Icons.photo,
-                                                        size: 40,
-                                                        color: textColor,
-                                                      ),
+                                                  ),
+                                                  child: widget.frontImage == null
+                                                      ? ClipRRect(
+                                                          borderRadius: BorderRadius.only(
+                                                            topLeft: Radius.circular(0),
+                                                            bottomLeft: Radius.circular(20),
+                                                            topRight: Radius.circular(20),
+                                                            bottomRight: Radius.circular(20),
+                                                          ),
+                                                          child: Center(
+                                                            child: Icon(
+                                                              Icons.photo,
+                                                              size: 40,
+                                                              color: textColor,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : widget.frontImage != null && widget.frontType == 'Gallery' ||
+                                                              widget.frontType == 'Camera'
+                                                          ? ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.file(
+                                                                widget.frontImage,
+                                                                fit: BoxFit.fill,
+                                                                width: double.infinity,
+                                                              ))
+                                                          : ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.network(
+                                                                'http://172.105.253.131:1337${widget.frontImage}',
+                                                                width: double.infinity,
+                                                                height: 100,
+                                                                fit: BoxFit.fill,
+                                                              ),
+                                                            )),
+                                              Container(
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                    color: labelGrey,
+                                                    borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(0),
+                                                      bottomRight: Radius.circular(0),
                                                     ),
-                                                  )
-                                                : widget.frontImage != null && widget.frontType == 'Gallery' ||
-                                                        widget.frontType == 'Camera'
-                                                    ? ClipRRect(
-                                                        borderRadius: BorderRadius.only(
-                                                          topLeft: Radius.circular(0),
-                                                          bottomLeft: Radius.circular(20),
-                                                          topRight: Radius.circular(20),
-                                                          bottomRight: Radius.circular(20),
-                                                        ),
-                                                        child: Image.file(
-                                                          widget.frontImage,
-                                                          fit: BoxFit.fill,
-                                                        ))
-                                                    : ClipRRect(
-                                                        borderRadius: BorderRadius.only(
-                                                          topLeft: Radius.circular(0),
-                                                          bottomLeft: Radius.circular(20),
-                                                          topRight: Radius.circular(20),
-                                                          bottomRight: Radius.circular(20),
-                                                        ),
-                                                        child: Image.network(
-                                                          'http://172.105.253.131:1337${widget.frontImage}',
-                                                          width: double.infinity,
-                                                          height: 100,
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      )),
-                                        Container(
-                                            height: 28,
-                                            decoration: BoxDecoration(
-                                              color: labelGrey,
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(0),
-                                                bottomRight: Radius.circular(0),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Expanded(child: SizedBox()),
-                                                Text(
-                                                  'Front Neck Design',
-                                                  style: TextStyle(color: textColor, fontSize: 12),
-                                                ),
-                                                Expanded(child: SizedBox()),
-                                              ],
-                                            ))
-                                      ]),
-                                    ),
-                                  ),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(child: SizedBox()),
+                                                      Text(
+                                                        'Front Neck Design',
+                                                        style: TextStyle(color: textColor, fontSize: 12),
+                                                      ),
+                                                      Expanded(child: SizedBox()),
+                                                    ],
+                                                  ))
+                                            ]),
+                                          ),
+                                        )
+                                      : Container(
+                                          child: Expanded(
+                                            child: Stack(alignment: Alignment.bottomCenter, children: [
+                                              Container(
+                                                  height: 200,
+                                                  decoration: BoxDecoration(
+                                                    color: darkGrey,
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(0),
+                                                      bottomLeft: Radius.circular(20),
+                                                      topRight: Radius.circular(20),
+                                                      bottomRight: Radius.circular(20),
+                                                    ),
+                                                  ),
+                                                  child: widget.bottomType == null
+                                                      ? ClipRRect(
+                                                          borderRadius: BorderRadius.only(
+                                                            topLeft: Radius.circular(0),
+                                                            bottomLeft: Radius.circular(20),
+                                                            topRight: Radius.circular(20),
+                                                            bottomRight: Radius.circular(20),
+                                                          ),
+                                                          child: Center(
+                                                            child: Icon(
+                                                              Icons.photo,
+                                                              size: 40,
+                                                              color: textColor,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : widget.bottomImage != null && widget.bottomType == 'Gallery' ||
+                                                              widget.bottomType == 'Camera'
+                                                          ? ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.file(
+                                                                widget.bottomImage,
+                                                                fit: BoxFit.fill,
+                                                                width: double.infinity,
+                                                              ))
+                                                          : ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.network(
+                                                                'http://172.105.253.131:1337${widget.bottomImage}',
+                                                                width: double.infinity,
+                                                                height: 100,
+                                                                fit: BoxFit.fill,
+                                                              ),
+                                                            )),
+                                              Container(
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                    color: labelGrey,
+                                                    borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(0),
+                                                      bottomRight: Radius.circular(0),
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(child: SizedBox()),
+                                                      Text(
+                                                        'Style Reference',
+                                                        style: TextStyle(color: textColor, fontSize: 12),
+                                                      ),
+                                                      Expanded(child: SizedBox()),
+                                                    ],
+                                                  ))
+                                            ]),
+                                          ),
+                                        ),
                                 ],
                               ),
                               SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Container(
-                                    child: Expanded(
-                                      child: Stack(alignment: Alignment.bottomCenter, children: [
+                              (homepageController.productName == 'blouse' || homepageController.productName == 'top')
+                                  ? Row(
+                                      children: [
                                         Container(
-                                            height: 200,
-                                            decoration: BoxDecoration(
-                                              color: darkGrey,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(0),
-                                                bottomLeft: Radius.circular(20),
-                                                topRight: Radius.circular(0),
-                                                bottomRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            child: widget.backImage == null
-                                                ? ClipRRect(
+                                          child: Expanded(
+                                            child: Stack(alignment: Alignment.bottomCenter, children: [
+                                              Container(
+                                                  height: 200,
+                                                  decoration: BoxDecoration(
+                                                    color: darkGrey,
                                                     borderRadius: BorderRadius.only(
                                                       topLeft: Radius.circular(0),
                                                       bottomLeft: Radius.circular(20),
-                                                      topRight: Radius.circular(20),
+                                                      topRight: Radius.circular(0),
                                                       bottomRight: Radius.circular(20),
                                                     ),
-                                                    child: Center(
-                                                      child: Icon(
-                                                        Icons.photo,
-                                                        size: 40,
-                                                        color: textColor,
-                                                      ),
+                                                  ),
+                                                  child: widget.backImage == null
+                                                      ? ClipRRect(
+                                                          borderRadius: BorderRadius.only(
+                                                            topLeft: Radius.circular(0),
+                                                            bottomLeft: Radius.circular(20),
+                                                            topRight: Radius.circular(20),
+                                                            bottomRight: Radius.circular(20),
+                                                          ),
+                                                          child: Center(
+                                                            child: Icon(
+                                                              Icons.photo,
+                                                              size: 40,
+                                                              color: textColor,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : widget.backImage != null && widget.backType == 'Gallery' ||
+                                                              widget.backType == 'Camera'
+                                                          ? ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.file(
+                                                                widget.backImage,
+                                                                fit: BoxFit.fill,
+                                                                width: double.infinity,
+                                                              ))
+                                                          : ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.network(
+                                                                'http://172.105.253.131:1337${widget.backImage}',
+                                                                width: double.infinity,
+                                                                height: 100,
+                                                                fit: BoxFit.fill,
+                                                              ),
+                                                            )),
+                                              Container(
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                    color: labelGrey,
+                                                    borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(20),
+                                                      bottomRight: Radius.circular(0),
                                                     ),
-                                                  )
-                                                : widget.backImage != null && widget.backType == 'Gallery' ||
-                                                        widget.backType == 'Camera'
-                                                    ? ClipRRect(
-                                                        borderRadius: BorderRadius.only(
-                                                          topLeft: Radius.circular(0),
-                                                          bottomLeft: Radius.circular(20),
-                                                          topRight: Radius.circular(20),
-                                                          bottomRight: Radius.circular(20),
-                                                        ),
-                                                        child: Image.file(
-                                                          widget.backImage,
-                                                          fit: BoxFit.fill,
-                                                        ))
-                                                    : ClipRRect(
-                                                        borderRadius: BorderRadius.only(
-                                                          topLeft: Radius.circular(0),
-                                                          bottomLeft: Radius.circular(20),
-                                                          topRight: Radius.circular(20),
-                                                          bottomRight: Radius.circular(20),
-                                                        ),
-                                                        child: Image.network(
-                                                          'http://172.105.253.131:1337${widget.backImage}',
-                                                          width: double.infinity,
-                                                          height: 100,
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      )),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(child: SizedBox()),
+                                                      Text(
+                                                        'Back Neck Design',
+                                                        style: TextStyle(color: textColor, fontSize: 12),
+                                                      ),
+                                                      Expanded(child: SizedBox()),
+                                                    ],
+                                                  ))
+                                            ]),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
                                         Container(
-                                            height: 28,
-                                            decoration: BoxDecoration(
-                                              color: labelGrey,
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(20),
-                                                bottomRight: Radius.circular(0),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Expanded(child: SizedBox()),
-                                                Text(
-                                                  'Back Neck Design',
-                                                  style: TextStyle(color: textColor, fontSize: 12),
-                                                ),
-                                                Expanded(child: SizedBox()),
-                                              ],
-                                            ))
-                                      ]),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Container(
-                                    child: Expanded(
-                                      child: Stack(alignment: Alignment.bottomCenter, children: [
-                                        Container(
-                                            height: 200,
-                                            decoration: BoxDecoration(
-                                              color: darkGrey,
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(0),
-                                                bottomLeft: Radius.circular(20),
-                                                topRight: Radius.circular(0),
-                                                bottomRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            child: widget.sleeveImage == null
-                                                ? ClipRRect(
+                                          child: Expanded(
+                                            child: Stack(alignment: Alignment.bottomCenter, children: [
+                                              Container(
+                                                  height: 200,
+                                                  decoration: BoxDecoration(
+                                                    color: darkGrey,
                                                     borderRadius: BorderRadius.only(
                                                       topLeft: Radius.circular(0),
                                                       bottomLeft: Radius.circular(20),
-                                                      topRight: Radius.circular(20),
+                                                      topRight: Radius.circular(0),
                                                       bottomRight: Radius.circular(20),
                                                     ),
-                                                    child: Center(
-                                                      child: Icon(
-                                                        Icons.photo,
-                                                        size: 40,
-                                                        color: textColor,
-                                                      ),
+                                                  ),
+                                                  child: widget.sleeveImage == null
+                                                      ? ClipRRect(
+                                                          borderRadius: BorderRadius.only(
+                                                            topLeft: Radius.circular(0),
+                                                            bottomLeft: Radius.circular(20),
+                                                            topRight: Radius.circular(20),
+                                                            bottomRight: Radius.circular(20),
+                                                          ),
+                                                          child: Center(
+                                                            child: Icon(
+                                                              Icons.photo,
+                                                              size: 40,
+                                                              color: textColor,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : widget.sleeveImage != null && widget.sleeveType == 'Gallery' ||
+                                                              widget.sleeveType == 'Camera'
+                                                          ? ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.file(
+                                                                widget.sleeveImage,
+                                                                fit: BoxFit.fill,
+                                                                width: double.infinity,
+                                                              ))
+                                                          : ClipRRect(
+                                                              borderRadius: BorderRadius.only(
+                                                                topLeft: Radius.circular(0),
+                                                                bottomLeft: Radius.circular(20),
+                                                                topRight: Radius.circular(20),
+                                                                bottomRight: Radius.circular(20),
+                                                              ),
+                                                              child: Image.network(
+                                                                'http://172.105.253.131:1337${widget.sleeveImage}',
+                                                                width: double.infinity,
+                                                                height: 100,
+                                                                fit: BoxFit.fill,
+                                                              ),
+                                                            )),
+                                              Container(
+                                                  height: 28,
+                                                  decoration: BoxDecoration(
+                                                    color: labelGrey,
+                                                    borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(0),
+                                                      bottomRight: Radius.circular(20),
                                                     ),
-                                                  )
-                                                : widget.sleeveImage != null && widget.sleeveType == 'Gallery' ||
-                                                        widget.sleeveType == 'Camera'
-                                                    ? ClipRRect(
-                                                        borderRadius: BorderRadius.only(
-                                                          topLeft: Radius.circular(0),
-                                                          bottomLeft: Radius.circular(20),
-                                                          topRight: Radius.circular(20),
-                                                          bottomRight: Radius.circular(20),
-                                                        ),
-                                                        child: Image.file(
-                                                          widget.sleeveImage,
-                                                          fit: BoxFit.fill,
-                                                        ))
-                                                    : ClipRRect(
-                                                        borderRadius: BorderRadius.only(
-                                                          topLeft: Radius.circular(0),
-                                                          bottomLeft: Radius.circular(20),
-                                                          topRight: Radius.circular(20),
-                                                          bottomRight: Radius.circular(20),
-                                                        ),
-                                                        child: Image.network(
-                                                          'http://172.105.253.131:1337${widget.sleeveImage}',
-                                                          width: double.infinity,
-                                                          height: 100,
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      )),
-                                        Container(
-                                            height: 28,
-                                            decoration: BoxDecoration(
-                                              color: labelGrey,
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(0),
-                                                bottomRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Expanded(child: SizedBox()),
-                                                Text(
-                                                  'Sleeves Design',
-                                                  style: TextStyle(color: textColor, fontSize: 12),
-                                                ),
-                                                Expanded(child: SizedBox()),
-                                              ],
-                                            ))
-                                      ]),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(child: SizedBox()),
+                                                      Text(
+                                                        'Sleeves Design',
+                                                        style: TextStyle(color: textColor, fontSize: 12),
+                                                      ),
+                                                      Expanded(child: SizedBox()),
+                                                    ],
+                                                  ))
+                                            ]),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(),
                             ],
                           ),
                         ),
@@ -571,47 +669,88 @@ class _PreviewOrdersBlouseState extends State<PreviewOrdersBlouse> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 14, left: 27, right: 39),
-                          child: Column(
-                            children: [
-                              toggle("CUPS", 0, value),
-                              Divider(),
-                              toggle("PIPING", 1, value),
-                              Divider(),
-                              toggle("ZIP TYPE", 2, value),
-                              SizedBox(height: 10),
-                              if (value.status[2]) zipType(value),
-                              SizedBox(height: 5),
-                              Divider(),
-                              toggle("HOOKS", 3, value),
-                              SizedBox(height: 10),
-                              if (value.status[3]) hooks(value),
-                              SizedBox(height: 5),
-                              Divider(),
-                              SizedBox(height: 10),
-                            ],
-                          ),
+                          child: (homepageController.productName == 'blouse')
+                              ? Column(
+                                  children: [
+                                    toggle("CUPS", 0, value),
+                                    Divider(),
+                                    toggle("PIPING", 1, value),
+                                    Divider(),
+                                    toggle("ZIP TYPE", 2, value),
+                                    SizedBox(height: 10),
+                                    if (value.status[2]) zipType(value),
+                                    SizedBox(height: 5),
+                                    Divider(),
+                                    toggle("HOOKS", 3, value),
+                                    SizedBox(height: 10),
+                                    if (value.status[3]) hooks(value),
+                                    SizedBox(height: 5),
+                                    Divider(),
+                                    SizedBox(height: 10),
+                                  ],
+                                )
+                              : (homepageController.productName == 'top')
+                                  ? Column(
+                                      children: [
+                                        toggle("LINING", 0, value),
+                                        Divider(),
+                                        toggle("CUPS", 1, value),
+                                        Divider(),
+                                        toggle("PIPING", 2, value),
+                                        Divider(),
+                                        toggle("ZIP TYPE", 3, value),
+                                        SizedBox(height: 10),
+                                        if (value.status[3]) zipType(value),
+                                        SizedBox(height: 5),
+                                        Divider(),
+                                      ],
+                                    )
+                                  : (homepageController.productName == 'bottom')
+                                      ? Column(
+                                          children: [
+                                            toggle("DrawString(Nada)", 1, value),
+                                            Divider(),
+                                            toggle("Elastic", 0, value),
+                                            Divider(),
+                                            toggle("Lining", 2, value),
+                                            Divider(),
+                                            SizedBox(height: 10),
+                                          ],
+                                        )
+                                      : (homepageController.productName == 'bottom')
+                                          ? Column(
+                                              children: [
+                                                toggle("Falls", 0, value),
+                                                Divider(),
+                                                toggle("Zig Zag", 1, value),
+                                                Divider(),
+                                              ],
+                                            )
+                                          : Container(),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Hangings()),
-                                  );
-                                },
-                                child: picWithHead('HANGINGS', '')),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Drawing_Pad()),
-                                  );
-                                },
-                                child: picWithHead('DRAWING PAD', '')),
-                          ],
-                        ),
+                        (homepageController.productName == 'bottom')
+                            ? Container()
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Hangings()),
+                                        );
+                                      },
+                                      child: picWithHead('HANGINGS', '')),
+                                  InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Drawing_Pad()),
+                                        );
+                                      },
+                                      child: picWithHead('DRAWING PAD', '')),
+                                ],
+                              ),
                       ],
                     ),
                   ),

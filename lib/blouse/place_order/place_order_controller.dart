@@ -36,6 +36,7 @@ class PlaceOrderController extends GenerateBillController {
   String? zipType;
   String? hooks;
   String? measurementData;
+  var localfabricImage;
 
   Future<void> fetchInvoiceNumberSuggestions() async {
     invoiceNumber = await getInvoiceNumberSuggestion();
@@ -86,7 +87,6 @@ class PlaceOrderController extends GenerateBillController {
     } else if (dropdownValue == 'Dec') {
       month = 12;
     }
-    print(month);
     notifyListeners();
   }
 
@@ -112,19 +112,32 @@ class PlaceOrderController extends GenerateBillController {
     pipings = prefs.getBool('piping');
     zipType = prefs.getString('zipType');
     hooks = prefs.getString('hooks');
-    viewOrderAndMeasurement.add(ViewOrderAndMeasurement(
+    placeOrderItems.add(PlaceOrderList(
         data: Map<String, double>.from(jsonDecode(measurementData!)),
         frontImage: frontImage,
         backImage: backImage,
         sleevesImage: sleevesImage,
-        frontImageType: frontImageType,
-        backImageType: backImageType,
-        sleevesImageType: sleevesImageType,
         cups: cups,
         piping: pipings,
         zipType: zipType,
         hooks: hooks,
-        fabricImage: fabricImage));
+        file: localfabricImage,
+        orderType: orderType,
+        quantity: 1));
+    viewOrderAndMeasurement.add(ViewOrderAndMeasurement(
+      data: Map<String, double>.from(jsonDecode(measurementData!)),
+      frontImage: frontImage,
+      backImage: backImage,
+      sleevesImage: sleevesImage,
+      frontImageType: frontImageType,
+      backImageType: backImageType,
+      sleevesImageType: sleevesImageType,
+      cups: cups,
+      piping: pipings,
+      zipType: zipType,
+      hooks: hooks,
+      fabricImage: fabricImage,
+    ));
   }
 
   double? get grandTotalAmount {

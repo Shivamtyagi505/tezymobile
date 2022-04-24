@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -16,8 +15,8 @@ class PreviewOrderBottom extends StatefulWidget {
 
 class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
   dynamic status = [true, true, true, true];
-   File? _image;
-   File? _galleryImage;
+  File? _image;
+  File? _galleryImage;
   var loading = false;
   final picker = ImagePicker();
 
@@ -60,8 +59,6 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
         });
   }
 
-  
-
   Widget zipType() {
     return ToggleSwitch(
       minWidth: 90.0,
@@ -78,9 +75,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
       totalSwitches: 3,
       labels: ['Back', 'Front', 'Side'],
       radiusStyle: true,
-      onToggle: (index) {
-        // print('switched to: $index');
-      },
+      onToggle: (index) {},
     );
   }
 
@@ -99,9 +94,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
       totalSwitches: 2,
       labels: ['Back', 'Front'],
       radiusStyle: true,
-      onToggle: (index) {
-        // print('switched to: $index');
-      },
+      onToggle: (index) {},
     );
   }
 
@@ -134,7 +127,6 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
     );
   }
 
-
   Widget appBar() {
     return Column(
       children: [
@@ -151,7 +143,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                 color: primaryColor,
               ),
               onPressed: () {
-                Navigator.pop(context,true);
+                Navigator.pop(context, true);
               },
             ),
             Padding(
@@ -213,7 +205,7 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.bottomCenter, children: [
                                       InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           _imgFromCamera();
                                         },
                                         child: Container(
@@ -227,34 +219,38 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                               bottomRight: Radius.circular(20),
                                             ),
                                           ),
-                                          child: 
-                                          _image != null
-                                          ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.file(
-                                  _image!,
-                                  width: double.infinity,
-                                  height: 100,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                                          :Center(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  size: 40,
-                                                  color: Colors.black,
+                                          child: _image != null
+                                              ? ClipRRect(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  child: Image.file(
+                                                    _image!,
+                                                    width: double.infinity,
+                                                    height: 100,
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.camera_alt_outlined,
+                                                        size: 40,
+                                                        color: Colors.black,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Container(
+                                                          margin: EdgeInsets.symmetric(horizontal: 40),
+                                                          child: Text(
+                                                            'Take Customer Fabric Photo',
+                                                            textAlign: TextAlign.center,
+                                                          ))
+                                                    ],
+                                                  ),
                                                 ),
-                                                SizedBox(height: 10,),
-                                                Container(
-                                                  margin: EdgeInsets.symmetric(horizontal: 40),
-                                                  child: Text('Take Customer Fabric Photo',textAlign: TextAlign.center,))
-                                              ],
-                                            ),
-                                          ),
                                         ),
                                       ),
                                       Container(
@@ -279,12 +275,14 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                     ]),
                                   ),
                                 ),
-                                SizedBox(width: 5,),
+                                SizedBox(
+                                  width: 5,
+                                ),
                                 Container(
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.bottomCenter, children: [
                                       InkWell(
-                                        onTap: (){
+                                        onTap: () {
                                           _imgFromGallery();
                                         },
                                         child: Container(
@@ -298,24 +296,23 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                               bottomRight: Radius.circular(20),
                                             ),
                                           ),
-                                          child:
-                                          _galleryImage != null 
-                                         ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.file(
-                                  _galleryImage!,
-                                  width: double.infinity,
-                                  height: 100,
-                                  fit: BoxFit.fill,
-                                ),
-                              )
-                                         : Center(
-                                            child: Icon(
-                                              Icons.photo,
-                                              size: 40,
-                                              color: textColor,
-                                            ),
-                                          ),
+                                          child: _galleryImage != null
+                                              ? ClipRRect(
+                                                  borderRadius: BorderRadius.circular(20),
+                                                  child: Image.file(
+                                                    _galleryImage!,
+                                                    width: double.infinity,
+                                                    height: 100,
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                )
+                                              : Center(
+                                                  child: Icon(
+                                                    Icons.photo,
+                                                    size: 40,
+                                                    color: textColor,
+                                                  ),
+                                                ),
                                         ),
                                       ),
                                       Container(
@@ -349,8 +346,8 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.bottomCenter, children: [
                                       InkWell(
-                                        onTap: (){
-                                           _imgFromGallery();
+                                        onTap: () {
+                                          _imgFromGallery();
                                         },
                                         child: Container(
                                           height: 200,
@@ -394,13 +391,15 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                                     ]),
                                   ),
                                 ),
-                                SizedBox(width: 5,),
+                                SizedBox(
+                                  width: 5,
+                                ),
                                 Container(
                                   child: Expanded(
                                     child: Stack(alignment: Alignment.bottomCenter, children: [
                                       InkWell(
-                                        onTap: (){
-                                           _imgFromGallery();
+                                        onTap: () {
+                                          _imgFromGallery();
                                         },
                                         child: Container(
                                           height: 200,
@@ -468,14 +467,14 @@ class _PreviewOrderBottomState extends State<PreviewOrderBottom> {
                       Padding(
                         padding: const EdgeInsets.only(top: 14, left: 27, right: 39),
                         child: Column(
-                          children: [toggle("DrawString(Nada)", 1),
+                          children: [
+                            toggle("DrawString(Nada)", 1),
                             Divider(),
                             toggle("Elastic", 0),
                             Divider(),
                             toggle("Lining", 2),
                             Divider(),
                             SizedBox(height: 10),
-                          
                           ],
                         ),
                       )

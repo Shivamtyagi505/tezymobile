@@ -3,20 +3,24 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:quikieappps1/api/select_design/select_design_model.dart';
 import 'package:quikieappps1/api/select_design/select_design_services.dart';
 import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/bill/generate_bill_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
+import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BlouseSelectDesignController extends GenerateBillController {
   ReferenceImageType? selectFrontDesign;
   ReferenceImageType? selectBackDesign;
   ReferenceImageType? selectSleeveDesign;
+  ReferenceImageType? selectBottomOtherDesign;
   List<SelectDesignClass>? selectFrontDesignClass = [];
   List<SelectDesignClass>? selectBackDesignClass = [];
   List<SelectDesignClass>? selectSleeveDesignClass = [];
+  List<SelectDesignClass>? selectBottomOtherClass = [];
   File? _frontimage;
   final picker = ImagePicker();
   DesignImage? frontDesignImage = DesignImage();
@@ -25,79 +29,140 @@ class BlouseSelectDesignController extends GenerateBillController {
   DesignImage? backDesignImage = DesignImage();
   File? _sleevesimage;
   DesignImage? sleeveDesignImage = DesignImage();
+  DesignImage? bottomDesignImage = DesignImage();
+  File? _bottomimage;
   var frontImageUrl;
   var backImageUrl;
   var sleevesImageUrl;
+  int frontIndex = 0;
+  int backIndex = 0;
+  int sleevesIndex = 0;
 
-  Future imgFromCameraSleeves() async {
+  Future imgFromCameraSleeves(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
     if (pickedFile != null) _sleevesimage = File(pickedFile.path);
     sleeveDesignImage!.image = _sleevesimage;
     sleeveDesignImage!.type = 'Camera';
-    files.putIfAbsent('files.sleevesImage_blouse1', () => sleeveDesignImage!.image);
+    if (sleeveDesignImage!.image != null) {
+      frontIndex++;
+    }
+    files.putIfAbsent('files.sleevesImage_${provider.productName}$frontIndex', () => sleeveDesignImage!.image);
     notifyListeners();
   }
 
-  Future imgFromGallerySleeves() async {
+  Future imgFromGallerySleeves(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
     if (pickedFile != null) _sleevesimage = File(pickedFile.path);
     sleeveDesignImage!.image = _sleevesimage;
     sleeveDesignImage!.type = 'Gallery';
-    files.putIfAbsent('files.sleevesImage_blouse1', () => sleeveDesignImage!.image);
+    if (sleeveDesignImage!.image != null) {
+      frontIndex++;
+    }
+    files.putIfAbsent('files.sleevesImage_${provider.productName}$frontIndex', () => sleeveDesignImage!.image);
     notifyListeners();
   }
 
-  Future imgFromCameraBack() async {
+  Future imgFromCameraBack(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
     if (pickedFile != null) _backimage = File(pickedFile.path);
     backDesignImage!.image = _backimage;
     backDesignImage!.type = 'Camera';
-    files.putIfAbsent('files.backImage_blouse1', () => backDesignImage!.image);
+    if (backDesignImage!.image != null) {
+      backIndex++;
+    }
+    files.putIfAbsent('files.backImage_${provider.productName}$backIndex', () => backDesignImage!.image);
     notifyListeners();
   }
 
-  Future imgFromGalleryBack() async {
+  Future imgFromGalleryBack(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
     if (pickedFile != null) _backimage = File(pickedFile.path);
     backDesignImage!.image = _backimage;
     backDesignImage!.type = 'Gallery';
-    files.putIfAbsent('files.backImage_blouse1', () => backDesignImage!.image);
+    if (backDesignImage!.image != null) {
+      backIndex++;
+    }
+    files.putIfAbsent('files.backImage_${provider.productName}$backIndex', () => backDesignImage!.image);
     notifyListeners();
   }
 
-  Future imgFromCameraFront() async {
+  Future imgFromCameraFront(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
     final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
     if (pickedFile != null) _frontimage = File(pickedFile.path);
     frontDesignImage!.image = _frontimage;
     frontDesignImage!.type = 'Camera';
-    files.putIfAbsent('files.frontImage_blouse1', () => frontDesignImage!.image);
+    if (frontDesignImage!.image != null) {
+      frontIndex++;
+    }
+    files.putIfAbsent('files.frontImage_${provider.productName}$frontIndex', () => frontDesignImage!.image);
     notifyListeners();
   }
 
-  Future imgFromGalleryFront() async {
+  Future imgFromGalleryFront(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
     if (pickedFile != null) _frontimage = File(pickedFile.path);
     frontDesignImage!.image = _frontimage;
     frontDesignImage!.type = 'Gallery';
-    files.putIfAbsent('files.frontImage_blouse1', () => frontDesignImage!.image);
+    if (frontDesignImage!.image != null) {
+      frontIndex++;
+    }
+    files.putIfAbsent('files.frontImage_${provider.productName}$frontIndex', () => frontDesignImage!.image);
     notifyListeners();
   }
 
-  Future<void> fetchSelectFrontDesignApi() async {
-    selectFrontDesign = await selectDesignApi('blouse', 'front');
+  Future imgFromCameraBottom(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
+    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    if (pickedFile != null) _bottomimage = File(pickedFile.path);
+    bottomDesignImage!.image = _bottomimage;
+    bottomDesignImage!.type = 'Camera';
+    if (bottomDesignImage!.image != null) {
+      frontIndex++;
+    }
+    files.putIfAbsent('files.bottomImage_${provider.productName}$frontIndex', () => bottomDesignImage!.image);
+    notifyListeners();
+  }
+
+  Future imgFromGalleryBottom(BuildContext context) async {
+    var provider = Provider.of<HomepageController>(context, listen: false);
+    final pickedFile = await picker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    if (pickedFile != null) _bottomimage = File(pickedFile.path);
+    bottomDesignImage!.image = _bottomimage;
+    bottomDesignImage!.type = 'Gallery';
+    if (bottomDesignImage!.image != null) {
+      frontIndex++;
+    }
+    files.putIfAbsent('files.bottomImage_${provider.productName}$frontIndex', () => bottomDesignImage!.image);
+    notifyListeners();
+  }
+
+  Future<void> fetchSelectFrontDesignApi(String productName) async {
+    selectFrontDesign = await selectDesignApi(productName, 'front');
     selectFrontDesignClass = selectFrontDesign!.data;
     notifyListeners();
   }
 
-  Future<void> fetchSelectBackDesignApi() async {
-    selectBackDesign = await selectDesignApi('blouse', 'back');
+  Future<void> fetchSelectBackDesignApi(String productName) async {
+    selectBackDesign = await selectDesignApi(productName, 'back');
     selectBackDesignClass = selectBackDesign!.data;
     notifyListeners();
   }
 
-  Future<void> fetchSelectSleeveDesignApi() async {
-    selectSleeveDesign = await selectDesignApi('sleeve', 'sleeves');
+  Future<void> fetchSelectSleeveDesignApi(String productName) async {
+    selectSleeveDesign = await selectDesignApi(productName, 'sleeves');
     selectSleeveDesignClass = selectSleeveDesign!.data;
+    notifyListeners();
+  }
+
+  Future<void> fetchSelectBottomDesignApi(String productName) async {
+    selectBottomOtherDesign = await selectBottomOtherDesignApi(productName);
+    selectBottomOtherClass = selectBottomOtherDesign!.data;
     notifyListeners();
   }
 
@@ -106,7 +171,6 @@ class BlouseSelectDesignController extends GenerateBillController {
     for (var i = 0; i < selectBackDesignClass!.length; i++) {
       hashTags.add(selectBackDesignClass![i].attributes!.hashTag);
     }
-    print(hashTags);
   }
 
   Widget imageContainer(String text) {

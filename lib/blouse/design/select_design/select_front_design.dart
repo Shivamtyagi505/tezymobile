@@ -5,6 +5,7 @@ import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_back_design.dart';
+import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 
 class select_front_design extends StatefulWidget {
   @override
@@ -27,14 +28,14 @@ class select_front_designState extends State<select_front_design> {
                         leading: new Icon(Icons.photo_library),
                         title: new Text('Photo Library'),
                         onTap: () {
-                          value.imgFromGalleryFront();
+                          value.imgFromGalleryFront(bc);
                           Navigator.of(context).pop();
                         }),
                     new ListTile(
                       leading: new Icon(Icons.photo_camera),
                       title: new Text('Camera'),
                       onTap: () {
-                        value.imgFromCameraFront();
+                        value.imgFromCameraFront(bc);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -111,8 +112,11 @@ class select_front_designState extends State<select_front_design> {
   @override
   void initState() {
     var provider = Provider.of<BlouseSelectDesignController>(context, listen: false);
-    provider.fetchSelectFrontDesignApi();
+    var homePage = Provider.of<HomepageController>(context, listen: false);
+    homePage.categoriesName();
+    provider.fetchSelectFrontDesignApi(homePage.productName);
     provider.splitHastTag();
+    homePage.categoriesName();
     super.initState();
   }
 
@@ -332,25 +336,33 @@ class select_front_designState extends State<select_front_design> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: StaggeredGridView.countBuilder(
-                                physics: ScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 12,
-                                itemCount: value.selectFrontDesignClass!.length,
-                                itemBuilder: (BuildContext context, int index) => frontDesign(
-                                    value.selectFrontDesignClass![index].attributes!.productName!,
-                                    value.selectFrontDesignClass![index].attributes!.image!.data!.attributes!.formats!
-                                        .large!.url,
-                                    value),
-                                staggeredTileBuilder: (index) {
-                                  return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
-                                }),
-                          ),
+                          (value.selectFrontDesignClass!.isNotEmpty)
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: StaggeredGridView.countBuilder(
+                                      physics: ScrollPhysics(),
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 12,
+                                      itemCount: value.selectFrontDesignClass!.length,
+                                      itemBuilder: (BuildContext context, int index) => frontDesign(
+                                          value.selectFrontDesignClass![index].attributes!.productName!,
+                                          value.selectFrontDesignClass![index].attributes!.image!.data!.attributes!
+                                              .formats!.large!.url,
+                                          value),
+                                      staggeredTileBuilder: (index) {
+                                        return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
+                                      }),
+                                )
+                              : Container(
+                                  margin: EdgeInsets.only(top: 130),
+                                  child: Text(
+                                    'Oops!! No Front Design. Please Upload Your Photo!',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 18),
+                                  )),
                         ],
                       ),
                     ),

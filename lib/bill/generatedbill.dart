@@ -199,174 +199,180 @@ class GeneratedBillState extends State<GeneratedBill> {
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20))),
               ),
               Container(
-                height: height * 0.7,
+                height: height * 0.8,
                 width: MediaQuery.of(context).size.width - 10.0,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text("RECEIPT",
-                            style: TextStyle(
-                                color: Color.fromRGBO(95, 93, 93, 10), fontSize: 18, fontWeight: FontWeight.w600)),
-                      ),
-                      SizedBox(
-                        height: 3,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: DottedLine(
-                          direction: Axis.horizontal,
-                          lineLength: double.infinity,
-                          lineThickness: 2.0,
-                          dashLength: 4.0,
-                          dashColor: Colors.black,
-                          dashRadius: 0.0,
-                          dashGapLength: 4.0,
-                          dashGapColor: Colors.transparent,
-                          dashGapRadius: 0.0,
-                        ),
-                      ),
-                      SizedBox(height: 3),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("To",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(3, 43, 119, 10), fontSize: 15, fontWeight: FontWeight.w500)),
-                            Text("Date Of Order : ",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(151, 151, 151, 10),
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500)),
-                          ],
-                        ),
-                      ),
-                      Consumer<SelectCustomerController>(builder: (context, value, child) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("${value.allCustomerAttributes!.name}",
-                                  style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
-                              Text(formattedDate,
-                                  style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
-                            ],
-                          ),
-                        );
-                      }),
-                      Consumer<SelectCustomerController>(builder: (context, value, child) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          child: Text("Mobile No: ${value.allCustomerAttributes!.mobile}",
+                child: SingleChildScrollView(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text("RECEIPT",
                               style: TextStyle(
-                                  color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400)),
-                        );
-                      }),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text("Address:Basaveshwarnangara, Bangalore",
-                            style: TextStyle(
-                                color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text("E-mail:",
-                            style: TextStyle(
-                                color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400)),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        child: DottedLine(
-                          direction: Axis.horizontal,
-                          lineLength: double.infinity,
-                          lineThickness: 2.0,
-                          dashLength: 4.0,
-                          dashColor: Colors.black,
-                          dashRadius: 0.0,
-                          dashGapLength: 4.0,
-                          dashGapColor: Colors.transparent,
-                          dashGapRadius: 0.0,
+                                  color: Color.fromRGBO(95, 93, 93, 10), fontSize: 18, fontWeight: FontWeight.w600)),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Bill No:",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(151, 151, 151, 10),
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500)),
-                            Text("DUE DATE",
-                                style: TextStyle(
-                                    color: Color.fromRGBO(151, 151, 151, 10),
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500)),
-                          ],
+                        SizedBox(
+                          height: 3,
                         ),
-                      ),
-                      Consumer<PlaceOrderController>(builder: (context, value, child) {
-                        return Padding(
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: DottedLine(
+                            direction: Axis.horizontal,
+                            lineLength: double.infinity,
+                            lineThickness: 2.0,
+                            dashLength: 4.0,
+                            dashColor: Colors.black,
+                            dashRadius: 0.0,
+                            dashGapLength: 4.0,
+                            dashGapColor: Colors.transparent,
+                            dashGapRadius: 0.0,
+                          ),
+                        ),
+                        SizedBox(height: 3),
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("${value.invoiceNumber!.data!.attributes!.nextInvoiceNumberSuggestion}",
+                              Text("To",
                                   style: TextStyle(
                                       color: Color.fromRGBO(3, 43, 119, 10),
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold)),
-                              Text("${formatDate(value.selectedValue, [dd, M, yyyy])}",
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500)),
+                              Text("Date Of Order : ",
                                   style: TextStyle(
-                                      color: Color.fromRGBO(3, 43, 119, 10),
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold)),
+                                      color: Color.fromRGBO(151, 151, 151, 10),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500)),
                             ],
                           ),
-                        );
-                      }),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: DottedLine(
-                          direction: Axis.horizontal,
-                          lineLength: double.infinity,
-                          lineThickness: 2.0,
-                          dashLength: 4.0,
-                          dashColor: Colors.black,
-                          dashRadius: 0.0,
-                          dashGapLength: 4.0,
-                          dashGapColor: Colors.transparent,
-                          dashGapRadius: 0.0,
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      ListView.builder(
-                          physics: ScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: widget.placeOrderList!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return BillWidget(
-                              image: Image.file(
-                                widget.placeOrderList![index].file!,
-                                fit: BoxFit.fill,
-                              ),
-                              quantity: widget.placeOrderList![index].quantity!,
-                              amount: widget.placeOrderList![index].priceTotal,
-                              price: widget.placeOrderList![index].price!,
-                              index: index,
-                              type: widget.placeOrderList![index].orderType!,
-                            );
-                          }),
-                    ]),
+                        Consumer<SelectCustomerController>(builder: (context, value, child) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("${value.allCustomerAttributes!.name}",
+                                    style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
+                                Text(formattedDate,
+                                    style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w500)),
+                              ],
+                            ),
+                          );
+                        }),
+                        Consumer<SelectCustomerController>(builder: (context, value, child) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            child: Text("Mobile No: ${value.allCustomerAttributes!.mobile}",
+                                style: TextStyle(
+                                    color: Color.fromRGBO(151, 151, 151, 10),
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400)),
+                          );
+                        }),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text("Address:Basaveshwarnangara, Bangalore",
+                              style: TextStyle(
+                                  color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text("E-mail:",
+                              style: TextStyle(
+                                  color: Color.fromRGBO(151, 151, 151, 10), fontSize: 10, fontWeight: FontWeight.w400)),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                          child: DottedLine(
+                            direction: Axis.horizontal,
+                            lineLength: double.infinity,
+                            lineThickness: 2.0,
+                            dashLength: 4.0,
+                            dashColor: Colors.black,
+                            dashRadius: 0.0,
+                            dashGapLength: 4.0,
+                            dashGapColor: Colors.transparent,
+                            dashGapRadius: 0.0,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Bill No:",
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(151, 151, 151, 10),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500)),
+                              Text("DUE DATE",
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(151, 151, 151, 10),
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500)),
+                            ],
+                          ),
+                        ),
+                        Consumer<PlaceOrderController>(builder: (context, value, child) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("${value.invoiceNumber!.data!.attributes!.nextInvoiceNumberSuggestion}",
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(3, 43, 119, 10),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold)),
+                                Text("${formatDate(value.selectedValue, [dd, M, yyyy])}",
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(3, 43, 119, 10),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                          );
+                        }),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: DottedLine(
+                            direction: Axis.horizontal,
+                            lineLength: double.infinity,
+                            lineThickness: 2.0,
+                            dashLength: 4.0,
+                            dashColor: Colors.black,
+                            dashRadius: 0.0,
+                            dashGapLength: 4.0,
+                            dashGapColor: Colors.transparent,
+                            dashGapRadius: 0.0,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        ListView.builder(
+                            physics: ScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: widget.placeOrderList!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return BillWidget(
+                                image: Image.file(
+                                  widget.placeOrderList![index].file!,
+                                  fit: BoxFit.fill,
+                                ),
+                                quantity: widget.placeOrderList![index].quantity!,
+                                amount: widget.placeOrderList![index].priceTotal,
+                                price: widget.placeOrderList![index].price!,
+                                index: index,
+                                type: widget.placeOrderList![index].orderType!,
+                              );
+                            }),
+                      ]),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),

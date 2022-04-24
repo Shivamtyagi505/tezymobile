@@ -5,6 +5,7 @@ import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_sleeve_design.dart';
+import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 
 class select_back_design extends StatefulWidget {
   var frontImage;
@@ -30,14 +31,14 @@ class select_back_designState extends State<select_back_design> {
                         leading: new Icon(Icons.photo_library),
                         title: new Text('Photo Library'),
                         onTap: () {
-                          value.imgFromGalleryBack();
+                          value.imgFromGalleryBack(bc);
                           Navigator.of(context).pop();
                         }),
                     new ListTile(
                       leading: new Icon(Icons.photo_camera),
                       title: new Text('Camera'),
                       onTap: () {
-                        value.imgFromCameraBack();
+                        value.imgFromCameraBack(bc);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -226,7 +227,8 @@ class select_back_designState extends State<select_back_design> {
   @override
   void initState() {
     var provider = Provider.of<BlouseSelectDesignController>(context, listen: false);
-    provider.fetchSelectBackDesignApi();
+    var homePage = Provider.of<HomepageController>(context, listen: false);
+    provider.fetchSelectBackDesignApi(homePage.productName);
     super.initState();
   }
 
@@ -439,25 +441,33 @@ class select_back_designState extends State<select_back_design> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: StaggeredGridView.countBuilder(
-                          physics: ScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 12,
-                          itemCount: value.selectBackDesignClass!.length,
-                          itemBuilder: (BuildContext context, int index) => backDesign(
-                              value.selectBackDesignClass![index].attributes!.productName!,
-                              value.selectBackDesignClass![index].attributes!.image!.data!.attributes!.formats!.large!
-                                  .url,
-                              value),
-                          staggeredTileBuilder: (index) {
-                            return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
-                          }),
-                    ),
+                    (value.selectBackDesignClass!.isNotEmpty)
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: StaggeredGridView.countBuilder(
+                                physics: ScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 12,
+                                itemCount: value.selectBackDesignClass!.length,
+                                itemBuilder: (BuildContext context, int index) => backDesign(
+                                    value.selectBackDesignClass![index].attributes!.productName!,
+                                    value.selectBackDesignClass![index].attributes!.image!.data!.attributes!.formats!
+                                        .large!.url,
+                                    value),
+                                staggeredTileBuilder: (index) {
+                                  return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
+                                }),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(top: 130),
+                            child: Text(
+                              'Oops!! No Back Design. Please Upload Your Photo!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18),
+                            )),
                   ],
                 ),
               ),

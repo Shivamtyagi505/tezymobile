@@ -9,6 +9,7 @@ class MeasurementController extends GenerateBillController {
   List<double> items = [];
 
   Map<String, double>? data = {};
+  Map<String, double>? Localdata = {};
 
   save(String key, value) async {
     final prefs = await SharedPreferences.getInstance();

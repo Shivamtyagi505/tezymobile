@@ -9,48 +9,41 @@ import '../Model/orders_model.dart';
 
 String? stringResponse;
 
-Future <OrdersModel> fetchOrders() async {
+Future<OrdersModel> fetchOrders() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? jwt = prefs.getString('jwt');
 
   http.Response response;
-  response = await http.get(Uri.parse(orders), headers: <String, String>{
-    'Authorization':
-    'Bearer $jwt'
-  }).timeout(Duration(seconds: 15));
+  response = await http
+      .get(Uri.parse(orders), headers: <String, String>{'Authorization': 'Bearer $jwt'}).timeout(Duration(seconds: 15));
 
   if (response.statusCode == 200) {
     stringResponse = response.body;
 
     return OrdersModel.fromJson(jsonDecode(stringResponse!));
   } else {
-    print("error ${response.statusCode}");
     throw Exception('Failed to fetch data');
   }
 }
 
-Future <OrdersPutModel> ordersPutRequest(ApiOrdersData data)  async{
+Future<OrdersPutModel> ordersPutRequest(ApiOrdersData data) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? jwt = prefs.getString('jwt');
 
   http.Response response;
-  response = await http.put(Uri.parse(ordersPut),headers:<String,String>{
-    'Authorization' : 'Bearer $jwt',
-    'Content-Type' : 'multipart/form-data; boundary=---011000010111000001101001'
-  },
-      body: jsonEncode(<String,String>{
+  response = await http.put(Uri.parse(ordersPut),
+      headers: <String, String>{
+        'Authorization': 'Bearer $jwt',
+        'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001'
+      },
+      body: jsonEncode(<String, String>{
         'manualBillCompletion': data.manualBillCompletion!,
         'balancePayment': data.balancePayment!
-      })
-  );
+      }));
 
-  if(response.statusCode == 200) {
-    print("response.statusCode ${'successful'}");
-    // stringResponse = response.body;
+  if (response.statusCode == 200) {
     return OrdersPutModel.fromJson(jsonDecode(response.body));
-  }
-  else {
-    print("error ${response.statusCode}");
+  } else {
     throw Exception('Failed to load data');
   }
 }

@@ -13,6 +13,7 @@ class HomepageController extends GenerateBillController {
   var formatter = new DateFormat('yyyy-MM-dd');
   int selectedIndex = 0;
   String orderType = '';
+  String productName = '';
 
   String dateFormat() {
     var date = DateTime.now();
@@ -51,5 +52,17 @@ class HomepageController extends GenerateBillController {
   void updateOrderType(String orderTypeValue) {
     orderType = orderTypeValue;
     notifyListeners();
+  }
+
+  void categoriesName() {
+    if (tabController.index == 0) {
+      productName = 'blouse';
+    } else if (tabController.index == 1) {
+      productName = 'top';
+    } else if (tabController.index == 2) {
+      productName = 'bottom';
+    } else if (tabController.index == 3) {
+      productName = 'others';
+    }
   }
 }

@@ -31,7 +31,6 @@ Future<AddCustomerModel> addCustomerApi(AddCustomerData data) async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    print("error ${response.statusCode}");
     throw Exception('Failed to Fetch All Customers');
   }
 }
@@ -59,7 +58,6 @@ Future<AllCustomerModel> getCustomerApi() async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    print("error ${response.statusCode}");
     throw Exception('Failed to AddCustomer');
   }
 }

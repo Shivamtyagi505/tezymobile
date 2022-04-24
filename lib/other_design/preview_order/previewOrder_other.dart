@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -82,7 +81,7 @@ class _PreviewOrderOtherState extends State<PreviewOrderOther> {
             ),
             InkWell(
               onTap: () {
-             //   Navigator.push(context, MaterialPageRoute(builder: (context) => Drawing_Pad()));
+                //   Navigator.push(context, MaterialPageRoute(builder: (context) => Drawing_Pad()));
               },
               child: Container(
                 height: 124,
@@ -116,9 +115,7 @@ class _PreviewOrderOtherState extends State<PreviewOrderOther> {
       totalSwitches: 3,
       labels: ['Back', 'Front', 'Side'],
       radiusStyle: true,
-      onToggle: (index) {
-        // print('switched to: $index');
-      },
+      onToggle: (index) {},
     );
   }
 
@@ -137,9 +134,7 @@ class _PreviewOrderOtherState extends State<PreviewOrderOther> {
       totalSwitches: 2,
       labels: ['Back', 'Front'],
       radiusStyle: true,
-      onToggle: (index) {
-        // print('switched to: $index');
-      },
+      onToggle: (index) {},
     );
   }
 

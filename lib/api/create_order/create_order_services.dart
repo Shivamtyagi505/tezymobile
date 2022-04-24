@@ -36,7 +36,6 @@ Future<void> createOrderApi(CreateOrder createOrder, Map<String, File> mapOfFile
   var request = http.MultipartRequest('POST', Uri.parse('http://172.105.253.131:1337/api/orders'));
 
   for (int i = 0; i < keysForImage.length; i++) {
-    print(keysForImage[i]);
     var multipartFile = await http.MultipartFile.fromPath(keysForImage[i], mapOfFilesAndKey[keysForImage[i]]!.path);
     request.files.add(multipartFile);
   }
@@ -48,40 +47,5 @@ Future<void> createOrderApi(CreateOrder createOrder, Map<String, File> mapOfFile
 
   if (response.statusCode == 200) {
     Fluttertoast.showToast(msg: 'Order created successfully');
-    print(await response.stream.bytesToString());
-  } else {
-    print(response.reasonPhrase);
   }
-
-  // request.fields.addAll(body);
-  // for (int i = 0; i < body.length; i++) {
-  //   var key = body.keys.elementAt(i);
-  //   request.fields[key] = body[key]!;
-  // }
-
-  // request.headers.addAll(headers);
-  // var response = await request.send();
-  // http.Response data = await http.Response.fromStream(response);
-  // print(data.body);
-  // print(data.request);
-  // print(data.statusCode);
-  // print(data.headers);
-// .then(httpResponse)
-// .catchError(httpCatch)
-// .timeout(connectionTimeout,onTimeout:(){
-//   apiTimeOut();
-// });
-
-//Dio Implement
-
-  // var formData = FormData.fromMap({'data': json.encode(body)});
-  // var dio = Dio();
-
-  // var response = await Dio().post('http://172.105.253.131:1337/api/orders',
-  //     data: formData,
-  //     options: Options(
-  //       contentType: 'multipart/form-data',
-  //       headers: {'Authorization': 'Bearer $jwt'},
-  //     ));
-  // print(response.statusCode);
 }

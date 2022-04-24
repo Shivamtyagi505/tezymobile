@@ -5,7 +5,6 @@ import 'package:quikieappps1/api/apifile/api_list.dart';
 import 'package:quikieappps1/api/datafromfrontend/login_data_class.dart';
 import 'package:quikieappps1/api/login/login_model.dart';
 
-
 Future<LoginModel> getLogin(LoginData data) async {
   final response = await http.post(
     Uri.parse(login),
@@ -21,12 +20,11 @@ Future<LoginModel> getLogin(LoginData data) async {
   if (response.statusCode == 200) {
     // If the server did return a 201 CREATED response,
     // then parse the JSON.
-    final items =  LoginModel.fromJson(jsonDecode(response.body));
+    final items = LoginModel.fromJson(jsonDecode(response.body));
     return items;
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    print("error ${response.statusCode}");
     throw Exception('Failed to Login');
   }
 }

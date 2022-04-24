@@ -197,13 +197,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                 _listViewData.clear();
                                 arrange.forEach((element) {
                                   _listViewData.add(returnindex.elementAt(element));
-                                  //  print('arrange element data $element');
                                 });
                               });
                             }
                           });
-                          // deleted.clear();
-
                         }
                       }
                     },
@@ -453,6 +450,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                             itemCount: _listViewData.length,
                             itemBuilder: (context, index) {
                               measurementController.data!.putIfAbsent(
+                                _listViewData[index],
+                                () => getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])],
+                              );
+                              measurementController.Localdata!.putIfAbsent(
                                 _listViewData[index],
                                 () => getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])],
                               );

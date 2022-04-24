@@ -7,6 +7,8 @@ import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
 
+import '../blouse/design/select_design/select_other_design.dart';
+
 // ignore: must_be_immutable
 class BottomMeasurement extends StatefulWidget {
   double selectVal;
@@ -101,7 +103,6 @@ class _BottomMeasurementState extends State<BottomMeasurement> {
 
                       if (!delete.isEmpty) {
                         delete.forEach((element) {
-                          print("hello delete item name  ${element}");
                           _listViewData.remove(element);
 
                           deleted.add(element);
@@ -110,12 +111,9 @@ class _BottomMeasurementState extends State<BottomMeasurement> {
                       }
                     });
                     if (isSelected) {
-                      print("enter in isSelected");
                       if (!deleted.isEmpty) {
-                        print("enter in !deleted.isEmpty");
                         deleted.forEach((element) {
                           if (!_listViewData.contains(element)) {
-                            print(" !_listViewData.contains(element) $element");
                             setState(() {
                               _listViewData.add(element);
                               _listViewData.forEach((element) {
@@ -126,13 +124,10 @@ class _BottomMeasurementState extends State<BottomMeasurement> {
                               _listViewData.clear();
                               arrange.forEach((element) {
                                 _listViewData.add(returnindexonlybottommeasurement.elementAt(element));
-                                //  print('arrange element data $element');
                               });
                             });
                           }
                         });
-                        // deleted.clear();
-
                       }
                     }
                   },
@@ -352,10 +347,8 @@ class _BottomMeasurementState extends State<BottomMeasurement> {
                           },
                           itemCount: _listViewData.length,
                           itemBuilder: (context, index) {
-                            print("helloooooooo  :" + widget.selectVal.toString());
                             return InkWell(
                               onTap: () {
-                                // selectedImage = images[index];
                                 changeImageOnScroll(index);
                               },
                               child: Stack(children: [
@@ -475,6 +468,7 @@ class _BottomMeasurementState extends State<BottomMeasurement> {
               FloatingActionButton(
                 heroTag: null,
                 onPressed: () {
+                  Navigator.pop(context);
                 },
                 child: Image.asset("assets/images/Previous.png"),
               ),
@@ -483,7 +477,7 @@ class _BottomMeasurementState extends State<BottomMeasurement> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => selectotherdesign()),
+                    MaterialPageRoute(builder: (context) => SelectBottomOtherDesign()),
                   );
                 },
                 child: Image.asset("assets/images/Next.png"),

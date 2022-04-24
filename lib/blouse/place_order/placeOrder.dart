@@ -175,7 +175,7 @@ class _PlaceOrderState extends State<PlaceOrder> {
     var provider = Provider.of<PlaceOrderController>(context, listen: false);
     provider.fetchInvoiceNumberSuggestions();
     provider.getOrderType(context);
-    provider.addPlaceItems(PlaceOrderList(provider.orderType, fabricImage, quantity: 1));
+    provider.localfabricImage = fabricImage;
     provider.getAllLocalData();
     super.initState();
   }
@@ -959,6 +959,9 @@ class ViewOrderAndMeasurement {
   bool? piping;
   String? zipType;
   String? hooks;
+  int? quantity;
+  String? orderType;
+  String? price;
 
   String get cupsValue {
     if (cups == true) {
@@ -988,5 +991,8 @@ class ViewOrderAndMeasurement {
       this.cups,
       this.piping,
       this.zipType,
-      this.hooks});
+      this.hooks,
+      this.quantity,
+      this.orderType,
+      this.price});
 }

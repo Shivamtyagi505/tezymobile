@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quikieappps1/blouse/input_sample/input_sample.dart';
+import 'package:quikieappps1/blouse/measurement/measurement.dart';
+import 'package:quikieappps1/blouse/measurement/measurement_controller.dart';
 import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
 import 'package:quikieappps1/customer/select_customer/selectcustomer.dart';
 import 'package:quikieappps1/home/home_page/homepage_controller.dart';
@@ -302,14 +305,18 @@ class TabBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<HomepageController, SelectCustomerController>(
-        builder: (context, controller, selectCustomerController, child) {
+    return Consumer3<HomepageController, SelectCustomerController, MeasurementController>(
+        builder: (context, controller, selectCustomerController, measurementController, child) {
       return GestureDetector(
         onTap: () {
           if (selectCustomerController.allCustomerAttributes == null) {
             Navigator.push(context, MaterialPageRoute(builder: (context) => selectCustomer()));
           } else {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
+            if (mapEquals(measurementController.data, measurementController.Localdata)) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => input_sample()));
+            } else {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MeasurementScreen()));
+            }
           }
           controller.updateOrderType(text!);
         },

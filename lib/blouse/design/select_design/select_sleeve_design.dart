@@ -7,6 +7,7 @@ import 'package:quikieappps1/assets/colors.dart';
 import 'package:quikieappps1/blouse/design/after_selection.dart';
 import 'package:quikieappps1/blouse/design/select_design/select_design_controller.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse.dart';
+import 'package:quikieappps1/home/home_page/homepage_controller.dart';
 
 class select_sleeve_design extends StatefulWidget {
   var frontImage;
@@ -34,14 +35,14 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                         leading: new Icon(Icons.photo_library),
                         title: new Text('Photo Library'),
                         onTap: () {
-                          value.imgFromGallerySleeves();
+                          value.imgFromGallerySleeves(bc);
                           Navigator.of(context).pop();
                         }),
                     new ListTile(
                       leading: new Icon(Icons.photo_camera),
                       title: new Text('Camera'),
                       onTap: () {
-                        value.imgFromCameraSleeves();
+                        value.imgFromCameraSleeves(bc);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -342,7 +343,8 @@ class select_sleeve_designState extends State<select_sleeve_design> {
   @override
   void initState() {
     var provider = Provider.of<BlouseSelectDesignController>(context, listen: false);
-    provider.fetchSelectSleeveDesignApi();
+    var homePage = Provider.of<HomepageController>(context, listen: false);
+    provider.fetchSelectSleeveDesignApi(homePage.productName);
     super.initState();
   }
 
@@ -555,25 +557,33 @@ class select_sleeve_designState extends State<select_sleeve_design> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: StaggeredGridView.countBuilder(
-                          physics: ScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 12,
-                          itemCount: value.selectSleeveDesignClass!.length,
-                          itemBuilder: (BuildContext context, int index) => sleevesDesign(
-                              value.selectSleeveDesignClass![index].attributes!.productName!,
-                              value.selectSleeveDesignClass![index].attributes!.image!.data!.attributes!.formats!.large!
-                                  .url,
-                              value),
-                          staggeredTileBuilder: (index) {
-                            return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
-                          }),
-                    ),
+                    (value.selectSleeveDesignClass!.isNotEmpty)
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: StaggeredGridView.countBuilder(
+                                physics: ScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 12,
+                                itemCount: value.selectSleeveDesignClass!.length,
+                                itemBuilder: (BuildContext context, int index) => sleevesDesign(
+                                    value.selectSleeveDesignClass![index].attributes!.productName!,
+                                    value.selectSleeveDesignClass![index].attributes!.image!.data!.attributes!.formats!
+                                        .large!.url,
+                                    value),
+                                staggeredTileBuilder: (index) {
+                                  return StaggeredTile.count(1, index.isEven ? 1.4 : 1.8);
+                                }),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(top: 130),
+                            child: Text(
+                              'Oops!! No Sleeves Design. Please Upload Your Photo!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18),
+                            )),
                   ],
                 ),
               ),

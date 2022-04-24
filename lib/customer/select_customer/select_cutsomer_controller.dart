@@ -48,5 +48,6 @@ class SelectCustomerController extends ChangeNotifier {
   getCustomerData(AllCustomerAttributes allCustomerAttribute, int id) {
     allCustomerAttributes = allCustomerAttribute;
     customerId = id;
+    notifyListeners();
   }
 }

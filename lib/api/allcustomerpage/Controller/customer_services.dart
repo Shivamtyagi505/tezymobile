@@ -27,7 +27,6 @@ Future<AllCustomers> allCustomerModel() async {
 
     return AllCustomers.fromJson(jsonDecode(stringResponse!));
   } else {
-    print(response.statusCode);
     throw Exception('Failed to fetch all customer data');
   }
 }
@@ -50,7 +49,6 @@ Future<BillCustomerModel> getCustomerBills(var customerId) async {
 
     return BillCustomerModel.fromJson(jsonDecode(dataResponse));
   } else {
-    print(response.statusCode);
     throw Exception('Failed to fetch all customer data');
   }
 }

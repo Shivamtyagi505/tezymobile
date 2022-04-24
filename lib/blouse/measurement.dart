@@ -195,13 +195,10 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                               _listViewData.clear();
                               arrange.forEach((element) {
                                 _listViewData.add(returnindex.elementAt(element));
-                                //  print('arrange element data $element');
                               });
                             });
                           }
                         });
-                        // deleted.clear();
-
                       }
                     }
                   },
@@ -344,7 +341,6 @@ class _MeasurementScreenState extends State<MeasurementScreen> {
                                       getdataval[widget.selectVal]![returnindex.indexOf(_listViewData[index])] =
                                           updatedValue + 1;
                                       isSelectedItems = getdataval[widget.selectVal]!;
-                                      print(isSelectedItems);
                                       if (_listViewData[index] == 'Shoulder') scaleData.setName('Shoulder');
                                       if (_listViewData[index] == 'Full Length') scaleData.setName('Full Length');
                                       if (_listViewData[index] == 'Shoulder Gap') scaleData.setName('Shoulder Gap');

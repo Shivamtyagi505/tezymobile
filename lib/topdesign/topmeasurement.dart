@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:quikieappps1/blouse/design/select_design/select_front_design.dart';
 
-import 'package:quikieappps1/blouse/input_sample/input_sample.dart';
 import 'package:quikieappps1/bodymeasure/horizontal_numberpicker_wrapper.dart';
 import 'package:quikieappps1/excel_data/excel_value.dart';
 import 'package:quikieappps1/excel_data/get_Index_for_Scale_value.dart';
 import 'package:quikieappps1/state_management/mob_store.dart';
-import 'package:quikieappps1/topdesign/design/select_front_design.dart';
 import 'package:quikieappps1/topdesign/topimage_class.dart';
 
 // ignore: must_be_immutable
@@ -159,7 +158,6 @@ class _TopMeasurementState extends State<TopMeasurement> {
 
                       if (!delete.isEmpty) {
                         delete.forEach((element) {
-                          print("hello delete item name  ${element}");
                           _listViewData.remove(element);
 
                           deleted.add(element);
@@ -168,12 +166,9 @@ class _TopMeasurementState extends State<TopMeasurement> {
                       }
                     });
                     if (isSelected) {
-                      print("enter in isSelected");
                       if (!deleted.isEmpty) {
-                        print("enter in !deleted.isEmpty");
                         deleted.forEach((element) {
                           if (!_listViewData.contains(element)) {
-                            print(" !_listViewData.contains(element) $element");
                             setState(() {
                               _listViewData.add(element);
                               _listViewData.forEach((element) {
@@ -184,13 +179,10 @@ class _TopMeasurementState extends State<TopMeasurement> {
                               _listViewData.clear();
                               arrange.forEach((element) {
                                 _listViewData.add(returnindex.elementAt(element));
-                                //  print('arrange element data $element');
                               });
                             });
                           }
                         });
-                        // deleted.clear();
-
                       }
                     }
                   },
@@ -573,10 +565,7 @@ class _TopMeasurementState extends State<TopMeasurement> {
               FloatingActionButton(
                 heroTag: null,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => input_sample()),
-                  );
+                  Navigator.pop(context);
                 },
                 child: Image.asset("assets/images/Previous.png"),
               ),

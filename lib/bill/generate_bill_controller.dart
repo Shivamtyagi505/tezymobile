@@ -7,7 +7,6 @@ import 'package:quikieappps1/blouse/design/select_design/select_design_controlle
 import 'package:quikieappps1/blouse/measurement/measurement_controller.dart';
 import 'package:quikieappps1/blouse/place_order/place_order_controller.dart';
 import 'package:quikieappps1/blouse/preview_order/previewOrder_blouse_controller.dart';
-import 'package:quikieappps1/customer/add_customer/add_customer_controller.dart';
 import 'package:quikieappps1/customer/select_customer/select_cutsomer_controller.dart';
 import 'package:quikieappps1/hangings/hangings_controller.dart';
 import 'package:quikieappps1/home/home_page/homepage_controller.dart';
@@ -36,53 +35,56 @@ class GenerateBillController extends ChangeNotifier {
     var addCustomer = Provider.of<SelectCustomerController>(context, listen: false);
     var placeOrder = Provider.of<PlaceOrderController>(context, listen: false);
     var selectDesign = Provider.of<BlouseSelectDesignController>(context, listen: false);
-    var previewOrder = Provider.of<PreviewOrderBlouseController>(context, listen: false);
     var measurement = Provider.of<MeasurementController>(context, listen: false);
     var homePage = Provider.of<HomepageController>(context, listen: false);
     var hangings = Provider.of<SelectHangingsController>(context, listen: false);
-    createOrder.customerName = addCustomer.username;
-    // createOrder.customerId = addCustomer.customer.data.
+    createOrder.customerName = addCustomer.allCustomerAttributes?.name ?? '';
+    createOrder.customerId = addCustomer.customerId;
     createOrder.balancePayment = remaining.toString();
-    // createOrder.grandTotalPayment = placeOrder.grandTotalAmount.toString();
+    createOrder.grandTotalPayment = placeOrder.grandTotalAmount.toString();
     createOrder.automaticBillCompletion = false;
     createOrder.manualBillCompletion = false;
     createOrder.adavancePayment = textController.text;
     createOrder.orderDate = DateTime.now().toString();
     createOrder.dueDate = placeOrder.selectedValue.toString();
     createOrder.invoiceNumber = int.parse(placeOrder.invoiceNumber!.data!.attributes!.nextInvoiceNumberSuggestion!);
-    createOrder.orderList!.add(OrderList(
-        productType: "blouse",
-        productName: homePage.orderType,
-        price: placeOrder.grandTotalAmount.toString(),
-        quantity: placeOrder.quantity[0],
-        fullLength: measurement.data?['Full Length'].toString() ?? '',
-        shoulder: measurement.data?['Shoulder'].toString() ?? '',
-        shoulderGap: measurement.data?['Shoulder Gap'].toString() ?? '',
-        sleevesLength: measurement.data?['Shoulder'].toString() ?? '',
-        armholeRound: measurement.data?['Armhole Round'].toString() ?? '',
-        circleDownLoose: measurement.data?['Circle Down Loose'].toString() ?? '',
-        sleevesRound: measurement.data?['Sleeves Round'].toString() ?? '',
-        upperChestRound: measurement.data?['Upper Chest Round'].toString() ?? '',
-        chestRound: measurement.data?['Chest Round'].toString() ?? '',
-        lowerChestRound: measurement.data?['Lower Chest Round'].toString() ?? '',
-        waistRound: measurement.data?['Waist Round'].toString() ?? '',
-        firstDartPoint: measurement.data?['First Dart Point'].toString() ?? '',
-        secondDartPoint: measurement.data?['Second Dart Point'].toString() ?? '',
-        bustPoint: measurement.data?['Bust Point'].toString() ?? '',
-        frontNeckDeep: measurement.data?['Front Neck Deep'].toString() ?? '',
-        backNeckDeep: measurement.data?['Back Neck Deep'].toString() ?? '',
-        waistBandLength: measurement.data?['Waist Band Length'].toString() ?? '',
-        neckWidth: measurement.data?['Neck Width'].toString() ?? '',
-        backNeckWidth: measurement.data?['Back Neck Width'].toString() ?? '',
-        orderCompletion: false,
-        frontImageUrl: selectDesign.frontImageUrl,
-        backImageUrl: selectDesign.backImageUrl,
-        sleevesImageUrl: selectDesign.sleevesImageUrl,
-        hangingsImageUrl: hangings.hangingsDesignImage!.image,
-        cups: placeOrder.cups,
-        piping: placeOrder.pipings,
-        zipType: placeOrder.zipType,
-        hooks: placeOrder.hooks));
+
+    for (var item in placeOrder.viewOrderAndMeasurement) {
+      orderList.add(OrderList(
+          productType: "blouse",
+          productName: homePage.orderType,
+          price: placeOrder.grandTotalAmount.toString(),
+          quantity: placeOrder.quantity[0],
+          fullLength: measurement.data?['Full Length'].toString() ?? '',
+          shoulder: measurement.data?['Shoulder'].toString() ?? '',
+          shoulderGap: measurement.data?['Shoulder Gap'].toString() ?? '',
+          sleevesLength: measurement.data?['Shoulder'].toString() ?? '',
+          armholeRound: measurement.data?['Armhole Round'].toString() ?? '',
+          circleDownLoose: measurement.data?['Circle Down Loose'].toString() ?? '',
+          sleevesRound: measurement.data?['Sleeves Round'].toString() ?? '',
+          upperChestRound: measurement.data?['Upper Chest Round'].toString() ?? '',
+          chestRound: measurement.data?['Chest Round'].toString() ?? '',
+          lowerChestRound: measurement.data?['Lower Chest Round'].toString() ?? '',
+          waistRound: measurement.data?['Waist Round'].toString() ?? '',
+          firstDartPoint: measurement.data?['First Dart Point'].toString() ?? '',
+          secondDartPoint: measurement.data?['Second Dart Point'].toString() ?? '',
+          bustPoint: measurement.data?['Bust Point'].toString() ?? '',
+          frontNeckDeep: measurement.data?['Front Neck Deep'].toString() ?? '',
+          backNeckDeep: measurement.data?['Back Neck Deep'].toString() ?? '',
+          waistBandLength: measurement.data?['Waist Band Length'].toString() ?? '',
+          neckWidth: measurement.data?['Neck Width'].toString() ?? '',
+          backNeckWidth: measurement.data?['Back Neck Width'].toString() ?? '',
+          orderCompletion: false,
+          frontImageUrl: selectDesign.frontImageUrl,
+          backImageUrl: selectDesign.backImageUrl,
+          sleevesImageUrl: selectDesign.sleevesImageUrl,
+          hangingsImageUrl: hangings.hangingsDesignImage!.image,
+          cups: placeOrder.cups,
+          piping: placeOrder.pipings,
+          zipType: placeOrder.zipType,
+          hooks: placeOrder.hooks));
+    }
+    createOrder.orderList = orderList;
     notifyListeners();
   }
 

@@ -63,9 +63,7 @@ class Drawing_PadState extends State<Drawing_Pad> {
                         key: _sign,
                         onSign: () {
                           final sign = _sign.currentState;
-                          //  debugPrint('${sign.points.length} points in the signature');
                         },
-                        //  backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                         strokeWidth: strokeWidth,
                       ),
                     )
@@ -74,9 +72,7 @@ class Drawing_PadState extends State<Drawing_Pad> {
                       key: _sign,
                       onSign: () {
                         final sign = _sign.currentState;
-                        //  debugPrint('${sign.points.length} points in the signature');
                       },
-                      //  backgroundPainter: _WatermarkPaint("2.0", "2.0"),
                       strokeWidth: strokeWidth,
                     ),
             ),
@@ -97,7 +93,6 @@ class Drawing_PadState extends State<Drawing_Pad> {
                           height: 40,
                           width: 100,
                           child: TextField(
-                            
                             autofocus: true,
                             // controller: editingController[index],
                             onSubmitted: (text) {
@@ -107,13 +102,12 @@ class Drawing_PadState extends State<Drawing_Pad> {
                               });
                             },
                             decoration: InputDecoration(
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
-                               contentPadding: EdgeInsets.symmetric(horizontal: 2,vertical: 2)
-                            ),
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(horizontal: 2, vertical: 2)),
                           )),
                     ))
                 :
@@ -123,7 +117,7 @@ class Drawing_PadState extends State<Drawing_Pad> {
                 //   child: Text(value ??''))
                 (_list.isNotEmpty)
                     ? Container(
-                        height:  MediaQuery.of(context).size.height * 0.8,
+                        height: MediaQuery.of(context).size.height * 0.8,
                         child: Stack(
                             children: List<Positioned>.generate(
                           _list.length,
@@ -212,7 +206,6 @@ class Drawing_PadState extends State<Drawing_Pad> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          
                           textField = !textField;
                         });
                       },

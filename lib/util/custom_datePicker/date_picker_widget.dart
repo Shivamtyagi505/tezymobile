@@ -139,7 +139,6 @@ class _DatePickerState extends State<DatePicker> {
 
           // check if this date needs to be deactivated for only DeactivatedDates
           if (widget.inactiveDates != null) {
-//            print("Inside Inactive dates.");
             for (DateTime inactiveDate in widget.inactiveDates!) {
               if (_compareDate(date, inactiveDate)) {
                 isDeactivated = true;

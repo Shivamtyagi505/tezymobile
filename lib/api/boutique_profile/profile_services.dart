@@ -26,7 +26,6 @@ Future<ProfileImage> getProfileImage() async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    print("error ${response.statusCode}");
     throw Exception('Failed to Fetch All Customers');
   }
 }
@@ -51,10 +50,7 @@ Future<void> updateProfileImage(File profileImage) async {
 
   if (response.statusCode == 200) {
     Fluttertoast.showToast(msg: 'Profile Image Updated successfully');
-    print(await response.stream.bytesToString());
-  } else {
-    print(response.reasonPhrase);
-  }
+  } else {}
 }
 
 Future<void> deleteProfileImage(File profileImage) async {
@@ -77,10 +73,7 @@ Future<void> deleteProfileImage(File profileImage) async {
 
   if (response.statusCode == 200) {
     Fluttertoast.showToast(msg: 'Delete Profile Image successfully');
-    print(await response.stream.bytesToString());
-  } else {
-    print(response.reasonPhrase);
-  }
+  } else {}
 }
 
 Future<void> createProfileImage(File profileImage) async {
@@ -103,8 +96,5 @@ Future<void> createProfileImage(File profileImage) async {
 
   if (response.statusCode == 200) {
     Fluttertoast.showToast(msg: 'Profile Image Uploaded successfully');
-    print(await response.stream.bytesToString());
-  } else {
-    print(response.reasonPhrase);
-  }
+  } else {}
 }
